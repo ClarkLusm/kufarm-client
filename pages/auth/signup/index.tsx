@@ -1,19 +1,19 @@
 import { Button, Checkbox, Label, Alert, TextInput } from "flowbite-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import Link from "next/link";
 import axios from "axios";
 
 import { schema } from "./schema";
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/router";
 
 type Inputs = {
   username: string;
   email: string;
   password: string;
   rePassword: string;
-  referralId?: string;
+  referralId?: string | undefined | null;
   walletAddress: string;
 };
 
@@ -74,9 +74,9 @@ export default function SignUpPage() {
           </div>
           <div>
             <TextInput
+              required
               type="email"
               placeholder="Email"
-              required
               {...register("email")}
               color={errors.email ? "failure" : ""}
               helperText={errors.email?.message}
@@ -84,8 +84,8 @@ export default function SignUpPage() {
           </div>
           <div>
             <TextInput
-              type="password"
               required
+              type="password"
               placeholder="Password"
               {...register("password")}
               color={errors.password ? "failure" : ""}
@@ -94,8 +94,8 @@ export default function SignUpPage() {
           </div>
           <div>
             <TextInput
-              type="password"
               required
+              type="password"
               placeholder="Repeat Password"
               {...register("rePassword")}
               color={errors.rePassword ? "failure" : ""}

@@ -10,7 +10,8 @@ export const schema = yup
     password: yup.string().min(6).required(),
     rePassword: yup
       .string()
-      .oneOf([yup.ref("password")], "Passwords must match"),
+      .oneOf([yup.ref("password")], "Passwords must match")
+      .required(),
     referralId: yup.string().optional().nullable(),
     walletAddress: yup.string().required(),
   })
