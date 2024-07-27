@@ -18,16 +18,28 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+.mining-line {
+  animation: slide 150.4s linear infinite;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 40px, #29ad93 0, #29ad93 86px);
+}
+
+@-webkit-keyframes slide {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: 15000px;
   }
 }
