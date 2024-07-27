@@ -20,7 +20,7 @@ import {
 export default () => {
   return (
     <div>
-      <Footer container className="container m-auto">
+      <Footer container className="container max-w-[1100px] mx-auto">
         <div className="w-full">
           <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
             <div>

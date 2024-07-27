@@ -5,8 +5,8 @@ import Menu from './menu';
 
 export default () => {
   return (
-    <Navbar fluid rounded className="fixed z-50 w-full bg-gray-100">
-      <div className="container m-auto flex items-center justify-between">
+    <Navbar fluid rounded className="fixed z-50 w-full bg-gray-100 top-0">
+      <div className="container max-w-[1100px] mx-auto flex items-center justify-between">
         <NavbarBrand href="/">
           <img
             src="https://flowbite.com/docs/images/logo.svg"
