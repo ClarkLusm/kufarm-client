@@ -1,48 +1,68 @@
-import { NavbarCollapse, NavbarLink } from 'flowbite-react';
+import { NavbarCollapse, NavbarLink } from "flowbite-react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+
+type MenuItem = {
+  path: string;
+  label: string;
+};
 
 export default () => {
-  const logged = false;
-  const routes = logged
-    ? [
+  const { status } = useSession();
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      setMenuItems([
         {
-          label: 'About us',
-          path: '/about-us',
+          label: "Dashboard",
+          path: "/dashboard",
         },
         {
-          label: 'Contact',
-          path: '/contact',
+          label: "Buy more TH/S",
+          path: "/buy",
         },
         {
-          label: 'Review',
-          path: '/review',
-        },
-      ]
-    : [
-        {
-          label: 'Buy more TH/S',
-          path: '/buy',
+          label: "Withdraw",
+          path: "/withdraw",
         },
         {
-          label: 'Withdraw',
-          path: '/withdraw',
+          label: "Order History",
+          path: "/history",
+        },
+      ]);
+    } else {
+      setMenuItems([
+        {
+          label: "Home",
+          path: "/home",
         },
         {
-          label: 'Order History',
-          path: '/history',
+          label: "Buy more TH/S",
+          path: "/buy",
         },
-      ];
+        {
+          label: "Withdraw",
+          path: "/withdraw",
+        },
+        {
+          label: "Order History",
+          path: "/history",
+        },
+      ]);
+    }
+  }, [status]);
 
   return (
     <NavbarCollapse>
-      <NavbarLink className="text-xl font-semibold" href="/" active>
-        Home
-      </NavbarLink>
-      {routes.map((r) => (
+      {menuItems.map((r) => (
         <NavbarLink
           className="text-xl font-semibold"
           key={r.path}
           href={r.path}
-          active={false}
+          active={pathname === r.path}
         >
           {r.label}
         </NavbarLink>
