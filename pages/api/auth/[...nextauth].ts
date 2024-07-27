@@ -40,20 +40,23 @@ export const authOptions = {
         );
         const dateNowInSeconds = new Date().getTime() / 1000;
         if (dateNowInSeconds > tokenParsed.exp) {
-          throw Error("expired token");
+          token.error = 'AccessTokenExpired'
         }
         return { ...token, ...user };
       }
       return token;
     },
     async session({ session, token }: any) {
-      console.log(token, session);
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       session.user = token.user;
+      session.error = token.error;
       return session;
     },
   },
+  pages: {
+    signIn: '/auth/signin'
+  }
 } satisfies AuthOptions;
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {

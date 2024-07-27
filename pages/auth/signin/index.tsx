@@ -19,10 +19,8 @@ export default function SignInPage() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    if (status === "unauthenticated") {
-      void signIn("okta");
-    } else if (status === "authenticated") {
-      void router.push("/");
+    if (status === "authenticated") {
+      void router.push("/dashboard");
     }
   }, [status]);
 
@@ -41,8 +39,6 @@ export default function SignInPage() {
     }).then((res) => {
       if (!res?.ok) {
         setMessage(res?.error || "Login failed!");
-      } else {
-        router.push("/");
       }
     });
   };
