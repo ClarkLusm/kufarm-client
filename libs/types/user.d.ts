@@ -4,6 +4,7 @@ export type UserProfile = {
   email: string;
   walletAddress: string;
   balance: number;
+  referralBalance: number;
   maxOut: number;
   income: number;
   hashPower: number;

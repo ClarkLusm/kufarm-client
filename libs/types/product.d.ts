@@ -9,4 +9,5 @@ export type Product = {
   hashPower: number;
   dailyIncome: number;
   monthlyIncome: number;
+  count?: number;
 };

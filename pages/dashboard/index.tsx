@@ -1,79 +1,99 @@
 import { Button, Navbar, NavbarLink } from "flowbite-react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { getSession } from "next-auth/react";
+import axios from "axios";
 
-export default function About() {
+import { Product } from "@/libs/types/product";
+import { UserProfile } from "@/libs/types/user";
+import { useEffect, useState } from "react";
+
+type Resp = {
+  products: Product[];
+  userProducts: Product[];
+  profile: UserProfile;
+};
+
+export const getServerSideProps = (async (ctx) => {
+  const session = await getSession(ctx);
+  const reqOptions = {
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  };
+
+  try {
+    const [profileRes, productRes] = await Promise.all([
+      axios.get(`${process.env.API_URL}/api/account/profile`, reqOptions),
+      axios.get(`${process.env.API_URL}/api/account/my-products`, reqOptions),
+    ]);
+    return {
+      props: {
+        profile: profileRes.data,
+        products: productRes.data.data,
+        userProducts: productRes.data.userProducts,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        profile: {},
+        userProducts: [],
+        products: [],
+      },
+    };
+  }
+}) satisfies GetServerSideProps<Resp>;
+
+export default function Dashboard({
+  profile,
+  products,
+  userProducts,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [userBalance, setUserBalance] = useState<number>(profile.balance);
+  useEffect(() => {
+    if (!profile) return;
+    const timer = setInterval(() => {
+      const balance = profile.dailyIncome / 24 / 3600;
+      setUserBalance((prev) => prev + balance);
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   const statistic = [
     {
       id: "1",
       image: "https://kufarm.io/static/kufarm/user2.svg",
       properties: "Username:",
-      value: "pthanhhumg",
+      value: profile.username,
     },
     {
       id: "2",
       image: "https://kufarm.io/static/kufarm/layers.svg",
       properties: "Mining power:",
-      value: "1 TH/S",
+      value: profile.hashPower,
     },
     {
       id: "3",
       image: "https://kufarm.io/static/kufarm/wallet3.svg",
       properties: "Your BTC wallet:",
-      value: "1BoatSLRHtKNngkdXEeobR76b53LETtpyT",
+      value: profile.walletAddress,
     },
     {
       id: "4",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Balance:",
-      value: "Your Balance:",
+      value: profile.balance,
     },
     {
       id: "5",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Referral Balance:",
-      value: "0$",
+      value: profile.referralBalance,
     },
   ];
 
-  const miner = [
-    {
-      id: "1",
-      image: "https://kufarm.io/static/kufarm/chart.svg ",
-      properties: "Antminer Z9 MINI:",
-      value: "0",
-    },
-    {
-      id: "21",
-      image: "https://kufarm.io/static/kufarm/chart.svg ",
-      properties: "Antminer S9K:",
-      value: "0",
-    },
-    {
-      id: "3",
-      image: "https://kufarm.io/static/kufarm/chart.svg ",
-      properties: "Antminer T17:",
-      value: "0",
-    },
-    {
-      id: "4",
-      image: "https://kufarm.io/static/kufarm/chart.svg ",
-      properties: "Antminer S17 Pro:",
-      value: "0",
-    },
-    {
-      id: "5",
-      image: "https://kufarm.io/static/kufarm/chart.svg ",
-      properties: "Antminer S17 E-Series:",
-      value: "0",
-    },
-    {
-      id: "6",
-      image: "https://kufarm.io/static/kufarm/chart.svg ",
-      properties: "Antminer S19 PRO+ Hyd:",
-      value: "0",
-    },
-  ];
-
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const mining_statistic = [
     {
       id: "1",
@@ -85,24 +105,24 @@ export default function About() {
       id: "1",
       image: "https://kufarm.io/static/kufarm/bril.svg",
       properties: "DAILY Ƀ:",
-      value: "+0.00000183300 BITCOIN",
+      value: profile.dailyIncome,
     },
     {
       id: "1",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "MONTHLY Ƀ:",
-      value: "+0.00005499000 BITCOIN",
+      value: profile.monthlyIncome,
     },
     {
       id: "1",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "Mining power:",
-      value: "1 TH/S",
+      value: profile.hashPower + " TH/s",
     },
   ];
 
   return (
-    <div className="container m-auto pt-24">
+    <div className="relative pb-24">
       <div className="mb-10 rounded-2xl shadow-2xl">
         <div className="mb-5 rounded-2xl bg-slate-100 p-10">
           <div className="mb-5 text-2xl font-semibold">Mining Statistic:</div>
@@ -117,17 +137,15 @@ export default function About() {
           ))}
           <div className="my-6 h-5 w-full rounded-xl bg-slate-300 text-transparent mining-line"></div>
           <div className="my-6 text-center">
-            <span className="text-xl font-medium">
-              0.000059501281736108 BTC
-            </span>
+            <span className="text-xl font-medium">{userBalance}</span>
           </div>
         </div>
-        <div className="rounded-b-xl border">
-          <iframe
-            src='https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22frameElementId%22%3A%22tradingview_7763e%22%2C%22interval%22%3A%22240%22%2C%22hide_side_toolbar%22%3A%221%22%2C%22allow_symbol_change%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22watchlist%22%3A%22BINANCE%3ABTCUSDT%5Cu001fBINANCE%3AETHUSDT%22%2C%22details%22%3A%221%22%2C%22calendar%22%3A%221%22%2C%22hotlist%22%3A%221%22%2C%22studies%22%3A%22STD%3BSMA%22%2C%22theme%22%3A%22light%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUtc%22%2C%22show_popup_button%22%3A%221%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22BINANCE%3ABTCUSDT%22%2C%22page-uri%22%3A%22kufarm.com%2Faccounts%2Fmain%2F%22%7D'
-            className="h-[400px] w-full"
-          />
-        </div>
+      </div>
+      <div className="rounded-3xl border mb-10">
+        <iframe
+          src="https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22frameElementId%22%3A%22tradingview_7763e%22%2C%22interval%22%3A%22240%22%2C%22hide_side_toolbar%22%3A%221%22%2C%22allow_symbol_change%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22watchlist%22%3A%22BINANCE%3ABTCUSDT%5Cu001fBINANCE%3AETHUSDT%22%2C%22details%22%3A%221%22%2C%22calendar%22%3A%221%22%2C%22hotlist%22%3A%221%22%2C%22studies%22%3A%22STD%3BSMA%22%2C%22theme%22%3A%22light%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUtc%22%2C%22show_popup_button%22%3A%221%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22BINANCE%3ABTCUSDT%22%2C%22page-uri%22%3A%22kufarm.com%2Faccounts%2Fmain%2F%22%7D"
+          className="h-[400px] w-full rounded-3xl"
+        />
       </div>
       <div className="flex justify-between">
         <div className="mr-7 w-8/12 rounded-2xl bg-slate-100 p-10">
@@ -143,46 +161,45 @@ export default function About() {
               </div>
             </div>
           ))}
-          <Navbar className="flex w-4/6 list-none bg-transparent">
-            <NavbarLink href="#">
-              <Button color="success" className="h-12 w-44 items-center">
-                <img src="https://kufarm.io/static/kufarm/refresh.svg" alt="" />
-                <div className="ml-2 font-medium text-white">
-                  Refresh balance
-                </div>
-              </Button>
-            </NavbarLink>
-            <NavbarLink href="#">
-              <Button color="success" className="h-12 w-44 items-center">
-                <img
-                  src="https://kufarm.io/static/kufarm/credit-card.svg"
-                  alt=""
-                />
-                <div className="ml-2 font-medium text-white">Withdrawal</div>
-              </Button>
-            </NavbarLink>
-            <NavbarLink href="#">
-              <Button color="warning" className="h-12 w-44 items-center">
-                <img
-                  src="https://kufarm.io/static/kufarm/credit-card.svg"
-                  alt=""
-                />
-                <div className="ml-2 font-medium text-white">Referal</div>
-              </Button>
-            </NavbarLink>
-          </Navbar>
+          <div className="grid grid-cols-3 gap-4">
+            <Button color="success" className="h-12 items-center">
+              <img src="https://kufarm.io/static/kufarm/refresh.svg" alt="" />
+              <div className="ml-2 font-medium text-white">Refresh balance</div>
+            </Button>
+
+            <Button color="success" className="h-12 items-center">
+              <img
+                src="https://kufarm.io/static/kufarm/credit-card.svg"
+                alt=""
+              />
+              <div className="ml-2 font-medium text-white">Withdrawal</div>
+            </Button>
+
+            <Button color="warning" className="h-12 items-center">
+              <img
+                src="https://kufarm.io/static/kufarm/credit-card.svg"
+                alt=""
+              />
+              <div className="ml-2 font-medium text-white">Referal</div>
+            </Button>
+          </div>
         </div>
         <div className="w-4/12 rounded-2xl bg-slate-100 p-10">
           <div className="mb-5 text-2xl font-semibold">Dashboard Miners:</div>
-          {miner.map((m) => (
-            <div className="mb-5 flex" key={m.id}>
-              <img className="size-6" src={m.image} alt="" />
-              <div className="ml-2 font-medium">
-                {m.properties}
-                <span className="ml-2 text-gray-500">{m.value}</span>
+          {products.map((p: Product) => {
+            const owner = userProducts.find((p1: Product) => p1.id === p.id);
+            return (
+              <div className="mb-5 flex" key={p.id}>
+                <img className="size-6" src={p.image} alt="" />
+                <div className="ml-2 font-medium">
+                  {p.name}
+                  <span className="ml-2 text-gray-500">
+                    {owner?.count || 0}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           <Navbar className="-ml-4 flex w-4/6 list-none bg-transparent">
             <NavbarLink href="#">
               <Button color="success" className="h-12 w-44 items-center">
@@ -195,6 +212,16 @@ export default function About() {
             </NavbarLink>
           </Navbar>
         </div>
+      </div>
+
+      <div className="w-[100vw] absolute left-[50%] bottom-0 translate-x-[-50%]">
+        <iframe
+          src="https://widget.coinlib.io/widget?type=horizontal_v2&amp;theme=light&amp;pref_coin_id=1505&amp;invert_hover="
+          loading="lazy"
+          width="100%"
+          height="36px"
+          style={{ border: 0, margin: 0, padding: 0 }}
+        />
       </div>
     </div>
   );
