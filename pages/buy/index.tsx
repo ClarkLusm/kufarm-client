@@ -20,7 +20,7 @@ export default function BuyPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   return (
-    <div className="container m-auto grid py-10 pt-24 gap-8 max-w-[1100px] grid-cols-2">
+    <div className="grid gap-8 grid-cols-2 py-8">
       {product.data.map((p) => (
         <Card className="w-full bg-slate-100 rounded-2xl" key={p.id}>
           <div className="flex justify-between">

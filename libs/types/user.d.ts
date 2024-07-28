@@ -10,4 +10,5 @@ export type UserProfile = {
   hashPower: number;
   dailyIncome: number;
   monthlyIncome: number;
+  pool: string;
 };

@@ -1,7 +1,9 @@
 import { Button, Navbar, NavbarLink } from "flowbite-react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
+import router from "next/router";
 import axios from "axios";
+import { TbChartRadar } from "react-icons/tb";
 
 import { Product } from "@/libs/types/product";
 import { UserProfile } from "@/libs/types/user";
@@ -99,18 +101,18 @@ export default function Dashboard({
       id: "1",
       image: "https://kufarm.io/static/kufarm/chart.svg",
       properties: "Main mining pool:",
-      value: "stratum+tcp://sha256d.kupool.com:443",
+      value: profile.pool,
     },
     {
       id: "1",
       image: "https://kufarm.io/static/kufarm/bril.svg",
-      properties: "DAILY Ƀ:",
+      properties: "DAILY $:",
       value: profile.dailyIncome,
     },
     {
       id: "1",
       image: "https://kufarm.io/static/kufarm/time2.svg",
-      properties: "MONTHLY Ƀ:",
+      properties: "MONTHLY $:",
       value: profile.monthlyIncome,
     },
     {
@@ -162,12 +164,12 @@ export default function Dashboard({
             </div>
           ))}
           <div className="grid grid-cols-3 gap-4">
-            <Button color="success" className="h-12 items-center">
+            <Button color="success" className="h-12 items-center" onClick={router.reload}>
               <img src="https://kufarm.io/static/kufarm/refresh.svg" alt="" />
               <div className="ml-2 font-medium text-white">Refresh balance</div>
             </Button>
 
-            <Button color="success" className="h-12 items-center">
+            <Button color="success" className="h-12 items-center" onClick={() => router.push('/withdraw')}>
               <img
                 src="https://kufarm.io/static/kufarm/credit-card.svg"
                 alt=""
@@ -189,8 +191,8 @@ export default function Dashboard({
           {products.map((p: Product) => {
             const owner = userProducts.find((p1: Product) => p1.id === p.id);
             return (
-              <div className="mb-5 flex" key={p.id}>
-                <img className="size-6" src={p.image} alt="" />
+              <div className="mb-5 flex items-center" key={p.id}>
+                <TbChartRadar color="#e3a008" />
                 <div className="ml-2 font-medium">
                   {p.name}
                   <span className="ml-2 text-gray-500">

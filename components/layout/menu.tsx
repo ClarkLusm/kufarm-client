@@ -37,19 +37,15 @@ export default () => {
       setMenuItems([
         {
           label: "Home",
-          path: "/home",
+          path: "/",
         },
         {
-          label: "Buy more TH/S",
-          path: "/buy",
+          label: "Mining Pool",
+          path: "/mining",
         },
         {
-          label: "Withdraw",
-          path: "/withdraw",
-        },
-        {
-          label: "Order History",
-          path: "/history",
+          label: "About Us",
+          path: "/about-us",
         },
       ]);
     }
@@ -59,7 +55,7 @@ export default () => {
     <NavbarCollapse>
       {menuItems.map((r) => (
         <NavbarLink
-          className="text-xl font-semibold"
+          className="text-lg font-semibold"
           key={r.path}
           href={r.path}
           active={pathname === r.path}

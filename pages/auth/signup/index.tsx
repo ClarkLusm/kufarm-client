@@ -48,7 +48,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="container m-auto py-16 pt-24">
+    <div className="py-8">
       <div className="m-auto w-1/3 list-none rounded-xl border p-10">
         <div className="m-auto mb-5 flex">
           <img

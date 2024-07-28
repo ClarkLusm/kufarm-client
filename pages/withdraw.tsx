@@ -64,7 +64,7 @@ export default function Withdraw({
       : [...transactions, ...new Array(7 - transactions.length).fill(null)];
 
   return (
-    <div className="container m-auto my-10 flex pt-24">
+    <div className="my-10 flex">
       <div className="mr-9 w-1/3 rounded-2xl bg-slate-100 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
         <div className="mb-5 flex items-center">

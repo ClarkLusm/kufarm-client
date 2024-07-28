@@ -48,7 +48,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="container m-auto h-screen py-16 pt-24">
+    <div className="py-16">
       <div className="m-auto w-1/3 list-none rounded-xl border p-10">
         <form
           className="flex max-w-md flex-col gap-4"
