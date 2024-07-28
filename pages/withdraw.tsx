@@ -1,5 +1,4 @@
 import { Transaction } from "@/libs/types/transaction";
-import { UserProfile } from "@/libs/types/user";
 import {
   Button,
   Navbar,
@@ -12,17 +11,11 @@ import {
   TableRow,
   TextInput,
 } from "flowbite-react";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
 import axios from "axios";
 
-type Resp = {
-  profile?: UserProfile;
-  transactions?: Transaction[];
-  total: number;
-};
-
-export const getServerSideProps = (async (ctx) => {
+export const getServerSideProps = (async (ctx: any) => {
   const session = await getSession(ctx);
   const reqOptions = {
     headers: {
@@ -44,14 +37,12 @@ export const getServerSideProps = (async (ctx) => {
     };
   } catch (error) {
     return {
-      props: {
-        profile: {},
-        transactions: [],
-        total: [],
+      redirect: {
+        destination: "/500",
       },
     };
   }
-}) satisfies GetServerSideProps<Resp>;
+});
 
 export default function Withdraw({
   profile,
@@ -116,7 +107,7 @@ export default function Withdraw({
             </TableHead>
             <TableBody className="w-screen divide-y">
               {transItems.map((t: Transaction, index: number) => (
-                <TransactionItem data={t} index={index + 1} />
+                <TransactionItem key={index} data={t} index={index + 1} />
               ))}
             </TableBody>
           </Table>

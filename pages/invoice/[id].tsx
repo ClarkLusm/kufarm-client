@@ -24,12 +24,16 @@ export const getServerSideProps = async (ctx: any) => {
         invoice: res.data,
       },
     };
-  } catch (error) {
-    return {
-      redirect: {
-        destination: "/buy",
-      },
-    };
+  } catch (error: any) {
+    return error?.response?.status === 404
+      ? {
+          notFound: true,
+        }
+      : {
+          redirect: {
+            destination: "/buy",
+          },
+        };
   }
 };
 
@@ -42,8 +46,12 @@ export default function Withdraw({
       <div className="m-auto mb-10 w-4/6 rounded-2xl p-10 shadow-xl">
         <div className="mb-5 flex justify-between">
           <div className="text-xl font-medium">Invoice ID #{invoice?.code}</div>
-          {invoice.status === 0 && <span className="text-orange-400 font-semibold">Waiting...</span>}
-          {invoice.status === 2 && <span className="text-green-400 font-semibold">Success</span>}
+          {invoice.status === 0 && (
+            <span className="text-orange-400 font-semibold">Waiting...</span>
+          )}
+          {invoice.status === 2 && (
+            <span className="text-green-400 font-semibold">Success</span>
+          )}
         </div>
         <div className="mb-5">
           <div className="flex items-center">

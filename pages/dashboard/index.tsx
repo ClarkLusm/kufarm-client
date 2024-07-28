@@ -92,7 +92,7 @@ export default function Dashboard({
       id: "5",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Referral Balance:",
-      value: profile.referralBalance,
+      value: profile.referralCommission,
     },
   ];
 
@@ -104,19 +104,19 @@ export default function Dashboard({
       value: profile.pool,
     },
     {
-      id: "1",
+      id: "2",
       image: "https://kufarm.io/static/kufarm/bril.svg",
       properties: "DAILY $:",
       value: profile.dailyIncome,
     },
     {
-      id: "1",
+      id: "3",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "MONTHLY $:",
       value: profile.monthlyIncome,
     },
     {
-      id: "1",
+      id: "4",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "Mining power:",
       value: profile.hashPower + " TH/s",

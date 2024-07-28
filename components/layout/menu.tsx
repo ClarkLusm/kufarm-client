@@ -12,6 +12,8 @@ export default () => {
   const { status } = useSession();
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const pathname = usePathname();
+  const mainPath =
+    pathname !== "/" ? `/${pathname?.split("/")?.[1]}` : pathname;
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -58,7 +60,7 @@ export default () => {
           className="text-lg font-semibold"
           key={r.path}
           href={r.path}
-          active={pathname === r.path}
+          active={mainPath === r.path}
         >
           {r.label}
         </NavbarLink>

@@ -1,5 +1,7 @@
 import { InferGetServerSidePropsType } from "next";
+import { useSession } from "next-auth/react";
 import { Card } from "flowbite-react";
+import router from "next/router";
 import axios from "axios";
 
 import { Product } from "@/libs/types/product";
@@ -10,7 +12,7 @@ export const getServerSideProps = async (context: any) => {
   try {
     const [productRes, walletsRes] = await Promise.all([
       fetch(`${process.env.API_URL}/api/products/${id}`),
-      fetch(`${process.env.API_URL}/api/wallets`),
+      fetch(`${process.env.API_URL}/api/payments`),
     ]);
     const product: Product = await productRes.json();
     const wallets: PaymentWallet[] = await walletsRes.json();
@@ -28,18 +30,28 @@ export default function BuyOnePage({
   product,
   wallets,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const session = useSession();
   const onOrder = async (walletId: string) => {
-    try {
-      await axios.post(`${process.env.API_URL}/api/account/order`, {
+    const res = await axios.post(
+      `${process.env.API_URL}/api/account/order`,
+      {
         productId: product.id,
         quantity: 1,
         paymentWalletId: walletId,
-      });
-    } catch (error) {}
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${session?.data?.accessToken}`,
+        },
+      }
+    );
+    if (res.status === 201) {
+      router.push(`invoice/${res.data.code}`);
+    }
   };
 
   return (
-    <div className="flex py-12">
+    <div className="flex py-8">
       <Card className="w-5/12 bg-slate-100 rounded-2xl mr-8">
         <div className="flex flex-col items-center">
           <div className="mb-5 text-2xl font-semibold">{product.name}</div>
@@ -89,7 +101,11 @@ export default function BuyOnePage({
         </p>
         <div className="grid grid-cols-3 gap-4">
           {wallets.map((w: PaymentWallet) => (
-            <button className="flex rounded-xl" onClick={() => onOrder(w.id)}>
+            <button
+              key={w.id}
+              className="flex rounded-xl"
+              onClick={() => onOrder(w.id)}
+            >
               <img src={w.image} alt="" />
               <span>{w.name}</span>
             </button>
