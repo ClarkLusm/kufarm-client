@@ -11,3 +11,13 @@ export type Product = {
   monthlyIncome: number;
   count?: number;
 };
+
+export type Invoice = {
+  chainId: number;
+  code: string;
+  amount: number;
+  coin: string;
+  price: number;
+  expiredAt: Date;
+  walletAddress: string;
+}
