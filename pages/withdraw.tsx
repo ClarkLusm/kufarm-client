@@ -1,8 +1,7 @@
 import { Transaction } from "@/libs/types/transaction";
 import {
+  Alert,
   Button,
-  Navbar,
-  NavbarLink,
   Table,
   TableBody,
   TableCell,
@@ -12,10 +11,12 @@ import {
   TextInput,
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { IoWallet } from "react-icons/io5";
 import axios from "axios";
+import { useState } from "react";
 
-export const getServerSideProps = (async (ctx: any) => {
+export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
   const reqOptions = {
     headers: {
@@ -24,38 +25,70 @@ export const getServerSideProps = (async (ctx: any) => {
   };
 
   try {
-    const [profileRes, withdrawRes] = await Promise.all([
+    const [profileRes, withdrawRes, settingRes] = await Promise.all([
       axios.get(`${process.env.API_URL}/api/account/profile`, reqOptions),
       axios.get(`${process.env.API_URL}/api/account/withdraws`, reqOptions),
+      axios.get(`${process.env.API_URL}/api/app-settings`, reqOptions),
     ]);
     return {
       props: {
         profile: profileRes.data,
         transactions: withdrawRes.data.data,
         total: withdrawRes.data.total,
+        settings: settingRes.data,
       },
     };
-  } catch (error) {
+  } catch (error: any) {
     return {
-      redirect: {
-        destination: "/500",
-      },
+      notFound: true,
     };
   }
-});
+};
 
 export default function Withdraw({
   profile,
   transactions,
   total,
+  settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const session = useSession();
+  const [amount, setAmount] = useState(settings.withdrawMin);
+  const [errorMsg, setErrorMsg] = useState("");
+
   const transItems =
     transactions.length >= 7
       ? transactions
       : [...transactions, ...new Array(7 - transactions.length).fill(null)];
 
+  const onSubmit = async () => {
+    if (Number.isNaN(Number(amount))) {
+      setErrorMsg("Invalid amount!");
+    } else if (amount > profile.balanceToken / 1e8) {
+      setErrorMsg("Your balance is not enough to withdraw!");
+    } else if (amount < settings.withdrawMin) {
+      setErrorMsg("Withdrawal amount is less than the minimum!");
+    } else {
+      try {
+        await axios.post(
+          `${process.env.API_URL}/api/account/withdraw`,
+          { amount },
+          {
+            headers: {
+              Authorization: `Bearer ${session?.data?.accessToken}`,
+            },
+          }
+        );
+      } catch (error) {}
+    }
+  };
+
+  const onChange = (e: any) => {
+    setAmount(e.target.value);
+    if (errorMsg) setErrorMsg("");
+  };
+
   return (
-    <div className="my-10 flex">
+    <div className="mt-10 flex">
       <div className="mr-9 w-1/3 rounded-2xl bg-slate-100 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
         <div className="mb-5 flex items-center">
@@ -66,7 +99,12 @@ export default function Withdraw({
         <div className="mb-5 flex items-center">
           <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
           <div className="ml-2 font-semibold">Your Balance: </div>
-          <div className="ml-2 text-gray-400">{profile.balance} USD</div>
+          <div className="ml-2 text-gray-400">
+            {Number(profile.balanceToken / 1e18).toLocaleString("en-EN", {
+              maximumFractionDigits: 5,
+            })}{" "}
+            BITCO2
+          </div>
         </div>
         <div className="mb-5">
           <div className="mb-5 flex items-center">
@@ -80,19 +118,31 @@ export default function Withdraw({
             <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
             <div className="ml-2 font-semibold">Withdraw amount:</div>
           </div>
-          <TextInput defaultValue="0.0001" />
+          <TextInput value={amount} onChange={onChange} />
         </div>
-        <Navbar className="ml-36 list-none bg-transparent">
-          <NavbarLink href="#">
-            <Button color="success" className="flex items-center">
-              <img src="https://kufarm.io/static/kufarm/wallet2.svg" alt="" />
-              <div className="ml-2">Withdraw</div>
-            </Button>
-          </NavbarLink>
-        </Navbar>
+        <div className="flex justify-center mb-4">
+          <Button
+            color="success"
+            className="flex items-center"
+            onClick={onSubmit}
+            disabled={!!errorMsg}
+          >
+            <IoWallet />
+            <span className="ml-2">Withdraw</span>
+          </Button>
+        </div>
         <div className="text-center font-semibold">
-          Minimal withdraw: 0.0001 BTC
+          Minimal withdraw: {settings.withdrawMin} BITCO2
         </div>
+        {errorMsg && (
+          <Alert
+            color="failure"
+            className="mt-4 font-medium"
+            onDismiss={() => setErrorMsg("")}
+          >
+            {errorMsg}
+          </Alert>
+        )}
       </div>
       <div className="w-2/3 rounded-2xl bg-slate-100 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw history:</div>
