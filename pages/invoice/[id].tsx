@@ -4,6 +4,7 @@ import { getSession } from "next-auth/react";
 import axios from "axios";
 import Link from "next/link";
 import QRCode from "qrcode.react";
+import Image from "next/image";
 
 import { NETWORKS } from "@/libs/constants";
 
@@ -25,6 +26,7 @@ export const getServerSideProps = async (ctx: any) => {
       },
     };
   } catch (error: any) {
+    console.error(error);
     return error?.response?.status === 404
       ? {
           notFound: true,
@@ -55,25 +57,12 @@ export default function Withdraw({
         </div>
         <div className="mb-5">
           <div className="flex items-center">
-            <div className="size-10 rounded-3xl bg-slate-400">
-              <svg
-                className="ml-2 mt-2 size-6 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m8 10 4-6 4 6H8Zm8 4-4 6-4-6h8Z"
-                />
-              </svg>
-            </div>
+            <Image
+              src={`/images/tokens/${invoice?.coin}.png`}
+              alt={invoice?.coin}
+              width={32}
+              height={32}
+            />
             <div className="ml-2 text-xl font-medium">{invoice?.coin}</div>
           </div>
         </div>

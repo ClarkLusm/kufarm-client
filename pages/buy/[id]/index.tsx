@@ -18,10 +18,9 @@ export const getServerSideProps = async (context: any) => {
     const wallets: PaymentWallet[] = await walletsRes.json();
     return { props: { product, wallets } };
   } catch (error) {
+    console.error(error);
     return {
-      redirect: {
-        destination: "/500",
-      },
+      notFound: true,
     };
   }
 };
@@ -31,6 +30,8 @@ export default function BuyOnePage({
   wallets,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const session = useSession();
+  console.log(wallets);
+
   const onOrder = async (walletId: string) => {
     const res = await axios.post(
       `${process.env.API_URL}/api/account/order`,
@@ -46,7 +47,7 @@ export default function BuyOnePage({
       }
     );
     if (res.status === 201) {
-      router.push(`invoice/${res.data.code}`);
+      router.push(`/invoice/${res.data.code}`);
     }
   };
 
@@ -103,10 +104,14 @@ export default function BuyOnePage({
           {wallets.map((w: PaymentWallet) => (
             <button
               key={w.id}
-              className="flex rounded-xl"
+              className="flex rounded-xl border p-2 hover:border-green-400"
               onClick={() => onOrder(w.id)}
             >
-              <img src={w.image} alt="" />
+              <img
+                src={`/images/tokens/${w.coin}.png`}
+                alt={w.name}
+                width={32}
+              />
               <span>{w.name}</span>
             </button>
           ))}

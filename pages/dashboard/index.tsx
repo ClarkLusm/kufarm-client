@@ -74,7 +74,7 @@ export default function Dashboard({
       id: "2",
       image: "https://kufarm.io/static/kufarm/layers.svg",
       properties: "Mining power:",
-      value: profile.hashPower,
+      value: profile.hashPower.toLocaleString("en-EN"),
     },
     {
       id: "3",
@@ -86,13 +86,17 @@ export default function Dashboard({
       id: "4",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Balance:",
-      value: profile.balance,
+      value: userBalance.toLocaleString("en-EN", {
+        maximumFractionDigits: 5,
+      }),
     },
     {
       id: "5",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Referral Balance:",
-      value: profile.referralCommission,
+      value: profile.referralCommission.toLocaleString("en-EN", {
+        maximumFractionDigits: 5,
+      }),
     },
   ];
 
@@ -119,7 +123,7 @@ export default function Dashboard({
       id: "4",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "Mining power:",
-      value: profile.hashPower + " TH/s",
+      value: profile.hashPower.toLocaleString("en-EN") + " TH/s",
     },
   ];
 
@@ -139,7 +143,11 @@ export default function Dashboard({
           ))}
           <div className="my-6 h-5 w-full rounded-xl bg-slate-300 text-transparent mining-line"></div>
           <div className="my-6 text-center">
-            <span className="text-xl font-medium">{userBalance}</span>
+            <span className="text-xl font-medium">
+              {userBalance.toLocaleString("en-EN", {
+                maximumFractionDigits: 9,
+              })}
+            </span>
           </div>
         </div>
       </div>
@@ -164,12 +172,20 @@ export default function Dashboard({
             </div>
           ))}
           <div className="grid grid-cols-3 gap-4">
-            <Button color="success" className="h-12 items-center" onClick={router.reload}>
+            <Button
+              color="success"
+              className="h-12 items-center"
+              onClick={router.reload}
+            >
               <img src="https://kufarm.io/static/kufarm/refresh.svg" alt="" />
               <div className="ml-2 font-medium text-white">Refresh balance</div>
             </Button>
 
-            <Button color="success" className="h-12 items-center" onClick={() => router.push('/withdraw')}>
+            <Button
+              color="success"
+              className="h-12 items-center"
+              onClick={() => router.push("/withdraw")}
+            >
               <img
                 src="https://kufarm.io/static/kufarm/credit-card.svg"
                 alt=""
@@ -189,7 +205,7 @@ export default function Dashboard({
         <div className="w-4/12 rounded-2xl bg-slate-100 p-10">
           <div className="mb-5 text-2xl font-semibold">Dashboard Miners:</div>
           {products.map((p: Product) => {
-            const owner = userProducts.find((p1: Product) => p1.id === p.id);
+            const owner = userProducts.find((p1: any) => p1.productId === p.id);
             return (
               <div className="mb-5 flex items-center" key={p.id}>
                 <TbChartRadar color="#e3a008" />
@@ -202,17 +218,14 @@ export default function Dashboard({
               </div>
             );
           })}
-          <Navbar className="-ml-4 flex w-4/6 list-none bg-transparent">
-            <NavbarLink href="#">
-              <Button color="success" className="h-12 w-44 items-center">
-                <img
-                  src="https://kufarm.io/static/kufarm/cart-icon.svg"
-                  alt=""
-                />
-                <div className="ml-2 font-medium text-white">Buy more TH/S</div>
-              </Button>
-            </NavbarLink>
-          </Navbar>
+          <Button
+            color="success"
+            className="h-12 w-44 items-center"
+            onClick={() => router.push("/buy")}
+          >
+            <img src="https://kufarm.io/static/kufarm/cart-icon.svg" alt="" />
+            <div className="ml-2 font-medium text-white">Buy more TH/S</div>
+          </Button>
         </div>
       </div>
 
