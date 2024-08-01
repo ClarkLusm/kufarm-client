@@ -1,7 +1,7 @@
 export type Transaction = {
   id: string;
   coin: string;
-  walletAddress: string;
+  userAddress: string;
   amount: number;
   status: number;
 };

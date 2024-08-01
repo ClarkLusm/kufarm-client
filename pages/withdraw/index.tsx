@@ -1,6 +1,7 @@
 import { Transaction } from "@/libs/types/transaction";
 import {
   Alert,
+  Badge,
   Button,
   Table,
   TableBody,
@@ -11,10 +12,13 @@ import {
   TextInput,
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { IoWallet } from "react-icons/io5";
-import axios from "axios";
 import { useState } from "react";
+import axios from "axios";
+
+import { ConfirmDialog } from "./_confirm-dialog";
+import { shortAddress } from "@/utils";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -45,15 +49,15 @@ export const getServerSideProps = async (ctx: any) => {
   }
 };
 
-export default function Withdraw({
+export default function WithdrawPage({
   profile,
   transactions,
   total,
   settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const session = useSession();
   const [amount, setAmount] = useState(settings.withdrawMin);
   const [errorMsg, setErrorMsg] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const transItems =
     transactions.length >= 7
@@ -68,17 +72,7 @@ export default function Withdraw({
     } else if (amount < settings.withdrawMin) {
       setErrorMsg("Withdrawal amount is less than the minimum!");
     } else {
-      try {
-        await axios.post(
-          `${process.env.API_URL}/api/account/withdraw`,
-          { amount },
-          {
-            headers: {
-              Authorization: `Bearer ${session?.data?.accessToken}`,
-            },
-          }
-        );
-      } catch (error) {}
+      setOpenModal(true);
     }
   };
 
@@ -96,7 +90,7 @@ export default function Withdraw({
           <div className="ml-2 font-semibold">Email:</div>
           <div className="ml-2 text-gray-400">{profile.email}</div>
         </div>
-        <div className="mb-5 flex items-center">
+        <div className="flex items-center">
           <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
           <div className="ml-2 font-semibold">Your Balance: </div>
           <div className="ml-2 text-gray-400">
@@ -106,10 +100,19 @@ export default function Withdraw({
             BITCO2
           </div>
         </div>
+        <div className="pl-6 mb-5">
+          <span className="text-sm text-gray-400">
+            (~USD Balance:{" "}
+            {profile.balance.toLocaleString("en-EN", {
+              maximumFractionDigits: 5,
+            })}
+            )
+          </span>
+        </div>
         <div className="mb-5">
           <div className="mb-5 flex items-center">
             <img src="https://kufarm.io/static/kufarm/wallet.svg" alt="" />
-            <div className="ml-2 font-semibold">Bitcoin wallet address:</div>
+            <div className="ml-2 font-semibold">Wallet address:</div>
           </div>
           <TextInput disabled value={profile.walletAddress} />
         </div>
@@ -163,6 +166,15 @@ export default function Withdraw({
           </Table>
         </div>
       </div>
+      <ConfirmDialog
+        show={openModal}
+        data={{
+          withdrawTo: profile.walletAddress,
+          amount,
+          transactionFee: (amount * settings.withdrawFeePercent) / 100,
+        }}
+        onClose={(status: boolean) => setOpenModal(status)}
+      />
     </div>
   );
 }
@@ -187,10 +199,37 @@ const TransactionItem = ({ index, data }: TransactionProps) => {
       <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
         {index}
       </TableCell>
-      <TableCell>{data?.walletAddress ?? "..."}</TableCell>
+      <TableCell>
+        {data?.userAddress ? shortAddress(data.userAddress) : "..."}
+      </TableCell>
       <TableCell>{data?.coin ?? "..."}</TableCell>
-      <TableCell>{data?.amount ?? "..."}</TableCell>
-      <TableCell>{data?.status ? status?.[data?.status] : "..."}</TableCell>
+      <TableCell>
+        {data?.amount
+          ? data?.coin !== "USD"
+            ? (data.amount / 1e18).toLocaleString("en-EN", {
+                maximumFractionDigits: 5,
+              })
+            : data.amount.toLocaleString("en-EN")
+          : "..."}
+      </TableCell>
+      <TableCell>
+        {data?.status ? (
+          <Badge
+            className="inline-flex"
+            color={
+              data?.status == 2
+                ? "success"
+                : data?.status == 1
+                ? "failure"
+                : "warning"
+            }
+          >
+            {status?.[data?.status]}
+          </Badge>
+        ) : (
+          "..."
+        )}
+      </TableCell>
     </TableRow>
   );
 };
