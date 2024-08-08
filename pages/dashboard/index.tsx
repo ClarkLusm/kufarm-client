@@ -51,11 +51,11 @@ export default function Dashboard({
   products,
   userProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [userBalance, setUserBalance] = useState<number>(profile.balance);
+  const [userBalance, setUserBalance] = useState<number>(profile?.balance);
   useEffect(() => {
     if (!profile) return;
     const timer = setInterval(() => {
-      const balance = profile.dailyIncome / 24 / 3600;
+      const balance = profile?.dailyIncome / 24 / 3600;
       setUserBalance((prev) => prev + balance);
     }, 1000);
     return () => {
@@ -68,25 +68,25 @@ export default function Dashboard({
       id: "1",
       image: "https://kufarm.io/static/kufarm/user2.svg",
       properties: "Username:",
-      value: profile.username,
+      value: profile?.username,
     },
     {
       id: "2",
       image: "https://kufarm.io/static/kufarm/layers.svg",
       properties: "Mining power:",
-      value: profile.hashPower.toLocaleString("en-EN"),
+      value: profile?.hashPower?.toLocaleString("en-EN"),
     },
     {
       id: "3",
       image: "https://kufarm.io/static/kufarm/wallet3.svg",
       properties: "Your BTC wallet:",
-      value: profile.walletAddress,
+      value: profile?.walletAddress,
     },
     {
       id: "4",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Balance:",
-      value: userBalance.toLocaleString("en-EN", {
+      value: userBalance?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
       }),
     },
@@ -94,7 +94,7 @@ export default function Dashboard({
       id: "5",
       image: "https://kufarm.io/static/kufarm/btc2.svg",
       properties: "Your Referral Balance:",
-      value: profile.referralCommission.toLocaleString("en-EN", {
+      value: profile?.referralCommission?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
       }),
     },
@@ -105,25 +105,25 @@ export default function Dashboard({
       id: "1",
       image: "https://kufarm.io/static/kufarm/chart.svg",
       properties: "Main mining pool:",
-      value: profile.pool,
+      value: profile?.pool,
     },
     {
       id: "2",
       image: "https://kufarm.io/static/kufarm/bril.svg",
       properties: "DAILY $:",
-      value: profile.dailyIncome,
+      value: profile?.dailyIncome,
     },
     {
       id: "3",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "MONTHLY $:",
-      value: profile.monthlyIncome,
+      value: profile?.monthlyIncome,
     },
     {
       id: "4",
       image: "https://kufarm.io/static/kufarm/time2.svg",
       properties: "Mining power:",
-      value: profile.hashPower.toLocaleString("en-EN") + " TH/s",
+      value: profile?.hashPower?.toLocaleString("en-EN") + " TH/s",
     },
   ];
 
@@ -144,7 +144,7 @@ export default function Dashboard({
           <div className="my-6 h-5 w-full rounded-xl bg-slate-300 text-transparent mining-line"></div>
           <div className="my-6 text-center">
             <span className="text-xl font-medium">
-              {userBalance.toLocaleString("en-EN", {
+              {userBalance?.toLocaleString("en-EN", {
                 maximumFractionDigits: 9,
               })}
             </span>

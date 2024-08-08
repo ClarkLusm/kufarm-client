@@ -1,13 +1,22 @@
 import { useSession, signOut } from "next-auth/react";
+import { useEffect } from "react";
 import router from "next/router";
 
 export default () => {
   const { data: session, status } = useSession();
 
+  useEffect(() => {
+    if (session?.error === "AccessTokenExpired") {
+      signOut({ callbackUrl: "/", redirect: true });
+    }
+  }, [session]);
+
   if (status === "authenticated") {
     return (
       <div className="flex list-none items-center">
-        <span className="font-medium text-gray-500 mr-2">{session.user.email}</span>
+        <span className="font-medium text-gray-500 mr-2">
+          {session.user.email}
+        </span>
         <button
           type="button"
           className="rounded-full bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

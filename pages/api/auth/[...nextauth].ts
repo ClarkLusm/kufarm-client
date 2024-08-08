@@ -35,14 +35,16 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }: any) {
       if (user) {
-        var tokenParsed = JSON.parse(
-          Buffer.from(user?.accessToken?.split(".")?.[1], "base64").toString()
-        );
-        const dateNowInSeconds = new Date().getTime() / 1000;
-        if (dateNowInSeconds > tokenParsed.exp) {
-          token.error = 'AccessTokenExpired'
-        }
-        return { ...token, ...user };
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+        token.user = user.user;
+      }
+      const tokenParsed = JSON.parse(
+        Buffer.from(token?.accessToken?.split(".")?.[1], "base64").toString()
+      );
+      const dateNowInSeconds = new Date().getTime() / 1000;
+      if (dateNowInSeconds > tokenParsed.exp) {
+        token.error = "AccessTokenExpired";
       }
       return token;
     },
@@ -55,8 +57,8 @@ export const authOptions = {
     },
   },
   pages: {
-    signIn: '/auth/signin'
-  }
+    signIn: "/auth/signin",
+  },
 } satisfies AuthOptions;
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {

@@ -20,4 +20,5 @@ export type Invoice = {
   price: number;
   expiredAt: Date;
   walletAddress: string;
+  status: number;
 }

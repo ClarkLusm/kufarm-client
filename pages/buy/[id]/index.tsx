@@ -5,7 +5,6 @@ import router from "next/router";
 import axios from "axios";
 
 import { Product } from "@/libs/types/product";
-import { PaymentWallet } from "@/libs/types/wallet";
 
 export const getServerSideProps = async (context: any) => {
   const { id } = context.query;
@@ -30,7 +29,6 @@ export default function BuyOnePage({
   wallets,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const session = useSession();
-  console.log(wallets);
 
   const onOrder = async (walletId: string) => {
     const res = await axios.post(

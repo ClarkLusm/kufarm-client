@@ -1,5 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
+
+import { AppKit } from "@/contexts/web3.context";
 import Layout from "@/components/layout";
 import "@/styles/globals.css";
 
@@ -13,9 +15,11 @@ export default function App({
       refetchInterval={5 * 60}
       refetchOnWindowFocus={true}
     >
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <AppKit>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AppKit>
     </SessionProvider>
   );
 }
