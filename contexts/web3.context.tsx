@@ -10,8 +10,8 @@ const projectId = '109f6a4d1721bc23b8b24fd19dffadb6'
 
 // 3. Create a metadata object
 const metadata = {
-  name: 'My Website',
-  description: 'My Website description',
+  name: 'Kufarm',
+  description: 'Kufarm description',
   url: 'http://localhost:3000', // origin must match your domain & subdomain
   icons: ['https://avatars.mywebsite.com/']
 }

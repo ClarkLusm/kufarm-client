@@ -18,7 +18,7 @@ export const NETWORKS: { [key: number]: NetworkInfo } = {
     name: "Binance Smart Testnet",
     currency: 'tBNB',
     explorerUrl: "https://testnet.bscscan.com",
-    rpcUrl: "https://bsc-testnet-rpc.publicnode.com"
+    rpcUrl: "https://bsc-testnet-dataseed.bnbchain.org"
   },
   11155111: {
     chainId: 11155111,

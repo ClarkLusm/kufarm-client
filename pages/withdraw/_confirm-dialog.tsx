@@ -27,7 +27,7 @@ export function ConfirmDialog({ show, onClose, data }: DialogProps) {
       setLoading(true);
       await axios.post(
         `${process.env.API_URL}/api/account/withdraw`,
-        { amount: 0.01 || data.amount - data.transactionFee },
+        { amount: data.amount - data.transactionFee },
         {
           headers: {
             Authorization: `Bearer ${session?.data?.accessToken}`,
@@ -63,9 +63,11 @@ export function ConfirmDialog({ show, onClose, data }: DialogProps) {
             <FaCheckCircle className="inline-block my-4 text-7xl text-green-400" />
             <p className="text-2xl">
               <span className="font-bold">
-                {data.amount.toLocaleString("en-EN")}
-              </span>{" "}
-              BITCO2
+                {data.amount.toLocaleString("en-EN", {
+                  maximumFractionDigits: 5,
+                })}
+              </span>
+              <span className="ml-2">BITCO2</span>
             </p>
             <p className="text-center">
               has been withdrawn to your wallet address{" "}
@@ -86,7 +88,12 @@ export function ConfirmDialog({ show, onClose, data }: DialogProps) {
                 <p className="font-semibold">Details</p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
                   <span>Amount: </span>
-                  <span>{data.amount.toLocaleString("en-EN")} BITCO2</span>
+                  <span>
+                    {data.amount.toLocaleString("en-EN", {
+                      maximumFractionDigits: 5,
+                    })}{" "}
+                    BITCO2
+                  </span>
                 </p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
                   <span>Transaction fee:</span>
@@ -94,17 +101,18 @@ export function ConfirmDialog({ show, onClose, data }: DialogProps) {
                     -
                     {data.transactionFee.toLocaleString("en-EN", {
                       maximumFractionDigits: 5,
-                    })}{" "}
-                    BITCO2
+                    })}
+                    <span className="ml-2">BITCO2</span>
                   </span>
                 </p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
                   <span>Net amount:</span>
                   <span>
                     {(data.amount - data.transactionFee).toLocaleString(
-                      "en-EN"
-                    )}{" "}
-                    BITCO2
+                      "en-EN",
+                      { maximumFractionDigits: 5 }
+                    )}
+                    <span className="ml-2">BITCO2</span>
                   </span>
                 </p>
               </div>

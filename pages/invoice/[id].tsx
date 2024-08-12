@@ -1,7 +1,8 @@
-import { Alert, Button, Clipboard, Label } from "flowbite-react";
+import { Alert, Button, Clipboard, Label, Spinner } from "flowbite-react";
 import { getSession } from "next-auth/react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { InferGetServerSidePropsType } from "next";
+import router from "next/router";
 import { ethers, BrowserProvider, Contract } from "ethers";
 import {
   useWeb3Modal,
@@ -16,6 +17,7 @@ import Image from "next/image";
 
 import tokenABI from "@/libs/abis/USDT_test.abi.json";
 import { NETWORKS } from "@/libs/constants";
+import { EOrderStatus } from "@/libs/enums/order.enum";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -35,7 +37,6 @@ export const getServerSideProps = async (ctx: any) => {
       },
     };
   } catch (error: any) {
-    console.error(error);
     return error?.response?.status === 404
       ? {
           notFound: true,
@@ -63,34 +64,97 @@ export default function ({
   const { address, chainId, isConnected } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
   const { switchNetwork } = useSwitchNetwork();
+  const [loading, setLoading] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [allowance, setAllowance] = useState(0);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isConnected) getAllowance();
+  }, [isConnected]);
+
   const formattedAmount = ethers.formatUnits(
     invoice.amount.toString(),
     invoice.decimals
   );
+  const bigIntAmount = ethers.parseUnits(formattedAmount, invoice.decimals);
 
-  const sendTransaction = useCallback(async () => {
-    if (!walletProvider) return;
-    const ethersProvider = new BrowserProvider(walletProvider!);
+  const onClick = () => {
+    isConnected
+      ? chainId !== invoice.chainId
+        ? switchNetwork(invoice.chainId)
+        : sendTransaction()
+      : open();
+  };
+
+  const getTokenContract = useCallback(async () => {
     try {
+      const ethersProvider = new BrowserProvider(walletProvider!);
       const signer = await ethersProvider.getSigner(address);
-      // // The Contract object
-      const tokenContract = new Contract(
+      return new Contract(invoice.contractAddress, tokenABI, signer);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [walletProvider, address]);
+
+  async function getAllowance() {
+    const tokenContract = await getTokenContract();
+    if (!tokenContract) return false;
+    const a = await tokenContract.allowance(address, invoice.walletAddress);
+    setAllowance(a);
+  }
+
+  const sendTransaction = async () => {
+    try {
+      setLoading(true);
+      const tokenContract = await getTokenContract();
+      // ("0xaa3d07cbdd5a9b35369b311aa524cfe8864d676444e8a014c943bf9b44314ba4");
+      if (allowance < bigIntAmount) {
+        await tokenContract?.approve(invoice.contractAddress, bigIntAmount);
+      }
+      const gasFee = await tokenContract?.transfer.estimateGas(
         invoice.contractAddress,
-        tokenABI,
-        signer
+        bigIntAmount
       );
-      const tx = await tokenContract.transfer(
+      const tx = await tokenContract?.transfer(
         invoice.walletAddress,
-        ethers.parseUnits(invoice.amount.toString(), invoice.decimals)
+        bigIntAmount,
+        {
+          gasLimit: gasFee,
+        }
       );
       await tx.wait();
-      console.log(tx);
+      await payOrderSuccess(tx);
+      router.push("/history");
     } catch (error) {
       console.error("Error sending transaction:", error);
       throw error;
+    } finally {
+      setLoading(false);
     }
-  }, [walletProvider]);
-  console.log(invoice);
+  };
+
+  async function payOrderSuccess(tx: any) {
+    const session = await getSession();
+    return axios.post(
+      process.env.API_URL + "/api/account/payorder",
+      {
+        code: invoice.code,
+        walletAddress: invoice.walletAddress,
+        tx,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + session?.accessToken,
+        },
+      }
+    );
+  }
+
+  if (!hasMounted) return null;
 
   return (
     <div className="m-auto my-5 w-3/4 rounded-t-3xl border bg-white">
@@ -109,15 +173,17 @@ export default function ({
       )}
       <div className="m-auto mb-10 w-4/6 rounded-2xl p-10 shadow-xl">
         <div className="mb-5 flex justify-between">
-          <div className="text-xl font-medium">Invoice ID #{invoice?.code}</div>
-          {invoice?.status === 0 && (
+          <div className="text-xl font-medium">
+            <span>Invoice ID #{invoice.code}</span>
+          </div>
+          {invoice.status === 0 && (
             <span className="text-orange-400 font-semibold">Waiting...</span>
           )}
           {invoice.status === 2 && (
             <span className="text-green-400 font-semibold">Success</span>
           )}
         </div>
-        <div className="mb-5">
+        <div className="mb-5 flex justify-between">
           <div className="flex items-center">
             <Image
               src={`/images/tokens/${invoice?.coin}.png`}
@@ -127,6 +193,7 @@ export default function ({
             />
             <div className="ml-2 text-xl font-medium">{invoice?.coin}</div>
           </div>
+          {isConnected && <w3m-account-button balance="hide" />}
         </div>
         <div className="mb-5">
           <div className="mb-2 block">
@@ -149,10 +216,7 @@ export default function ({
         </div>
         <div className="mb-5">
           <div className="mb-2 block">
-            <Label
-              htmlFor="small"
-              value={`Wallet address(${invoice.coin}): :`}
-            />
+            <Label htmlFor="small" value={`Wallet address(${invoice.coin}):`} />
           </div>
           <div className="relative flex">
             <div className="border p-2 bg-white rounded-lg w-full">
@@ -164,57 +228,42 @@ export default function ({
             />
           </div>
         </div>
-        <Link
-          target="_blank"
-          href={`${NETWORKS[56]?.explorerUrl}/${invoice.walletAddress}`}
-          className="text-sky-500 underline"
-        >
-          Check Explorer...
-        </Link>
-        {isConnected && (
+        {invoice.status === EOrderStatus.success && (
+          <Link
+            target="_blank"
+            href={`${NETWORKS[invoice.chainId]?.explorerUrl}/tx/${
+              invoice.txHash
+            }`}
+            className="text-sky-500 underline"
+          >
+            View transaction
+          </Link>
+        )}
+        {invoice.status === EOrderStatus.pending && (
           <>
-            {" "}
-            <div className="grid bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-              <h3 className="text-sm font-semibold bg-gray-100 p-2">
-                Account button (only when connected)
-              </h3>
-              <div className="text-xs bg-gray-50 p-2 font-mono overflow-x-auto">
-                {'<w3m-account-button balance={"show"} />'}
-              </div>
-              <div className="flex justify-center items-center p-4">
-                <w3m-account-button balance={"show"} />
-              </div>
-            </div>
-            <div className="grid bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
-              <h3 className="text-sm font-semibold bg-gray-100 p-2">
-                Account button with balance hidden
-              </h3>
-              <div className="text-xs bg-gray-50 p-2 font-mono overflow-x-auto">
-                {'<w3m-account-button balance={"hide"} />'}
-              </div>
-              <div className="flex justify-center items-center p-4">
-                <w3m-account-button balance={"hide"} />
-              </div>
-            </div>
+            <Link
+              target="_blank"
+              href={`${NETWORKS[invoice.chainId]?.explorerUrl}/${
+                invoice.walletAddress
+              }`}
+              className="text-sky-500 underline"
+            >
+              Check Explorer...
+            </Link>
+            <Button
+              disabled={loading}
+              onClick={onClick}
+              className={`flex items-center mt-4 px-4 py-2 w-full font-bold text-white rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:translate-y-0 focus:outline-none`}
+            >
+              {loading && <Spinner className="mr-2" />}
+              {isConnected
+                ? chainId !== invoice.chainId
+                  ? "Change Network"
+                  : "Submit"
+                : "Connect Wallet"}
+            </Button>
           </>
         )}
-        <Button
-          onClick={() =>
-            isConnected
-              ? chainId !== invoice.chainId
-                ? switchNetwork(invoice.chainId)
-                : sendTransaction()
-              : open()
-          }
-          className={`px-4 py-2 font-bold text-white rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:translate-y-0 focus:outline-none bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600`}
-        >
-          <span className="mr-2 text-xl">🔓</span>
-          {isConnected
-            ? chainId !== invoice.chainId
-              ? "Change Network"
-              : "Submit"
-            : "Connect Wallet"}
-        </Button>
       </div>
     </div>
   );

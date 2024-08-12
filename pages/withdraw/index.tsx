@@ -1,4 +1,3 @@
-import { Transaction } from "@/libs/types/transaction";
 import {
   Alert,
   Badge,
@@ -17,8 +16,9 @@ import { IoWallet } from "react-icons/io5";
 import { useState } from "react";
 import axios from "axios";
 
-import { ConfirmDialog } from "./_confirm-dialog";
+import { Transaction } from "@/libs/types/transaction";
 import { shortAddress } from "@/utils";
+import { ConfirmDialog } from "./_confirm-dialog";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -82,7 +82,7 @@ export default function WithdrawPage({
   };
 
   return (
-    <div className="mt-10 flex">
+    <div className="my-10 flex">
       <div className="mr-9 w-1/3 rounded-2xl bg-slate-100 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
         <div className="mb-5 flex items-center">
