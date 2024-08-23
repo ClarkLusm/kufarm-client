@@ -36,7 +36,7 @@ export default function About() {
   ];
 
   return (
-    <div className="container m-auto py-24">
+    <div className="dark:text-white m-auto py-8">
       <div className="m-12">
         <div className="text-center text-6xl font-bold">About Us</div>
         <div className="my-7 text-2xl font-semibold">
@@ -125,7 +125,7 @@ export default function About() {
         <div className="py-10 text-center text-5xl font-bold">
           Our working Team
         </div>
-        <div className="flex">
+        <div className="grid sm:grid-cols-3 gap-4">
           {members.map((m) => (
             <div className="list-none px-5 " key={m.id}>
               <div className="py-5 text-center text-xl font-bold text-gray-500">

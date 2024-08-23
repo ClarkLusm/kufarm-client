@@ -20,6 +20,7 @@ type Inputs = {
 export default function SignUpPage() {
   const router = useRouter();
   const [message, setMessage] = useState("");
+  const [agree, setAgree] = useState(false);
   const [successful, setSuccessful] = useState(false);
   const {
     register,
@@ -105,7 +106,7 @@ export default function SignUpPage() {
           <div>
             <TextInput
               required
-              placeholder="Your Bitcoin Wallet Adress e.g. 1PQb1hBMedgWxr8HnPmdyUCCb53fLkEYQ5"
+              placeholder="Your Wallet Adress e.g. 0x807974B411B6b2277d73d3D017f5749Fb7bD5E62"
               {...register("walletAddress")}
               color={errors.walletAddress ? "failure" : ""}
               helperText={errors.walletAddress?.message}
@@ -120,7 +121,7 @@ export default function SignUpPage() {
             />
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox id="remember" />
+            <Checkbox id="remember" onClick={() => setAgree(!agree)} />
             <Label htmlFor="remember" className="flex items-center">
               I agree to Kufarm
               <Link href="https://kufarm.io/conditions">
@@ -128,7 +129,7 @@ export default function SignUpPage() {
               </Link>
             </Label>
           </div>
-          <Button type="submit" disabled={!!message || successful}>
+          <Button type="submit" disabled={!!message || !agree || successful}>
             Registered
           </Button>
         </form>

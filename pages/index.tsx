@@ -22,9 +22,18 @@ type Resp = {
 };
 
 export const getServerSideProps = (async () => {
-  const res = await fetch(`${process.env.API_URL}/api/products`);
-  const resp: Resp = await res.json();
-  return { props: { resp } };
+  try {
+    const res = await fetch(`${process.env.API_URL}/api/products`);
+    const resp: Resp = await res.json();
+    return { props: { resp } };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/error',
+        permanent: false,
+      }
+    }    
+  }
 }) satisfies GetServerSideProps<{ resp: Resp }>;
 
 export default function Home({

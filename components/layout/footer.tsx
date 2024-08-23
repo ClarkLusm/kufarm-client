@@ -19,9 +19,9 @@ import {
 
 export default () => {
   return (
-    <Footer>
+    <Footer className="rounded-none">
       <div className="container max-w-[1100px] mx-auto">
-        <div className="grid w-full items-center justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
+        <div className="grid w-full items-center justify-between sm:flex sm:justify-between md:flex md:grid-cols-1 px-4">
           <div>
             <FooterBrand
               href="https://flowbite.com"
@@ -57,7 +57,7 @@ export default () => {
           </div>
         </div>
         <FooterDivider />
-        <div className="w-full sm:flex sm:items-center sm:justify-between">
+        <div className="w-full sm:flex sm:items-center sm:justify-between p-4">
           <FooterCopyright href="#" by="kufarm mining" year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <FooterIcon href="#" icon={BsFacebook} />

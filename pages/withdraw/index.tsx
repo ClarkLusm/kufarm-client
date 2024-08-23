@@ -19,6 +19,7 @@ import axios from "axios";
 import { Transaction } from "@/libs/types/transaction";
 import { shortAddress } from "@/utils";
 import { ConfirmDialog } from "./_confirm-dialog";
+import { ethers } from "ethers";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -59,6 +60,7 @@ export default function WithdrawPage({
   const [errorMsg, setErrorMsg] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
+  const balanceFormatted = ethers.formatUnits(profile.balanceToken, 18);
   const transItems =
     transactions.length >= 7
       ? transactions
@@ -67,7 +69,7 @@ export default function WithdrawPage({
   const onSubmit = async () => {
     if (Number.isNaN(Number(amount))) {
       setErrorMsg("Invalid amount!");
-    } else if (amount > profile.balanceToken / 1e8) {
+    } else if (amount > balanceFormatted) {
       setErrorMsg("Your balance is not enough to withdraw!");
     } else if (amount < settings.withdrawMin) {
       setErrorMsg("Withdrawal amount is less than the minimum!");
@@ -94,7 +96,7 @@ export default function WithdrawPage({
           <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
           <div className="ml-2 font-semibold">Your Balance: </div>
           <div className="ml-2 text-gray-400">
-            {Number(profile.balanceToken / 1e18).toLocaleString("en-EN", {
+            {Number(balanceFormatted).toLocaleString("en-EN", {
               maximumFractionDigits: 5,
             })}{" "}
             BITCO2
@@ -103,7 +105,7 @@ export default function WithdrawPage({
         <div className="pl-6 mb-5">
           <span className="text-sm text-gray-400">
             (~USD Balance:{" "}
-            {profile.balance.toLocaleString("en-EN", {
+            {Number(balanceFormatted).toLocaleString("en-EN", {
               maximumFractionDigits: 5,
             })}
             )
@@ -128,7 +130,6 @@ export default function WithdrawPage({
             color="success"
             className="flex items-center"
             onClick={onSubmit}
-            disabled={!!errorMsg}
           >
             <IoWallet />
             <span className="ml-2">Withdraw</span>

@@ -48,8 +48,8 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="py-16">
-      <div className="m-auto w-1/3 list-none rounded-xl border p-10">
+    <div className="py-16 flex justify-center">
+      <div className="mx-4 md:w-[400px] list-none rounded-xl border p-10">
         <form
           className="flex max-w-md flex-col gap-4"
           onSubmit={handleSubmit(onSubmit)}
@@ -62,7 +62,7 @@ export default function SignInPage() {
           )}
           <div className="flex items-center">
             <img src="https://kufarm.io/static/kufarm/entrance.svg" alt="" />
-            <div className="ml-3 text-xl font-bold">Entrace</div>
+            <div className="text-2xl font-bold dark:text-white">Login</div>
           </div>
           <div>
             <TextInput
@@ -90,7 +90,7 @@ export default function SignInPage() {
               className="w-full"
               disabled={!!message}
             >
-              Enter
+              Submit
             </Button>
             <Link href="/auth/signup">
               <Button color="blue" className="w-full">
@@ -98,7 +98,7 @@ export default function SignInPage() {
               </Button>
             </Link>
           </div>
-          <Link className="text-base" href="/auth/recovery">
+          <Link className="text-base dark:text-white" href="/auth/recovery">
             Forgot your password?
           </Link>
         </form>
