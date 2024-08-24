@@ -66,25 +66,25 @@ export default function Dashboard({
   const statistic = [
     {
       id: "1",
-      image: "https://kufarm.io/static/kufarm/user2.svg",
+      image: "images/icons/user.svg",
       properties: "Username:",
       value: profile?.username,
     },
     {
       id: "2",
-      image: "https://kufarm.io/static/kufarm/layers.svg",
+      image: "images/icons/cpu.svg",
       properties: "Mining power:",
       value: profile?.hashPower?.toLocaleString("en-EN"),
     },
     {
       id: "3",
-      image: "https://kufarm.io/static/kufarm/wallet3.svg",
-      properties: "Your BTC wallet:",
+      image: "images/icons/wallet.svg",
+      properties: "Your wallet:",
       value: profile?.walletAddress,
     },
     {
       id: "4",
-      image: "https://kufarm.io/static/kufarm/btc2.svg",
+      image: "images/icons/usd.svg",
       properties: "Your Balance:",
       value: userBalance?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
@@ -92,7 +92,7 @@ export default function Dashboard({
     },
     {
       id: "5",
-      image: "https://kufarm.io/static/kufarm/btc2.svg",
+      image: "images/icons/btc.svg",
       properties: "Your Referral Balance:",
       value: profile?.referralCommission?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
@@ -103,25 +103,25 @@ export default function Dashboard({
   const mining_statistic = [
     {
       id: "1",
-      image: "https://kufarm.io/static/kufarm/chart.svg",
+      image: "images/icons/bit_cloud.svg",
       properties: "Main mining pool:",
       value: profile?.pool,
     },
     {
       id: "2",
-      image: "https://kufarm.io/static/kufarm/bril.svg",
-      properties: "DAILY $:",
-      value: profile?.dailyIncome,
+      image: "images/icons/24h.svg",
+      properties: "DAILY:",
+      value: profile?.dailyIncome + '$',
     },
     {
       id: "3",
-      image: "https://kufarm.io/static/kufarm/time2.svg",
-      properties: "MONTHLY $:",
-      value: profile?.monthlyIncome,
+      image: "images/icons/time_is_money.svg",
+      properties: "MONTHLY:",
+      value: profile?.monthlyIncome + '$',
     },
     {
       id: "4",
-      image: "https://kufarm.io/static/kufarm/time2.svg",
+      image: "images/icons/gpu.svg",
       properties: "Mining power:",
       value: profile?.hashPower?.toLocaleString("en-EN") + " TH/s",
     },
@@ -133,8 +133,8 @@ export default function Dashboard({
         <div className="mb-5 rounded-2xl bg-slate-100 p-10">
           <div className="mb-5 text-2xl font-semibold">Mining Statistic:</div>
           {mining_statistic.map((ms) => (
-            <div className="mb-2 flex" key={ms.id}>
-              <img className="size-6" src={ms.image} />
+            <div className="mb-2 flex items-center" key={ms.id}>
+              <img className="size-8" src={ms.image} />
               <div className="ml-2 font-medium">
                 {ms.properties}
                 <span className="ml-2 text-gray-500">{ms.value}</span>
