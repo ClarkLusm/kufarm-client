@@ -1,13 +1,13 @@
-import { Button, Navbar, NavbarLink } from "flowbite-react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { Button } from "flowbite-react";
+import { TbChartRadar } from "react-icons/tb";
 import { getSession } from "next-auth/react";
 import router from "next/router";
 import axios from "axios";
-import { TbChartRadar } from "react-icons/tb";
 
 import { Product } from "@/libs/types/product";
 import { UserProfile } from "@/libs/types/user";
-import { useEffect, useState } from "react";
 
 type Resp = {
   products: Product[];

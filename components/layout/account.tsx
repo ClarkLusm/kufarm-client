@@ -2,7 +2,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import router from "next/router";
 
-export default () => {
+const Account = () => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
@@ -49,3 +49,5 @@ export default () => {
     </div>
   );
 };
+
+export default Account;

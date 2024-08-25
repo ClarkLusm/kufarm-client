@@ -27,6 +27,7 @@ export const getServerSideProps = (async () => {
     const resp: Resp = await res.json();
     return { props: { resp } };
   } catch (error) {
+    console.error(error);
     return {
       redirect: {
         destination: '/error',

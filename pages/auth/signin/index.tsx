@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-import { schema } from "./schema";
+import { SignInSchema } from "@/libs/schemas/auth.schema";
 
 type Inputs = {
   email: string;
@@ -29,7 +29,7 @@ export default function SignInPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SignInSchema),
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {

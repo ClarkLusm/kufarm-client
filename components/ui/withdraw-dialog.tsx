@@ -16,7 +16,7 @@ type DialogProps = {
     withdrawTo: string;
   };
 };
-export function ConfirmDialog({ show, onClose, data }: DialogProps) {
+export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
   const session = useSession();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");

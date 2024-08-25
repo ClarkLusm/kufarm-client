@@ -6,7 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-import { schema } from "./schema";
+import { SignUpSchema } from "@/libs/schemas/auth.schema";
 
 type Inputs = {
   username: string;
@@ -27,7 +27,7 @@ export default function SignUpPage() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SignUpSchema),
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {

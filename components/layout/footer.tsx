@@ -17,7 +17,7 @@ import {
   BsTwitter,
 } from "react-icons/bs";
 
-export default () => {
+const FooterBase = () => {
   return (
     <Footer className="rounded-none">
       <div className="container max-w-[1100px] mx-auto">
@@ -71,3 +71,5 @@ export default () => {
     </Footer>
   );
 };
+
+export default FooterBase;

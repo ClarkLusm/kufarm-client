@@ -3,7 +3,7 @@ import { Flowbite } from "flowbite-react";
 import Footer from "./footer";
 import Header from "./header";
 
-export default function Layout({ children }) {
+export default function Layout({ children }: any) {
   return (
     <Flowbite>
       <Header />

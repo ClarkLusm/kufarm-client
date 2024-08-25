@@ -8,7 +8,7 @@ type MenuItem = {
   label: string;
 };
 
-export default () => {
+const Menu = () => {
   const { status } = useSession();
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const pathname = usePathname();
@@ -68,3 +68,5 @@ export default () => {
     </NavbarCollapse>
   );
 };
+
+export default Menu;

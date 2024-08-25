@@ -37,6 +37,6 @@ createWeb3Modal({
   allowUnsupportedChain: false,
 })
 
-export function AppKit({ children }) {
+export function AppKit({ children }: any) {
   return children
 }

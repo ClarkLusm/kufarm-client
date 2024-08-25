@@ -5,7 +5,7 @@ import {
   AccordionTitle,
 } from 'flowbite-react';
 
-export default () => {
+const FAQ = () => {
   return (
     <div className="my-5 w-screen">
       <div className="my-5 w-full text-center">
@@ -86,3 +86,5 @@ export default () => {
     </div>
   );
 };
+
+export default FAQ;

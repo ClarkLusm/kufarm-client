@@ -57,7 +57,7 @@ export interface AccountType {
   signer?: ethers.JsonRpcSigner;
 }
 
-export default function ({
+export default function InvoiceDetailPage({
   invoice,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { open } = useWeb3Modal();

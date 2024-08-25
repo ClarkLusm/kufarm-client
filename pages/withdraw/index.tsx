@@ -14,12 +14,12 @@ import { InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
 import { IoWallet } from "react-icons/io5";
 import { useState } from "react";
+import { ethers } from "ethers";
 import axios from "axios";
 
 import { Transaction } from "@/libs/types/transaction";
 import { shortAddress } from "@/utils";
-import { ConfirmDialog } from "./_confirm-dialog";
-import { ethers } from "ethers";
+import { WithdrawConfirmDialog } from "@/components/ui/withdraw-dialog";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -167,7 +167,7 @@ export default function WithdrawPage({
           </Table>
         </div>
       </div>
-      <ConfirmDialog
+      <WithdrawConfirmDialog
         show={openModal}
         data={{
           withdrawTo: profile.walletAddress,
