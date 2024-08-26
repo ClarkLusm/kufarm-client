@@ -128,12 +128,12 @@ export default function Dashboard({
   ];
 
   return (
-    <div className="relative pb-24">
+    <div className="relative py-24 sm:pt-0 px-4 sm:px-0">
       <div className="mb-10 rounded-2xl shadow-2xl">
-        <div className="mb-5 rounded-2xl bg-slate-100 p-10">
+        <div className="mb-5 rounded-2xl bg-slate-100 dark:bg-gray-800 p-4 sm:p-10">
           <div className="mb-5 text-2xl font-semibold">Mining Statistic:</div>
           {mining_statistic.map((ms) => (
-            <div className="mb-2 flex items-center" key={ms.id}>
+            <div className="mb-2 flex items-center overflow-hidden" key={ms.id}>
               <img className="size-8" src={ms.image} />
               <div className="ml-2 font-medium">
                 {ms.properties}
@@ -141,7 +141,7 @@ export default function Dashboard({
               </div>
             </div>
           ))}
-          <div className="my-6 h-5 w-full rounded-xl bg-slate-300 text-transparent mining-line"></div>
+          <div className="my-6 h-5 w-full rounded-xl bg-slate-300 dark:bg-gray-800 text-transparent mining-line"></div>
           <div className="my-6 text-center">
             <span className="text-xl font-medium">
               {userBalance?.toLocaleString("en-EN", {
@@ -157,13 +157,13 @@ export default function Dashboard({
           className="h-[400px] w-full rounded-3xl"
         />
       </div>
-      <div className="flex justify-between">
-        <div className="mr-7 w-8/12 rounded-2xl bg-slate-100 p-10">
+      <div className="sm:flex justify-between">
+        <div className="mb-4 sm:mr-7 sm:mb-0 sm:w-8/12 rounded-2xl bg-slate-100 dark:bg-gray-800 p-4 sm:p-10">
           <div className="mb-5 text-2xl font-semibold">
             Dashboard Statistic:
           </div>
           {statistic.map((s) => (
-            <div className="mb-5 flex" key={s.id}>
+            <div className="mb-5 flex overflow-hidden" key={s.id}>
               <img className="size-6" src={s.image} alt="" />
               <div className="ml-2 font-medium">
                 {s.properties}
@@ -202,7 +202,7 @@ export default function Dashboard({
             </Button>
           </div>
         </div>
-        <div className="w-4/12 rounded-2xl bg-slate-100 p-10">
+        <div className="sm:w-4/12 rounded-2xl bg-slate-100 dark:bg-gray-800 p-4 sm:p-10">
           <div className="mb-5 text-2xl font-semibold">Dashboard Miners:</div>
           {products.map((p: Product) => {
             const owner = userProducts.find((p1: any) => p1.productId === p.id);

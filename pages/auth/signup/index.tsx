@@ -49,15 +49,15 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="py-8">
-      <div className="m-auto w-1/3 list-none rounded-xl border p-10">
+    <div className="p-8">
+      <div className="m-auto sm:w-1/3 list-none rounded-xl border p-4 sm:p-10">
         <div className="m-auto mb-5 flex">
           <img
             className="w-6"
             src="https://kufarm.io/static/kufarm/user.svg"
             alt=""
           />
-          <span className="ml-3 text-xl font-semibold">Registration</span>
+          <span className="ml-3 text-xl font-semibold dark:text-white">Registration</span>
         </div>
         <form
           className="flex max-w-md flex-col gap-4"
@@ -69,6 +69,7 @@ export default function SignUpPage() {
               required
               placeholder="Username"
               {...register("username")}
+              autoComplete="off"
               color={errors.username ? "failure" : ""}
               helperText={errors.username?.message}
             />
@@ -89,6 +90,7 @@ export default function SignUpPage() {
               type="password"
               placeholder="Password"
               {...register("password")}
+              autoComplete="off"
               color={errors.password ? "failure" : ""}
               helperText={errors.password?.message}
             />
@@ -124,7 +126,7 @@ export default function SignUpPage() {
             <Checkbox id="remember" onClick={() => setAgree(!agree)} />
             <Label htmlFor="remember" className="flex items-center">
               I agree to Kufarm
-              <Link href="https://kufarm.io/conditions">
+              <Link target="_blank" href="#">
                 Terms & Conditions
               </Link>
             </Label>

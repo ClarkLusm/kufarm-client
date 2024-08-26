@@ -86,8 +86,8 @@ export default function Home({
 
   return (
     <div className="p-4">
-      <div className="mb-10 flex justify-evenly rounded-3xl border bg-gray-100">
-        <div className="w-7/12 list-none p-7">
+      <div className="mb-10 sm:flex justify-evenly rounded-3xl border bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
+        <div className="sm:w-7/12 list-none p-7">
           <div className="mb-5 flex gap-2">
             <Button
               color="gray"
@@ -100,7 +100,7 @@ export default function Home({
               FREE 1 TH/S on first sign up!
             </Button>
           </div>
-          <div className="text-6xl font-semibold">
+          <div className="text-3xl sm:text-6xl font-semibold dark:text-white">
             Start your Bitcoin mining journey today.
           </div>
           <div className="my-6 text-base font-semibold text-slate-400">
@@ -115,12 +115,12 @@ export default function Home({
             Try it out now
           </Button>
         </div>
-        <div className="m-5 h-96 w-5/12 rounded-3xl bg-white p-3">
+        <div className="m-5 h-96 sm:w-5/12 rounded-3xl bg-white dark:bg-gray-900 p-3">
           <Carousel slide indicators={false}>
             {resp.data.map((p) => (
               <div key={p.id} className="list-none text-center">
                 <img className="m-auto w-6/12" src={p.image} />
-                <Link className="text-lg font-bold" href={p.alias}>
+                <Link className="text-lg font-bold dark:text-white" href={p.alias}>
                   {p.name}
                 </Link>
                 <div className="text-lg font-bold text-slate-500">
@@ -138,14 +138,14 @@ export default function Home({
           </Carousel>
         </div>
       </div>
-      <div className="mb-10 grid grid-cols-3 gap-6">
+      <div className="mb-10 grid sm:grid-cols-3 gap-6">
         {describe.map((d) => (
-          <div key={d.id} className="relative rounded-3xl border bg-gray-100">
+          <div key={d.id} className="relative rounded-3xl border bg-gray-100 dark:bg-gray-900 dark:border-gray-700">
             <div className="absolute -top-7 right-0 w-52">
               <img src={d.image} alt="" />
             </div>
             <div className="w-3/4 pl-6 pb-6 pt-16">
-              <h2 className="pb-4 text-3xl font-semibold">{d.title}</h2>
+              <h2 className="pb-4 text-3xl font-semibold dark:text-white">{d.title}</h2>
               <div className="text-lg/5 font-semibold text-slate-600">
                 {d.content}
               </div>
@@ -160,7 +160,7 @@ export default function Home({
               <img className="m-auto" src={p.image} alt="" />
             </div>
             <div className="">
-              <h2 className="pb-4 text-3xl font-semibold">{p.count}</h2>
+              <h2 className="pb-4 text-3xl font-semibold dark:text-white">{p.count}</h2>
               <div className="text-lg/5 font-semibold text-slate-600">
                 {p.title}
               </div>
@@ -169,8 +169,8 @@ export default function Home({
         ))}
       </div>
       <div className="mb-20 flex justify-between">
-        <div className="  mt-4 w-3/6 list-none pr-16">
-          <div className="mb-8 text-3xl font-semibold">What is Kufarm?</div>
+        <div className="mt-4 sm:w-3/6 list-none pr-16">
+          <div className="mb-8 text-3xl font-semibold dark:text-white">What is Kufarm?</div>
           <span className="text-lg/5 font-semibold text-slate-500">
             Kufarm is a simple and affordable cloud mining service, the main
             purpose of which is to introduce a wider audience to the world of
@@ -186,7 +186,7 @@ export default function Home({
             Try it out now
           </Button>
         </div>
-        <div className="w-3/6">
+        <div className="sm:w-3/6">
           <img
             className="rounded-lg border-4"
             src="	https://kufarm.io/static/kufarm/info-block-img.jpg"
@@ -194,8 +194,8 @@ export default function Home({
           />
         </div>
       </div>
-      <div className="mb-20 flex justify-between">
-        <div className="w-3/6">
+      <div className="mb-20 sm:flex justify-between">
+        <div className="sm:w-3/6">
           <video
             className="w-11/12 rounded-lg border-4"
             controls
@@ -205,8 +205,8 @@ export default function Home({
             <source src="https://kufarm.io/static/kufarm/pr.mp4" />
           </video>
         </div>
-        <div className="mt-4 w-3/6 list-none">
-          <div className="mb-8 text-3xl font-semibold">
+        <div className="mt-4 sm:w-3/6 list-none">
+          <div className="mb-8 text-3xl font-semibold dark:text-white">
             Earn Money with Kufarm
           </div>
           <span className="text-lg/5 font-semibold text-slate-500">
@@ -219,11 +219,11 @@ export default function Home({
         </div>
       </div>
       <div className="">
-        <div className="relative mb-24 w-2/4">
-          <div className="absolute -left-6 -top-14 text-9xl font-semibold text-slate-200">
+        <div className="relative mb-24 sm:w-2/4 px-2">
+          <div className="absolute -left-6 -top-14 text-9xl font-semibold text-slate-200 dark:text-gray-600">
             1
           </div>
-          <div className="relative mb-2.5 text-3xl font-semibold">
+          <div className="relative mb-2.5 text-3xl font-semibold dark:text-white">
             Extensive range of services
           </div>
           <span className="relative font-semibold text-slate-500">
@@ -239,11 +239,11 @@ export default function Home({
             alt=""
           />
         </div>
-        <div className="relative float-end w-2/4">
-          <div className="absolute -left-6 -top-14 text-9xl font-semibold text-slate-200">
+        <div className="relative float-end sm:w-2/4">
+          <div className="absolute -left-6 -top-14 text-9xl font-semibold text-slate-200 dark:text-gray-600">
             2
           </div>
-          <div className="relative mb-2.5 text-3xl font-semibold">
+          <div className="relative mb-2.5 text-3xl font-semibold dark:text-white">
             Reliable mining solutions
           </div>
           <span className="relative font-semibold text-slate-500">
@@ -259,11 +259,11 @@ export default function Home({
           />
         </div>
         <div className="w-full pt-44">
-          <div className="relative m-auto mt-36 w-2/4 ">
-            <div className="absolute -left-6 -top-14 mb-2.5 text-9xl font-semibold text-slate-200">
+          <div className="relative m-auto mt-36 sm:w-2/4 ">
+            <div className="absolute -left-6 -top-14 mb-2.5 text-9xl font-semibold text-slate-200 dark:text-gray-600">
               3
             </div>
-            <div className="relative text-3xl font-semibold">
+            <div className="relative text-3xl font-semibold dark:text-white">
               Guarantee of services
             </div>
             <span className="relative font-semibold text-slate-500">
@@ -279,10 +279,10 @@ export default function Home({
       </div>
       <Faq />
       <div className="w-full list-none text-center">
-        <div className="text-3xl font-semibold">
+        <p className="text-3xl font-semibold dark:text-white">
           Start your bitcoin mining
           <br /> journey today!
-        </div>
+        </p>
         <div className="my-10 flex justify-center">
           <Button color="blue" pill onClick={() => router.push("/auth/signup")}>
             Register now

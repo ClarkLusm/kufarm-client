@@ -7,9 +7,9 @@ import {
 
 const FAQ = () => {
   return (
-    <div className="my-5 w-screen">
+    <div className="my-5">
       <div className="my-5 w-full text-center">
-        <span className="text-3xl font-semibold">FAQ</span>
+        <span className="text-3xl font-semibold dark:text-white">FAQ</span>
       </div>
       <Accordion collapseAll className="mx-7">
         <AccordionPanel>

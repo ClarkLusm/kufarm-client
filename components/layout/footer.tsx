@@ -21,7 +21,7 @@ const FooterBase = () => {
   return (
     <Footer className="rounded-none">
       <div className="container max-w-[1100px] mx-auto">
-        <div className="grid w-full items-center justify-between sm:flex sm:justify-between md:flex md:grid-cols-1 px-4">
+        <div className="grid w-full items-center justify-between sm:flex sm:justify-between md:flex md:grid-cols-1 px-4 pt-4">
           <div>
             <FooterBrand
               href="https://flowbite.com"
@@ -30,7 +30,7 @@ const FooterBase = () => {
               name="Kufarm mining"
             />
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-3 gap-8 sm:mt-4 sm:gap-6">
             <div>
               <FooterTitle title="about" />
               <FooterLinkGroup col>

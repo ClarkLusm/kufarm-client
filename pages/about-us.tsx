@@ -38,12 +38,12 @@ export default function About() {
   return (
     <div className="dark:text-white m-auto py-8">
       <div className="m-12">
-        <div className="text-center text-6xl font-bold">About Us</div>
+        <div className="text-center text-4xl sm:text-6xl font-bold">About Us</div>
         <div className="my-7 text-2xl font-semibold">
           KUFARM MINING COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
           CLOUD MINING
         </div>
-        <div className="my-3 text-xl font-semibold text-gray-500">
+        <div className="my-3 sm:text-xl font-semibold text-gray-500">
           This is a bitcoin mining company using a mining pool from Kucoin, as
           well as which provides cloud mining services for cryptocurrency ASIC
           and GPU miners that will take care of repetitive and tedious processes
@@ -61,8 +61,8 @@ export default function About() {
         </div>
       </div>
       <div className="my-10 flex rounded-3xl bg-cyan-200 p-12">
-        <div className="w-3/5">
-          <div className="text-4xl font-bold">More Info</div>
+        <div className="sm:w-3/5">
+          <div className="text-2xl sm:text-4xl font-bold">More Info</div>
           <div className="my-5 text-lg font-bold text-gray-400">
             Cloud mining is the easiest and most effective way to make money
             from cryptocurrency mining without buying and maintaining your
@@ -84,7 +84,7 @@ export default function About() {
             </NavbarLink>
           </Navbar>
         </div>
-        <div className="w-2/5">
+        <div className="sm:w-2/5">
           <img
             className="float-end"
             src="https://kufarm.io/static/kufarm/info-block2.png"
@@ -92,9 +92,9 @@ export default function About() {
           />
         </div>
       </div>
-      <div className="m-12 flex list-none">
-        <div className="w-3/5">
-          <div className="text-5xl font-bold">Our documents</div>
+      <div className="m-12 sm:flex list-none">
+        <div className="sm:w-3/5">
+          <div className="text-2xl sm:text-5xl font-bold">Our documents</div>
           <div className="my-5 text-lg font-semibold text-gray-500">
             The company has all the necessary documents and licenses to provide
             services in the financial sector and successfully passes regular
@@ -115,14 +115,14 @@ export default function About() {
             </NavbarLink>
           </Navbar>
         </div>
-        <Navbar className="ml-28 w-96 rounded-xl border">
+        <Navbar className="sm:ml-28 w-96 rounded-xl border">
           <NavbarLink href="https://kufarm.io/static/kufarm/sert.jpg">
             <img src="https://kufarm.io/static/kufarm/sert.jpg" />
           </NavbarLink>
         </Navbar>
       </div>
       <div>
-        <div className="py-10 text-center text-5xl font-bold">
+        <div className="py-10 text-center text-2xl sm:text-5xl font-bold">
           Our working Team
         </div>
         <div className="grid sm:grid-cols-3 gap-4">

@@ -13,7 +13,7 @@ export const SignUpSchema = yup
       .string()
       .matches(/^[a-z0-9]+$/i)
       .required(),
-    email: yup.string().required(),
+    email: yup.string().email().required(),
     password: yup.string().min(6).required(),
     rePassword: yup
       .string()

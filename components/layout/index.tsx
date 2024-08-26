@@ -7,7 +7,7 @@ export default function Layout({ children }: any) {
   return (
     <Flowbite>
       <Header />
-      <main className="bg-white dark:bg-gray-900">
+      <main className="bg-white dark:bg-gray-900 dark:text-white">
         <div className="main container max-w-[1100px] mx-auto h-max pt-24">{children}</div>
       </main>
       <Footer />

@@ -1,8 +1,9 @@
 import { Button, Card } from "flowbite-react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { Product } from "@/libs/types/product";
-import { useRouter } from "next/router";
 
 type Resp = {
   data: Product[];
@@ -20,39 +21,36 @@ export default function BuyPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   return (
-    <div className="grid gap-8 grid-cols-2 py-8">
+    <div className="grid gap-8 sm:grid-cols-2 py-8 px-4 sm:px-0">
       {product.data.map((p) => (
         <Card className="w-full bg-slate-100 rounded-2xl" key={p.id}>
           <div className="flex justify-between">
             <div>
               <div className="mb-5 text-2xl font-semibold">{p.name}</div>
               <div className="mb-3 flex items-center">
-                <img
-                  src="https://kufarm.io/static/kufarm/settings.svg"
-                  alt=""
-                />
+                <Image src="/images/icons/settings.svg" alt="" width={30} height={30} />
                 <div className="ml-2 font-medium text-gray-400">
                   Hashpower: {p.hashPower.toLocaleString("en-EN")} TH/S
                 </div>
               </div>
               <div className="flex items-center mb-3">
-                <img src="https://kufarm.io/static/kufarm/fire.svg" alt="" />
+                <Image src="/images/icons/fire.svg" alt="" width={30} height={30} />
                 <div className="ml-2 font-medium text-gray-400">
                   Daily Income: {Number(p.dailyIncome).toLocaleString("en-EN")}$
                 </div>
               </div>
               <div className="flex items-center mb-3">
-                <img src="https://kufarm.io/static/kufarm/time.svg" alt="" />
+                <Image src="/images/icons/time.svg" alt="" width={30} height={30} />
                 <div className="ml-2 font-medium text-gray-400">
                   Monthly Income:{" "}
                   {Number(p.monthlyIncome).toLocaleString("en-EN")}$
                 </div>
               </div>
             </div>
-            <img src="https://kufarm.io/static/kufarm/prod1.png" alt="" />
+            <Image src="/images/icons/prod1.png" alt="" width={30} height={30} />
           </div>
           <div className="flex items-center text-xl">
-            <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
+            <Image src="/images/icons/btc.svg" alt="" width={30} height={30} />
             <div className="ml-2 font-medium text-gray-400">Price:</div>
             <span className="ml-2 font-semibold">
               {p.price.toLocaleString("en-EN")}$
@@ -63,11 +61,7 @@ export default function BuyPage({
             className="w-32"
             onClick={() => router.push(`/buy/${p.alias}`)}
           >
-            <img
-              src="https://kufarm.io/static/kufarm/cart-icon.svg"
-              alt=""
-              className="mr-2"
-            />
+            <Image src="/images/icons/cart-icon.svg" alt="" width={30} height={30} className="mr-2" />
             Purchase
           </Button>
         </Card>
