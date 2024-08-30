@@ -26,8 +26,8 @@ const FooterBase = () => {
             <FooterBrand
               href="https://flowbite.com"
               src="https://flowbite.com/docs/images/logo.svg"
-              alt="Flowbite Logo"
-              name="Kufarm mining"
+              alt="Bitcoino2fi Logo"
+              name="Bitcoino2fi"
             />
           </div>
           <div className="grid grid-cols-3 gap-8 sm:mt-4 sm:gap-6">

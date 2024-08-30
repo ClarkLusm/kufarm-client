@@ -25,7 +25,6 @@ export const getServerSideProps = async (ctx: any) => {
         },
       }
     );
-    console.log(resp.data.data);
 
     return {
       props: {

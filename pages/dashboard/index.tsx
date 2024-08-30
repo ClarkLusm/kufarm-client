@@ -203,7 +203,11 @@ export default function Dashboard({
               <span className="text-white">Withdrawal</span>
             </Button>
 
-            <Button color="warning" className="h-12 items-center">
+            <Button
+              color="warning"
+              className="h-12 items-center"
+              onClick={() => router.push("/referral")}
+            >
               <ReferralIcon width={24} className="hidden sm:block mr-2" />
               <span className="text-white">Referal</span>
             </Button>

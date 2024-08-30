@@ -31,6 +31,8 @@ export const getServerSideProps = async (ctx: any) => {
         },
       }
     );
+    console.log(res.data);
+
     return {
       props: {
         invoice: res.data,
@@ -157,118 +159,123 @@ export default function InvoiceDetailPage({
   if (!hasMounted) return null;
 
   return (
-    <div className="m-auto my-5 w-3/4 rounded-t-3xl border bg-white dark:bg-gray-900">
-      {chainId && chainId !== invoice.chainId && (
-        <div className="mx-auto my-4 w-4/6">
-          <Alert color="failure">
-            <span>The payment method you choose is only supported in</span>
-            <button
-              className="font-bold ml-2"
-              onClick={() => switchNetwork(invoice.chainId)}
-            >
-              {NETWORKS[invoice?.chainId]?.name}
-            </button>
-          </Alert>
-        </div>
-      )}
-      <div className="m-auto mb-10 w-4/6 rounded-2xl p-10 shadow-xl">
-        <div className="mb-5 flex justify-between">
-          <div className="text-xl font-medium">
-            <span>Invoice ID #{invoice.code}</span>
+    <div className="px-4">
+      <div className="m-auto sm:my-5 sm:w-3/4 rounded-t-3xl border bg-white dark:bg-gray-900">
+        {chainId && chainId !== invoice.chainId && (
+          <div className="mx-auto my-4 sm:w-4/6">
+            <Alert color="failure">
+              <span>The payment method you choose is only supported in</span>
+              <button
+                className="font-bold ml-2"
+                onClick={() => switchNetwork(invoice.chainId)}
+              >
+                {NETWORKS[invoice?.chainId]?.name}
+              </button>
+            </Alert>
           </div>
-          {invoice.status === 0 && (
-            <span className="text-orange-400 font-semibold">Waiting...</span>
-          )}
-          {invoice.status === 2 && (
-            <span className="text-green-400 font-semibold">Success</span>
-          )}
-        </div>
-        <div className="mb-5 flex justify-between">
-          <div className="flex items-center">
-            <Image
-              src={`/images/tokens/${invoice?.coin}.png`}
-              alt={invoice?.coin}
-              width={32}
-              height={32}
-            />
-            <div className="ml-2 text-xl font-medium">{invoice?.coin}</div>
-          </div>
-          {isConnected && <w3m-account-button balance="hide" />}
-        </div>
-        <div className="mb-5">
-          <div className="mb-2 block">
-            <Label
-              htmlFor="small"
-              value={`Amount (approx: $${Number(invoice.price).toLocaleString(
-                "en-EN"
-              )}) :`}
-            />
-          </div>
-          <div className="relative flex">
-            <div className="border p-2 bg-white dark:bg-black rounded-lg text-md w-full text-grey">
-              {formattedAmount}
-            </div>
-            <Clipboard.WithIcon
-              className="absolute right-0 w-auto p-3"
-              valueToCopy={formattedAmount}
-            />
-          </div>
-        </div>
-        <div className="mb-5">
-          <div className="mb-2 block">
-            <Label htmlFor="small" value={`Wallet address(${invoice.coin}):`} />
-          </div>
-          <div className="relative flex">
-            <div className="border p-2 bg-white dark:bg-black rounded-lg w-full">
-              {invoice.walletAddress}
-            </div>
-            <Clipboard.WithIcon
-              className="absolute right-0 w-auto p-3"
-              valueToCopy={invoice.walletAddress}
-            />
-          </div>
-        </div>
-        {invoice.status === EOrderStatus.success && (
-          <Link
-            target="_blank"
-            href={`${NETWORKS[invoice.chainId]?.explorerUrl}/tx/${
-              invoice.txHash
-            }`}
-            className="text-sky-500 underline"
-          >
-            View transaction
-          </Link>
         )}
-        {invoice.status === EOrderStatus.pending && (
-          <>
+        <div className="m-auto sm:mb-10 sm:w-4/6 rounded-2xl p-4 sm:p-10 shadow-xl">
+          <div className="mb-5 flex justify-between">
+            <div className="text-xl font-medium">
+              <span>Invoice ID #{invoice.code}</span>
+            </div>
+            {invoice.status === 0 && (
+              <span className="text-orange-400 font-semibold">Waiting...</span>
+            )}
+            {invoice.status === 2 && (
+              <span className="text-green-400 font-semibold">Success</span>
+            )}
+          </div>
+          <div className="mb-5 flex justify-between">
+            <div className="flex items-center">
+              <Image
+                src={`/images/tokens/${invoice?.coin}.png`}
+                alt={invoice?.coin}
+                width={32}
+                height={32}
+              />
+              <div className="ml-2 text-xl font-medium">{invoice?.coin}</div>
+            </div>
+            {isConnected && <w3m-account-button balance="hide" />}
+          </div>
+          <div className="mb-5">
+            <div className="mb-2 block">
+              <Label
+                htmlFor="small"
+                value={`Amount (approx: $${Number(invoice.price).toLocaleString(
+                  "en-EN"
+                )}) :`}
+              />
+            </div>
+            <div className="relative flex">
+              <div className="border p-2 bg-white dark:bg-black rounded-lg text-md w-full text-grey">
+                {formattedAmount}
+              </div>
+              <Clipboard.WithIcon
+                className="absolute right-0 w-auto p-3"
+                valueToCopy={formattedAmount}
+              />
+            </div>
+          </div>
+          <div className="mb-5">
+            <div className="mb-2 block">
+              <Label
+                htmlFor="small"
+                value={`Wallet address(${invoice.coin}):`}
+              />
+            </div>
+            <div className="border p-2 relative flex rounded-lg overflow-hidden">
+              <div className="bg-white dark:bg-black rounded-lg w-full">
+                {invoice.walletAddress}
+              </div>
+              <Clipboard.WithIcon
+                className="absolute right-0 w-auto p-3 bg-white dark:bg-black"
+                valueToCopy={invoice.walletAddress}
+              />
+            </div>
+          </div>
+          {invoice.status === EOrderStatus.success && (
             <Link
               target="_blank"
-              href={`${NETWORKS[invoice.chainId]?.explorerUrl}/${
-                invoice.walletAddress
+              href={`${NETWORKS[invoice.chainId]?.explorerUrl}/tx/${
+                invoice.txHash
               }`}
               className="text-sky-500 underline"
             >
-              Check Explorer...
+              View transaction
             </Link>
-            <Button
-              disabled={loading}
-              onClick={onClick}
-              className={`flex items-center mt-4 px-4 py-2 w-full font-bold text-white rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:translate-y-0 focus:outline-none`}
-            >
-              {loading && <Spinner className="mr-2" />}
-              {isConnected
-                ? chainId !== invoice.chainId
-                  ? "Change Network"
-                  : "Submit"
-                : "Connect Wallet"}
-            </Button>
-          </>
-        )}
-        {!!errorMsg && (
-          <Alert color="failure">
-            <span className="">{errorMsg}</span>
-          </Alert>
-        )}
+          )}
+          {invoice.status === EOrderStatus.pending && (
+            <>
+              <Link
+                target="_blank"
+                href={`${NETWORKS[invoice.chainId]?.explorerUrl}/${
+                  invoice.walletAddress
+                }`}
+                className="text-sky-500 underline"
+              >
+                Check Explorer...
+              </Link>
+              <Button
+                disabled={loading}
+                onClick={onClick}
+                className={`flex items-center mt-4 px-4 py-2 w-full font-bold text-white rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:translate-y-0 focus:outline-none`}
+              >
+                {loading && <Spinner className="mr-2" />}
+                {isConnected
+                  ? chainId !== invoice.chainId
+                    ? "Change Network"
+                    : "Submit"
+                  : "Connect Wallet"}
+              </Button>
+            </>
+          )}
+          {!!errorMsg && (
+            <Alert color="failure">
+              <span className="">{errorMsg}</span>
+            </Alert>
+          )}
+        </div>
       </div>
     </div>
   );
