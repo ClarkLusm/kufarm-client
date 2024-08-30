@@ -12,6 +12,10 @@ body main {
   min-height: calc(100vh - 217px);
 }
 
+.dark input, .dark textarea, .dark select {
+  background: rgba(0, 0, 0, 0.65)
+}
+
 .mining-line {
   animation: slide 150.4s linear infinite;
   background-image: repeating-linear-gradient(

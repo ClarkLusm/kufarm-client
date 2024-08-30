@@ -2,6 +2,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import router from "next/router";
 
+import SignOutIcon from "@/icons/signout.svg";
+
 const Account = () => {
   const { data: session, status } = useSession();
 
@@ -14,16 +16,17 @@ const Account = () => {
   if (status === "authenticated") {
     return (
       <div className="flex list-none items-center">
-        <span className="font-medium text-gray-500 mr-2">
+        <span className="font-medium text-gray-500 mr-2 max-w-[200px] overflow-hidden text-ellipsis">
           {session.user.email}
         </span>
         <button
           type="button"
-          className="rounded-full bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="hidden sm:block rounded-full sm:bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={() => signOut({ callbackUrl: "/", redirect: true })}
         >
-          Log out
+          Sign out
         </button>
+        <SignOutIcon width={20} className="sm:hidden fill-gray-500" />
       </div>
     );
   }

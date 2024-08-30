@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "libs/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["svgr.d.ts", "next-env.d.ts", "libs/types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

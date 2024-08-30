@@ -8,6 +8,19 @@ import axios from "axios";
 
 import { Product } from "@/libs/types/product";
 import { UserProfile } from "@/libs/types/user";
+import UserIcon from "@/icons/user.svg";
+import UsdIcon from "@/icons/usd.svg";
+import BtcIcon from "@/icons/btc.svg";
+import CpuIcon from "@/icons/cpu.svg";
+import GpuIcon from "@/icons/gpu.svg";
+import WalletIcon from "@/icons/wallet.svg";
+import DayIcon from "@/icons/24h.svg";
+import MonthIcon from "@/icons/time-is-money.svg";
+import BitClouldIcon from "@/icons/bit_cloud.svg";
+import CartIcon from "@/icons/cart.svg";
+import CreditCardIcon from "@/icons/credit-card.svg";
+import RefreshIcon from "@/icons/refresh.svg";
+import ReferralIcon from "@/icons/referral.svg";
 
 type Resp = {
   products: Product[];
@@ -66,25 +79,25 @@ export default function Dashboard({
   const statistic = [
     {
       id: "1",
-      image: "images/icons/user.svg",
+      image: <UserIcon width={24} className="dark:color-white" />,
       properties: "Username:",
       value: profile?.username,
     },
     {
       id: "2",
-      image: "images/icons/cpu.svg",
+      image: <CpuIcon width={24} className="dark:color-white" />,
       properties: "Mining power:",
       value: profile?.hashPower?.toLocaleString("en-EN"),
     },
     {
       id: "3",
-      image: "images/icons/wallet.svg",
+      image: <WalletIcon width={24} className="dark:color-white" />,
       properties: "Your wallet:",
       value: profile?.walletAddress,
     },
     {
       id: "4",
-      image: "images/icons/usd.svg",
+      image: <UsdIcon width={24} className="dark:color-white" />,
       properties: "Your Balance:",
       value: userBalance?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
@@ -92,7 +105,7 @@ export default function Dashboard({
     },
     {
       id: "5",
-      image: "images/icons/btc.svg",
+      image: <BtcIcon width={24} className="dark:color-white" />,
       properties: "Your Referral Balance:",
       value: profile?.referralCommission?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
@@ -103,25 +116,25 @@ export default function Dashboard({
   const mining_statistic = [
     {
       id: "1",
-      image: "images/icons/bit_cloud.svg",
+      image: <BitClouldIcon width={24} className="fill-yellow-400" />,
       properties: "Main mining pool:",
       value: profile?.pool,
     },
     {
       id: "2",
-      image: "images/icons/24h.svg",
+      image: <DayIcon width={24} className="fill-yellow-400" />,
       properties: "DAILY:",
-      value: profile?.dailyIncome + '$',
+      value: profile?.dailyIncome + "$",
     },
     {
       id: "3",
-      image: "images/icons/time_is_money.svg",
+      image: <MonthIcon width={24} className="fill-yellow-400" />,
       properties: "MONTHLY:",
-      value: profile?.monthlyIncome + '$',
+      value: profile?.monthlyIncome + "$",
     },
     {
       id: "4",
-      image: "images/icons/gpu.svg",
+      image: <GpuIcon width={24} className="fill-yellow-400" />,
       properties: "Mining power:",
       value: profile?.hashPower?.toLocaleString("en-EN") + " TH/s",
     },
@@ -134,8 +147,8 @@ export default function Dashboard({
           <div className="mb-5 text-2xl font-semibold">Mining Statistic:</div>
           {mining_statistic.map((ms) => (
             <div className="mb-2 flex items-center overflow-hidden" key={ms.id}>
-              <img className="size-8" src={ms.image} />
-              <div className="ml-2 font-medium">
+              {ms.image}
+              <div className="ml-2 ">
                 {ms.properties}
                 <span className="ml-2 text-gray-500">{ms.value}</span>
               </div>
@@ -143,7 +156,7 @@ export default function Dashboard({
           ))}
           <div className="my-6 h-5 w-full rounded-xl bg-slate-300 dark:bg-gray-800 text-transparent mining-line"></div>
           <div className="my-6 text-center">
-            <span className="text-xl font-medium">
+            <span className="text-xl ">
               {userBalance?.toLocaleString("en-EN", {
                 maximumFractionDigits: 9,
               })}
@@ -164,8 +177,8 @@ export default function Dashboard({
           </div>
           {statistic.map((s) => (
             <div className="mb-5 flex overflow-hidden" key={s.id}>
-              <img className="size-6" src={s.image} alt="" />
-              <div className="ml-2 font-medium">
+              {s.image}
+              <div className="ml-2 ">
                 {s.properties}
                 <span className="ml-2 text-gray-500">{s.value}</span>
               </div>
@@ -177,8 +190,8 @@ export default function Dashboard({
               className="h-12 items-center"
               onClick={router.reload}
             >
-              <img src="https://kufarm.io/static/kufarm/refresh.svg" alt="" />
-              <div className="ml-2 font-medium text-white">Refresh balance</div>
+              <RefreshIcon width={24} className="hidden sm:block mr-2" />
+              <span className="text-white">Refresh balance</span>
             </Button>
 
             <Button
@@ -186,19 +199,13 @@ export default function Dashboard({
               className="h-12 items-center"
               onClick={() => router.push("/withdraw")}
             >
-              <img
-                src="https://kufarm.io/static/kufarm/credit-card.svg"
-                alt=""
-              />
-              <div className="ml-2 font-medium text-white">Withdrawal</div>
+              <CreditCardIcon width={24} className="hidden sm:block mr-2" />
+              <span className="text-white">Withdrawal</span>
             </Button>
 
             <Button color="warning" className="h-12 items-center">
-              <img
-                src="https://kufarm.io/static/kufarm/credit-card.svg"
-                alt=""
-              />
-              <div className="ml-2 font-medium text-white">Referal</div>
+              <ReferralIcon width={24} className="hidden sm:block mr-2" />
+              <span className="text-white">Referal</span>
             </Button>
           </div>
         </div>
@@ -209,7 +216,7 @@ export default function Dashboard({
             return (
               <div className="mb-5 flex items-center" key={p.id}>
                 <TbChartRadar color="#e3a008" />
-                <div className="ml-2 font-medium">
+                <div className="ml-2 ">
                   {p.name}
                   <span className="ml-2 text-gray-500">
                     {owner?.count || 0}
@@ -223,8 +230,8 @@ export default function Dashboard({
             className="h-12 w-44 items-center"
             onClick={() => router.push("/buy")}
           >
-            <img src="https://kufarm.io/static/kufarm/cart-icon.svg" alt="" />
-            <div className="ml-2 font-medium text-white">Buy more TH/S</div>
+            <CartIcon width={24} />
+            <div className="ml-2  text-white">Buy more TH/S</div>
           </Button>
         </div>
       </div>

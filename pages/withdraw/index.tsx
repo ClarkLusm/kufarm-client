@@ -12,7 +12,6 @@ import {
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
-import { IoWallet } from "react-icons/io5";
 import { useState } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
@@ -20,6 +19,9 @@ import axios from "axios";
 import { Transaction } from "@/libs/types/transaction";
 import { shortAddress } from "@/utils";
 import { WithdrawConfirmDialog } from "@/components/ui/withdraw-dialog";
+import EmailIcon from "@/icons/email.svg";
+import BtcIcon from "@/icons/btc.svg";
+import WalletIcon from "@/icons/wallet.svg";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -60,7 +62,10 @@ export default function WithdrawPage({
   const [errorMsg, setErrorMsg] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
-  const balanceFormatted = ethers.formatUnits(profile.balanceToken, 18);
+  const balanceFormatted = ethers.formatUnits(
+    (profile.balanceToken || 0).toString(),
+    18
+  );
   const transItems =
     transactions.length >= 7
       ? transactions
@@ -84,18 +89,20 @@ export default function WithdrawPage({
   };
 
   return (
-    <div className="my-10 flex">
-      <div className="mr-9 w-1/3 rounded-2xl bg-slate-100 p-7">
+    <div className="p-4 sm:py-10 sm:flex">
+      <div className="mb-4 sm:mb-0 sm:mr-9 sm:w-1/3 rounded-2xl bg-slate-100 dark:bg-slate-800 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
         <div className="mb-5 flex items-center">
-          <img src="https://kufarm.io/static/kufarm/email2.svg" alt="" />
+          <EmailIcon width={20} />
           <div className="ml-2 font-semibold">Email:</div>
-          <div className="ml-2 text-gray-400">{profile.email}</div>
+          <div className="ml-2 text-gray-600 dark:text-gray-200">
+            {profile.email}
+          </div>
         </div>
         <div className="flex items-center">
-          <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
+          <BtcIcon width={24} />
           <div className="ml-2 font-semibold">Your Balance: </div>
-          <div className="ml-2 text-gray-400">
+          <div className="ml-2 text-gray-600 dark:text-gray-200">
             {Number(balanceFormatted).toLocaleString("en-EN", {
               maximumFractionDigits: 5,
             })}{" "}
@@ -103,7 +110,7 @@ export default function WithdrawPage({
           </div>
         </div>
         <div className="pl-6 mb-5">
-          <span className="text-sm text-gray-400">
+          <span className="text-sm text-gray-600 dark:text-gray-200">
             (~USD Balance:{" "}
             {Number(balanceFormatted).toLocaleString("en-EN", {
               maximumFractionDigits: 5,
@@ -113,26 +120,22 @@ export default function WithdrawPage({
         </div>
         <div className="mb-5">
           <div className="mb-5 flex items-center">
-            <img src="https://kufarm.io/static/kufarm/wallet.svg" alt="" />
+            <WalletIcon width={24} />
             <div className="ml-2 font-semibold">Wallet address:</div>
           </div>
           <TextInput disabled value={profile.walletAddress} />
         </div>
         <div className="mb-5">
           <div className="mb-5 flex items-center">
-            <img src="https://kufarm.io/static/kufarm/btc.svg" alt="" />
+            <BtcIcon width={24} />
             <div className="ml-2 font-semibold">Withdraw amount:</div>
           </div>
           <TextInput value={amount} onChange={onChange} />
         </div>
         <div className="flex justify-center mb-4">
-          <Button
-            color="success"
-            className="flex items-center"
-            onClick={onSubmit}
-          >
-            <IoWallet />
-            <span className="ml-2">Withdraw</span>
+          <Button className="text-medium min-w-[120px] text-white" color="success" onClick={onSubmit}>
+            <WalletIcon width={20} className="mr-2" />
+            Withdraw
           </Button>
         </div>
         <div className="text-center font-semibold">
@@ -148,7 +151,7 @@ export default function WithdrawPage({
           </Alert>
         )}
       </div>
-      <div className="w-2/3 rounded-2xl bg-slate-100 p-7">
+      <div className="sm:w-2/3 rounded-2xl bg-slate-100 dark:bg-slate-800 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw history:</div>
         <div className="overflow-x-auto">
           <Table>

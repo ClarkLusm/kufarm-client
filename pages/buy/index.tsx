@@ -4,6 +4,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { Product } from "@/libs/types/product";
+import UsdIcon from "@/icons/usd.svg";
+import CpuIcon from "@/icons/cpu.svg";
+import DayIcon from "@/icons/24h.svg";
+import MonthIcon from "@/icons/time-is-money.svg";
+import CartIcon from "@/icons/cart.svg";
 
 type Resp = {
   data: Product[];
@@ -28,41 +33,41 @@ export default function BuyPage({
             <div>
               <div className="mb-5 text-2xl font-semibold">{p.name}</div>
               <div className="mb-3 flex items-center">
-                <Image src="/images/icons/settings.svg" alt="" width={30} height={30} />
-                <div className="ml-2 font-medium text-gray-400">
+                <CpuIcon width={30} height={30} />
+                <div className="ml-2 font-medium text-gray-600 dark:text-gray-200">
                   Hashpower: {p.hashPower.toLocaleString("en-EN")} TH/S
                 </div>
               </div>
               <div className="flex items-center mb-3">
-                <Image src="/images/icons/fire.svg" alt="" width={30} height={30} />
-                <div className="ml-2 font-medium text-gray-400">
+                <DayIcon width={30} height={30} />
+                <div className="ml-2 font-medium text-gray-600 dark:text-gray-200">
                   Daily Income: {Number(p.dailyIncome).toLocaleString("en-EN")}$
                 </div>
               </div>
               <div className="flex items-center mb-3">
-                <Image src="/images/icons/time.svg" alt="" width={30} height={30} />
-                <div className="ml-2 font-medium text-gray-400">
+                <MonthIcon width={30} height={30} />
+                <div className="ml-2 font-medium text-gray-600 dark:text-gray-200">
                   Monthly Income:{" "}
                   {Number(p.monthlyIncome).toLocaleString("en-EN")}$
                 </div>
               </div>
             </div>
-            <Image src="/images/icons/prod1.png" alt="" width={30} height={30} />
+            <Image src={p.image || ""} alt={p.name} />
           </div>
           <div className="flex items-center text-xl">
-            <Image src="/images/icons/btc.svg" alt="" width={30} height={30} />
-            <div className="ml-2 font-medium text-gray-400">Price:</div>
+            <UsdIcon width={30} height={30} />
+            <div className="ml-2 font-medium text-gray-600 dark:text-gray-200">Price:</div>
             <span className="ml-2 font-semibold">
               {p.price.toLocaleString("en-EN")}$
             </span>
           </div>
           <Button
             color="success"
-            className="w-32"
+            className="items-center"
             onClick={() => router.push(`/buy/${p.alias}`)}
           >
-            <Image src="/images/icons/cart-icon.svg" alt="" width={30} height={30} className="mr-2" />
-            Purchase
+            <CartIcon width={30} height={30} className="mr-2" />
+            <span className="text-base">Purchase</span>
           </Button>
         </Card>
       ))}

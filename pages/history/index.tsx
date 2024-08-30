@@ -34,6 +34,7 @@ export const getServerSideProps = async (ctx: any) => {
       },
     };
   } catch (error: any) {
+    console.error(error);
     return {
       notFound: true,
     };
@@ -51,7 +52,7 @@ export default function OrderPage({
 
   return (
     <div className="my-10 flex">
-      <div className="w-full rounded-2xl bg-slate-100 p-7">
+      <div className="w-full rounded-2xl bg-slate-100 dark:bg-slate-900 p-7">
         <div className="mb-5 text-2xl font-semibold">Order history:</div>
         <div className="overflow-x-auto">
           <Table>

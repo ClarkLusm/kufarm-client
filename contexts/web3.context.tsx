@@ -4,15 +4,16 @@ import { NETWORKS } from '@/libs/constants'
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
 
 // 1. Get projectId from https://cloud.walletconnect.com
-const projectId = '109f6a4d1721bc23b8b24fd19dffadb6'
+const projectId = process.env.WALLET_CONNECT_PROJECT_ID || ''
 
 // 2. Set chains
+const chains = Object.values(NETWORKS)
 
 // 3. Create a metadata object
 const metadata = {
-  name: 'Kufarm',
-  description: 'Kufarm description',
-  url: 'http://localhost:3000', // origin must match your domain & subdomain
+  name: 'Bitcoino2fi',
+  description: 'Bitcoino2fi description',
+  url: process.env.NEXTAUTH_URL ?? '', // origin must match your domain & subdomain
   icons: ['https://avatars.mywebsite.com/']
 }
 // 4. Create Ethers config
@@ -31,7 +32,7 @@ const ethersConfig = defaultConfig({
 // 5. Create a AppKit instance
 createWeb3Modal({
   ethersConfig,
-  chains: Object.values(NETWORKS),
+  chains,
   projectId,
   // enableAnalytics: true // Optional - defaults to your Cloud configuration
   allowUnsupportedChain: false,

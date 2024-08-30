@@ -67,6 +67,7 @@ export default function InvoiceDetailPage({
   const [loading, setLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [allowance, setAllowance] = useState(0);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     setHasMounted(true);
@@ -111,7 +112,6 @@ export default function InvoiceDetailPage({
     try {
       setLoading(true);
       const tokenContract = await getTokenContract();
-      // ("0xaa3d07cbdd5a9b35369b311aa524cfe8864d676444e8a014c943bf9b44314ba4");
       if (allowance < bigIntAmount) {
         await tokenContract?.approve(invoice.contractAddress, bigIntAmount);
       }
@@ -129,9 +129,9 @@ export default function InvoiceDetailPage({
       await tx.wait();
       await payOrderSuccess(tx);
       router.push("/history");
-    } catch (error) {
-      console.error("Error sending transaction:", error);
-      throw error;
+    } catch (e: any) {
+      console.error("Error sending transaction:", e);
+      setErrorMsg(e?.message || "UNKNOWN_ERROR");
     } finally {
       setLoading(false);
     }
@@ -157,8 +157,8 @@ export default function InvoiceDetailPage({
   if (!hasMounted) return null;
 
   return (
-    <div className="m-auto my-5 w-3/4 rounded-t-3xl border bg-white">
-      {chainId !== invoice.chainId && (
+    <div className="m-auto my-5 w-3/4 rounded-t-3xl border bg-white dark:bg-gray-900">
+      {chainId && chainId !== invoice.chainId && (
         <div className="mx-auto my-4 w-4/6">
           <Alert color="failure">
             <span>The payment method you choose is only supported in</span>
@@ -205,7 +205,7 @@ export default function InvoiceDetailPage({
             />
           </div>
           <div className="relative flex">
-            <div className="border p-2 bg-white rounded-lg text-md w-full text-grey">
+            <div className="border p-2 bg-white dark:bg-black rounded-lg text-md w-full text-grey">
               {formattedAmount}
             </div>
             <Clipboard.WithIcon
@@ -219,7 +219,7 @@ export default function InvoiceDetailPage({
             <Label htmlFor="small" value={`Wallet address(${invoice.coin}):`} />
           </div>
           <div className="relative flex">
-            <div className="border p-2 bg-white rounded-lg w-full">
+            <div className="border p-2 bg-white dark:bg-black rounded-lg w-full">
               {invoice.walletAddress}
             </div>
             <Clipboard.WithIcon
@@ -263,6 +263,11 @@ export default function InvoiceDetailPage({
                 : "Connect Wallet"}
             </Button>
           </>
+        )}
+        {!!errorMsg && (
+          <Alert color="failure">
+            <span className="">{errorMsg}</span>
+          </Alert>
         )}
       </div>
     </div>
