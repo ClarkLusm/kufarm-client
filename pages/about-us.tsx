@@ -7,7 +7,7 @@ export default function About() {
       position: 'Company Founder, CEO',
       image: 'https://kufarm.io/static/kufarm/about1.jfif',
       info_1:
-        'Paul Wade is an entrepreneur and the founder of the cryptomining company, Kufarm. He is an experienced leader and innovator in the technology industry.',
+        'Paul Wade is an entrepreneur and the founder of the cryptomining company, Bitcoino2. He is an experienced leader and innovator in the technology industry.',
       info_2:
         'Paul was born in San Francisco, California and attended Stanford University, where he received his degree in Computer Science. After graduating, he worked as a software engineer at several large companies, including Apple and Microsoft.',
       info_3:
@@ -40,7 +40,7 @@ export default function About() {
       <div className="m-12">
         <div className="text-center text-4xl sm:text-6xl font-bold">About Us</div>
         <div className="my-7 text-2xl font-semibold">
-          KUFARM MINING COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
+          BITCOINO2 COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
           CLOUD MINING
         </div>
         <div className="my-3 sm:text-xl font-semibold text-gray-500">
@@ -54,8 +54,8 @@ export default function About() {
           cryptocurrency mining strategy around the world.
         </div>
         <div className="my-3 text-xl font-semibold text-gray-500">
-          Kufarm offers bitcoin mining contracts from data centers in Asian
-          countries. Kufarm uses technologies from leading companies and
+          Bitcoino2 offers bitcoin mining contracts from data centers in Asian
+          countries. Bitcoino2 uses technologies from leading companies and
           manufacturers in the industry. You get maximum performance at low
           cost.
         </div>
@@ -163,7 +163,7 @@ export default function About() {
                 href="mailto:support@ku.farm"
                 className="text-xl font-semibold"
               >
-                support@kufarm.cloud
+                support@bitcoino2fi.com
               </NavbarLink>
             </Navbar>
           </div>

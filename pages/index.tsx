@@ -170,11 +170,11 @@ export default function Home({
       </div>
       <div className="mb-20 flex justify-between">
         <div className="mt-4 sm:w-3/6 list-none pr-16">
-          <div className="mb-8 text-3xl font-semibold dark:text-white">What is Kufarm?</div>
+          <div className="mb-8 text-3xl font-semibold dark:text-white">What is Bitcoino2?</div>
           <span className="text-lg/5 font-semibold text-slate-500">
-            Kufarm is a simple and affordable cloud mining service, the main
+            Bitcoino2 is a simple and affordable cloud mining service, the main
             purpose of which is to introduce a wider audience to the world of
-            bitcoin and other cryptocurrencies. Kufarm has a huge number of ASIC
+            bitcoin and other cryptocurrencies. Bitcoino2 has a huge number of ASIC
             miners who mine Bitcoin daily on the Kucoin pool
           </span>
           <Button
@@ -207,11 +207,11 @@ export default function Home({
         </div>
         <div className="mt-4 sm:w-3/6 list-none">
           <div className="mb-8 text-3xl font-semibold dark:text-white">
-            Earn Money with Kufarm
+            Earn Money with Bitcoino2
           </div>
           <span className="text-lg/5 font-semibold text-slate-500">
             To start mining bitcoins, just select a miner equipment from your
-            personal Kufarm account, each miner has a different cost and rental
+            personal Bitcoino2 account, each miner has a different cost and rental
             period, each equipment generates a unique amount of bitcoin daily.
             these coins are deposited to your personal account. you just have
             collect your coins everyday without any cost
@@ -229,7 +229,7 @@ export default function Home({
           <span className="relative font-semibold text-slate-500">
             The KuCoin pool is an important part of the global KuCoin ecosystem,
             uses the same accounting system as our cloud mining service to
-            ensure security. The KuCoin and Kufarm pool aims to erase the line
+            ensure security. The KuCoin and Bitcoino2 pool aims to erase the line
             between mining and trading by providing users with a wide range of
             mining solutions.
           </span>
