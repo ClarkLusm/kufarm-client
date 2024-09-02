@@ -44,7 +44,7 @@ export default function About() {
           CLOUD MINING
         </div>
         <div className="my-3 sm:text-xl font-semibold text-gray-500">
-          This is a bitcoin mining company using a mining pool from Kucoin, as
+          This is a bitcoino2 mining company using a mining pool from Kucoin, as
           well as which provides cloud mining services for cryptocurrency ASIC
           and GPU miners that will take care of repetitive and tedious processes
           for you, giving you more time to focus on growing your income and
@@ -54,7 +54,7 @@ export default function About() {
           cryptocurrency mining strategy around the world.
         </div>
         <div className="my-3 text-xl font-semibold text-gray-500">
-          Bitcoino2 offers bitcoin mining contracts from data centers in Asian
+          Bitcoino2 offers bitcoino2 mining contracts from data centers in Asian
           countries. Bitcoino2 uses technologies from leading companies and
           manufacturers in the industry. You get maximum performance at low
           cost.

@@ -50,8 +50,8 @@ export default function OrderPage({
       : [...orders, ...new Array(7 - orders.length).fill(null)];
 
   return (
-    <div className="my-10 flex">
-      <div className="w-full rounded-2xl bg-slate-100 dark:bg-slate-900 p-7">
+    <div className="p-4 flex">
+      <div className="w-full rounded-2xl bg-slate-100 dark:bg-slate-900">
         <div className="mb-5 text-2xl font-semibold">Order history:</div>
         <div className="overflow-x-auto">
           <Table>

@@ -5,9 +5,10 @@ import {
   TableHead,
   TableHeadCell,
   TableRow,
+  Clipboard,
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { ethers } from "ethers";
 import axios from "axios";
 
@@ -42,15 +43,38 @@ export default function ReferralPage({
   users,
   total,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { data } = useSession();
   const usersFormatted =
     users.length >= 7
       ? users
       : [...users, ...new Array(7 - users.length).fill(null)];
 
   return (
-    <div className="sm:my-10">
-      <div className="rounded-2xl bg-slate-100 dark:bg-slate-900 p-7">
-        <div className="mb-5 text-2xl font-semibold">Referral:</div>
+    <div className="">
+      <div className="rounded-2xl bg-slate-100 dark:bg-slate-900 p-4">
+        <div className="mb-5 text-2xl font-semibold">Referral</div>
+        <div className="grid grid-cols-3 gap-4 mb-4">
+          <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
+            <h4>Number of Friends Signed Up</h4>
+            <span className="text-xl text-gray-400">{total}</span>
+          </div>
+          <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
+            <h4>Total Earnings BITCOINO2</h4>
+            <span className="text-xl text-gray-400">
+              {data?.user.referralCommission}
+            </span>
+          </div>
+          <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
+            <h4>Referral code</h4>
+            <span className="text-xl text-gray-400 flex items-center">
+              <span>{data?.user.referralCode}</span>
+              <Clipboard.WithIcon
+                className="relative top-2 ml-3 p-0"
+                valueToCopy={data?.user.referralCode ?? ""}
+              />
+            </span>
+          </div>
+        </div>
         <div className="overflow-x-auto">
           <Table>
             <TableHead>

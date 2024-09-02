@@ -52,11 +52,23 @@ export default function BuyPage({
                 </div>
               </div>
             </div>
-            <Image src={p.image || ""} alt={p.name} />
+            <Image
+              src={p.image || ""}
+              alt={p.name}
+              width={100}
+              height={100}
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
+            />
           </div>
           <div className="flex items-center text-xl">
             <UsdIcon width={30} height={30} />
-            <div className="ml-2 font-medium text-gray-600 dark:text-gray-200">Price:</div>
+            <div className="ml-2 font-medium text-gray-600 dark:text-gray-200">
+              Price:
+            </div>
             <span className="ml-2 font-semibold">
               {p.price.toLocaleString("en-EN")}$
             </span>

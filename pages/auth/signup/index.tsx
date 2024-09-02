@@ -13,7 +13,7 @@ type Inputs = {
   email: string;
   password: string;
   rePassword: string;
-  referralId?: string | undefined | null;
+  referralCode?: string | undefined | null;
   walletAddress: string;
 };
 
@@ -49,7 +49,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-4 pb-8">
       <div className="m-auto sm:w-1/3 list-none rounded-xl border p-4 sm:p-10">
         <div className="m-auto mb-5 flex">
           <img
@@ -108,7 +108,7 @@ export default function SignUpPage() {
           <div>
             <TextInput
               required
-              placeholder="Your Wallet Adress e.g. 0x807974B411B6b2277d73d3D017f5749Fb7bD5E62"
+              placeholder="Your Binance Wallet Adress e.g. 0x807974B411B6b2277d73d3D017f5749Fb7bD5E62"
               {...register("walletAddress")}
               color={errors.walletAddress ? "failure" : ""}
               helperText={errors.walletAddress?.message}
@@ -116,17 +116,17 @@ export default function SignUpPage() {
           </div>
           <div>
             <TextInput
-              placeholder="Referral ID e.g. db80b3ac02224cbd947ab17dbacfde28"
-              {...register("referralId")}
-              color={errors.referralId ? "failure" : ""}
-              helperText={errors.referralId?.message}
+              placeholder="Referral code e.g. 4F8NI92OLI"
+              {...register("referralCode")}
+              color={errors.referralCode ? "failure" : ""}
+              helperText={errors.referralCode?.message}
             />
           </div>
           <div className="flex items-center gap-2">
             <Checkbox id="remember" onClick={() => setAgree(!agree)} />
             <Label htmlFor="remember" className="flex items-center">
               I agree to Bitcoino2
-              <Link target="_blank" href="#">
+              <Link target="_blank" href="#" className="ml-1">
                 Terms & Conditions
               </Link>
             </Label>

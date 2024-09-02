@@ -68,6 +68,9 @@ export default function Dashboard({
   useEffect(() => {
     if (!profile) return;
     const timer = setInterval(() => {
+      if (!profile.maxOut || profile.income >= profile.maxOut) {
+        clearInterval(timer);
+      }
       const balance = profile?.dailyIncome / 24 / 3600;
       setUserBalance((prev) => prev + balance);
     }, 1000);

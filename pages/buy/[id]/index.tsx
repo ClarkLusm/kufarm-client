@@ -66,9 +66,13 @@ export default function BuyOnePage({
           <Image
             src={product.image || ""}
             alt={product.name}
-            width={40}
-            height={0}
-            style={{ height: "auto" }}
+            width={100}
+            height={100}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
           />
         </div>
         <div className="mb-3 flex items-center">

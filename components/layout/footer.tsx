@@ -39,10 +39,10 @@ const FooterBase = () => {
               </FooterLinkGroup>
             </div>
             <div>
-              <FooterTitle title="Follow us" />
+              <FooterTitle title="Join us" />
               <FooterLinkGroup col>
-                <FooterLink href="#">Github</FooterLink>
-                <FooterLink href="#">Discord</FooterLink>
+                <FooterLink target="_blank" href="https://t.me/bitcoino2support">Support</FooterLink>
+                <FooterLink target="_blank" href="https://t.me/MiningBITCOINo2">Guide</FooterLink>
               </FooterLinkGroup>
             </div>
             <div>
@@ -58,7 +58,7 @@ const FooterBase = () => {
         </div>
         <FooterDivider />
         <div className="w-full sm:flex sm:items-center sm:justify-between p-4">
-          <FooterCopyright href="#" by="kufarm mining" year={2024} />
+          <FooterCopyright href="#" by="Bitcoino2fi" year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <FooterIcon href="#" icon={BsFacebook} />
             <FooterIcon href="#" icon={BsInstagram} />

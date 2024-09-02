@@ -7,6 +7,8 @@ declare module "next-auth" {
       username: string;
       email: string;
       balance: number;
+      referralCode: string;
+      referralCommission: number;
     };
     accessToken: string;
     refreshToken: string;

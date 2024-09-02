@@ -1,11 +1,12 @@
+import axios from "axios";
 import {
   Accordion,
   AccordionContent,
   AccordionPanel,
   AccordionTitle,
-} from 'flowbite-react';
+} from "flowbite-react";
 
-const FAQ = () => {
+const FAQ = ({ setting }: any) => {
   return (
     <div className="my-5">
       <div className="my-5 w-full text-center">
@@ -30,7 +31,7 @@ const FAQ = () => {
           </AccordionTitle>
           <AccordionContent>
             <p className="mb-2 font-semibold text-gray-500 dark:text-gray-400">
-              There are no fee in our service.
+              Our service has a fee of {setting?.withdrawFeePercent}%.
             </p>
           </AccordionContent>
         </AccordionPanel>
@@ -41,7 +42,8 @@ const FAQ = () => {
           <AccordionContent>
             <p className="mb-2 font-semibold text-gray-500 dark:text-gray-400">
               You can withdraw funds immediately upon reaching the minimum
-              withdrawal amount. The minimum withdrawal amount is 0.0001 BTC.
+              withdrawal amount. The minimum withdrawal amount is{" "}
+              {setting?.withdrawMin ?? 100} BTCo2.
             </p>
           </AccordionContent>
         </AccordionPanel>
@@ -77,7 +79,7 @@ const FAQ = () => {
               anyone is welcome. You can even promote our company and earn extra
               without having to make any investment. when a user registers using
               your referral link and rents a miner. 10% of the rental price is
-              sent as a reward to your Kufarm account. You can find a referral
+              sent as a reward to your BITCOINo2 account. You can find a referral
               link in your personal account on the referral page.
             </p>
           </AccordionContent>

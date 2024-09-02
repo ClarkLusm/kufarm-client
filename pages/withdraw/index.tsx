@@ -89,7 +89,7 @@ export default function WithdrawPage({
   };
 
   return (
-    <div className="p-4 sm:py-10 sm:flex">
+    <div className="p-4 sm:flex">
       <div className="mb-4 sm:mb-0 sm:mr-9 sm:w-1/3 rounded-2xl bg-slate-100 dark:bg-slate-800 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
         <div className="mb-5 flex items-center">
@@ -112,7 +112,7 @@ export default function WithdrawPage({
         <div className="pl-6 mb-5">
           <span className="text-sm text-gray-600 dark:text-gray-200">
             (~USD Balance:{" "}
-            {Number(balanceFormatted).toLocaleString("en-EN", {
+            {profile.balance.toLocaleString("en-EN", {
               maximumFractionDigits: 5,
             })}
             )

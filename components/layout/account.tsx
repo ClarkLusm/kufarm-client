@@ -26,7 +26,11 @@ const Account = () => {
         >
           Sign out
         </button>
-        <SignOutIcon width={20} className="sm:hidden fill-gray-500" />
+        <SignOutIcon
+          width={20}
+          className="sm:hidden fill-gray-500"
+          onClick={() => signOut({ callbackUrl: "/", redirect: true })}
+        />
       </div>
     );
   }
