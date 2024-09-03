@@ -53,23 +53,25 @@ export default function ReferralPage({
     <div className="">
       <div className="rounded-2xl bg-slate-100 dark:bg-slate-900 p-4">
         <div className="mb-5 text-2xl font-semibold">Referral</div>
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid sm:grid-cols-3 gap-4 mb-4">
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4>Number of Friends Signed Up</h4>
-            <span className="text-xl text-gray-400">{total}</span>
+            <h4 className="text-gray-400">Number of Friends Signed Up</h4>
+            <span className="text-md">{total}</span>
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4>Total Earnings BITCOINO2</h4>
-            <span className="text-xl text-gray-400">
+            <h4 className="text-gray-400">Total Earnings BITCOINO2</h4>
+            <span className="text-md">
               {data?.user.referralCommission}
             </span>
           </div>
-          <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4>Referral code</h4>
-            <span className="text-xl text-gray-400 flex items-center">
-              <span>{data?.user.referralCode}</span>
+          <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
+            <h4 className="text-gray-400">Referral link</h4>
+            <span className="text-md flex items-center overflow-hidden">
+              <span>
+                {process.env.NEXTAUTH_URL}/rf/{data?.user.referralCode ?? ""}
+              </span>
               <Clipboard.WithIcon
-                className="relative top-2 ml-3 p-0"
+                className="top-12 mt-1 bg-white dark:bg-slate-900"
                 valueToCopy={data?.user.referralCode ?? ""}
               />
             </span>

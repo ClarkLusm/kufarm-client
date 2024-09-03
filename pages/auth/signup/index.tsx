@@ -50,7 +50,7 @@ export default function SignUpPage() {
 
   return (
     <div className="p-4 pb-8">
-      <div className="m-auto sm:w-1/3 list-none rounded-xl border p-4 sm:p-10">
+      <div className="m-auto max-w-[500px] rounded-xl border p-4 sm:p-10">
         <div className="m-auto mb-5 flex">
           <img
             className="w-6"
@@ -124,7 +124,7 @@ export default function SignUpPage() {
           </div>
           <div className="flex items-center gap-2">
             <Checkbox id="remember" onClick={() => setAgree(!agree)} />
-            <Label htmlFor="remember" className="flex items-center">
+            <Label htmlFor="remember">
               I agree to Bitcoino2
               <Link target="_blank" href="#" className="ml-1">
                 Terms & Conditions
