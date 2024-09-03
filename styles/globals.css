@@ -27,6 +27,10 @@ body main {
   );
 }
 
+video {
+  height: 300px;
+}
+
 @-webkit-keyframes slide {
   0% {
     background-position-x: 0;

@@ -67,7 +67,7 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
                   maximumFractionDigits: 5,
                 })}
               </span>
-              <span className="ml-2">BITCO2</span>
+              <span className="ml-2">BTCO2</span>
             </p>
             <p className="text-center">
               has been withdrawn to your wallet address{" "}
@@ -92,7 +92,7 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
                     {data.amount.toLocaleString("en-EN", {
                       maximumFractionDigits: 5,
                     })}{" "}
-                    BITCO2
+                    BTCO2
                   </span>
                 </p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
@@ -102,7 +102,7 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
                     {data.transactionFee.toLocaleString("en-EN", {
                       maximumFractionDigits: 5,
                     })}
-                    <span className="ml-2">BITCO2</span>
+                    <span className="ml-2">BTCO2</span>
                   </span>
                 </p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
@@ -112,7 +112,7 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
                       "en-EN",
                       { maximumFractionDigits: 5 }
                     )}
-                    <span className="ml-2">BITCO2</span>
+                    <span className="ml-2">BTCO2</span>
                   </span>
                 </p>
               </div>

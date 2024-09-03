@@ -106,7 +106,7 @@ export default function WithdrawPage({
             {Number(balanceFormatted).toLocaleString("en-EN", {
               maximumFractionDigits: 5,
             })}{" "}
-            BITCO2
+            BTCO2
           </div>
         </div>
         <div className="pl-6 mb-5">
@@ -139,7 +139,7 @@ export default function WithdrawPage({
           </Button>
         </div>
         <div className="text-center font-semibold">
-          Minimal withdraw: {settings.withdrawMin} BITCO2
+          Minimal withdraw: {settings.withdrawMin} BTCO2
         </div>
         {errorMsg && (
           <Alert

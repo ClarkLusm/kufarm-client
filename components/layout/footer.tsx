@@ -17,6 +17,8 @@ import {
   BsTwitter,
 } from "react-icons/bs";
 
+import TeleIcon from "@/icons/telegram.svg";
+
 const FooterBase = () => {
   return (
     <Footer className="rounded-none">
@@ -41,15 +43,28 @@ const FooterBase = () => {
             <div>
               <FooterTitle title="Join us" />
               <FooterLinkGroup col>
-                <FooterLink target="_blank" href="https://t.me/bitcoino2support">Support</FooterLink>
-                <FooterLink target="_blank" href="https://t.me/MiningBITCOINo2">Guide</FooterLink>
+                <FooterLink
+                  target="_blank"
+                  href="https://t.me/bitcoino2support"
+                >
+                  <span className="flex items-center">
+                    <TeleIcon width={18} height={18} className="mr-1" />{" "}
+                    <span>Support</span>
+                  </span>
+                </FooterLink>
+                <FooterLink target="_blank" href="https://t.me/MiningBITCOINo2">
+                  <span className="flex items-center">
+                    <TeleIcon width={18} height={18} className="mr-1" />{" "}
+                    <span>Guide</span>
+                  </span>
+                </FooterLink>
               </FooterLinkGroup>
             </div>
             <div>
               <FooterTitle title="Legal" />
               <FooterLinkGroup col>
                 <FooterLink href="#">Privacy Policy</FooterLink>
-                <FooterLink href="https://kufarm.io/conditions">
+                <FooterLink href="#">
                   Terms &amp; Conditions
                 </FooterLink>
               </FooterLinkGroup>

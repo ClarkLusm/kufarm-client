@@ -80,26 +80,26 @@ export default function Home({
       id: "Multiple tokens",
       image: "https://kufarm.io/static/kufarm/adv-img3.png",
       title: "Multiple tokens",
-      content: "Currently, the Bitcoino2 pool supports BTCo2",
+      content: "Currently, the Bitcoino2 pool supports BTCO2",
     },
   ];
 
   const parameters = [
     {
       id: "1",
-      image: "https://kufarm.io/static/kufarm/adv2-img1.png",
+      image: "images/users.png",
       title: "Users",
       count: 23827,
     },
     {
       id: "2",
-      image: "https://kufarm.io/static/kufarm/adv2-img2.png",
+      image: "images/money.png",
       title: "Bitcoino2 mined",
       count: 1310.8879,
     },
     {
       id: "3",
-      image: "https://kufarm.io/static/kufarm/adv2-img3.png",
+      image: "images/purchase.png",
       title: "Bitcoino2 miner purchased",
       count: 30207,
     },
@@ -121,8 +121,8 @@ export default function Home({
               FREE {setting.maxOutNewUser}$ on first sign up!
             </Button>
           </div>
-          <div className="text-3xl sm:text-6xl font-semibold dark:text-white">
-            Start your Bitco2 mining journey today.
+          <div className="text-2xl sm:text-5xl font-semibold dark:text-white leading-7">
+            Start your <span className="font-bold">BITCOINO2</span> mining journey today.
           </div>
           <div className="my-6 text-base font-semibold text-slate-400">
             Get your first payout today
@@ -168,9 +168,9 @@ export default function Home({
             key={d.id}
             className="relative rounded-3xl border bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
           >
-            <div className="absolute -top-7 right-0 w-52">
+            {/* <div className="absolute -top-7 right-0 w-52">
               <img src={d.image} alt="" />
-            </div>
+            </div> */}
             <div className="w-3/4 pl-6 pb-6 pt-16">
               <h2 className="pb-4 text-3xl font-semibold dark:text-white">
                 {d.title}
@@ -182,12 +182,10 @@ export default function Home({
           </div>
         ))}
       </div>
-      <div className="mb-4 sm:mb-10 flex justify-between">
+      <div className="mb-4 sm:mb-10 grid grid-cols-3 gap-8">
         {parameters.map((p) => (
-          <div className="mx-4 h-64 w-2/6 text-center" key={p.id}>
-            <div className="h-24 w-full">
-              <img className="m-auto" src={p.image} alt="" />
-            </div>
+          <div className="mx-4 h-64 grid-item text-center" key={p.id}>
+            <img className="m-auto w-24" src={p.image} alt="" />
             <div className="">
               <h2 className="pb-4 text-xl sm:text-3xl font-semibold dark:text-white">
                 {p.count}
@@ -199,7 +197,7 @@ export default function Home({
           </div>
         ))}
       </div>
-      <div className="mb-20 flex justify-between">
+      <div className="mb-20 sm:flex justify-between">
         <div className="mt-4 sm:w-3/6 list-none pr-16">
           <div className="mb-8 text-3xl font-semibold dark:text-white">
             What is Bitcoino2?
@@ -207,8 +205,8 @@ export default function Home({
           <span className="text-lg/5 font-semibold text-slate-500">
             Bitcoino2 is a simple and affordable cloud mining service, the main
             purpose of which is to introduce a wider audience to the world of
-            bitcoino2 and other cryptocurrencies. BTCo2 has a huge number of
-            ASIC miners who mine Bitco2 daily on the Bitcoino2 pool
+            bitcoino2 and other cryptocurrencies. BTCO2 has a huge number of
+            ASIC miners who mine BTCO2 daily on the Bitcoino2 pool
           </span>
           <Button
             className="mb-3 mt-8"
@@ -221,8 +219,8 @@ export default function Home({
         </div>
         <div className="sm:w-3/6">
           <img
-            className="rounded-lg border-4"
-            src="	https://kufarm.io/static/kufarm/info-block-img.jpg"
+            className="rounded-lg"
+            src="images/mining.jpeg"
             alt=""
           />
         </div>
@@ -230,12 +228,12 @@ export default function Home({
       <div className="mb-20 sm:flex justify-between">
         <div className="sm:w-3/6">
           <video
-            className="w-11/12 rounded-lg border-4"
+            className="w-11/12 rounded-lg"
             controls
             autoPlay
             muted
           >
-            <source src="https://kufarm.io/static/kufarm/pr.mp4" />
+            <source src="media/pr.mp4" />
           </video>
         </div>
         <div className="mt-4 sm:w-3/6 list-none">
@@ -266,11 +264,6 @@ export default function Home({
             erase the line between mining and trading by providing users with a
             wide range of mining solutions.
           </span>
-          <img
-            className="absolute -left-20 top-0 h-60 w-full"
-            src="https://kufarm.io/static/kufarm/ls-arr1.png"
-            alt=""
-          />
         </div>
         <div className="relative float-end sm:w-2/4">
           <div className="absolute -left-6 -top-14 text-9xl font-semibold text-slate-200 dark:text-gray-600">
@@ -285,11 +278,6 @@ export default function Home({
             technologies. We strive to provide high-quality and innovative cloud
             mining service for users who need comprehensive mining services.
           </span>
-          <img
-            className="absolute -left-80 top-20 h-48 w-64"
-            src="https://kufarm.io/static/kufarm/ls-arr2.png"
-            alt=""
-          />
         </div>
         <div className="w-full pt-44">
           <div className="relative m-auto mt-36 sm:w-2/4 ">

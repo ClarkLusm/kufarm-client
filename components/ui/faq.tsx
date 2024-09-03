@@ -43,7 +43,7 @@ const FAQ = ({ setting }: any) => {
             <p className="mb-2 font-semibold text-gray-500 dark:text-gray-400">
               You can withdraw funds immediately upon reaching the minimum
               withdrawal amount. The minimum withdrawal amount is{" "}
-              {setting?.withdrawMin ?? 100} BTCo2.
+              {setting?.withdrawMin ?? 100} BTCO2.
             </p>
           </AccordionContent>
         </AccordionPanel>

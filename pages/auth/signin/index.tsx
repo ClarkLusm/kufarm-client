@@ -61,7 +61,6 @@ export default function SignInPage() {
             </Alert>
           )}
           <div className="flex items-center">
-            <img src="https://kufarm.io/static/kufarm/entrance.svg" alt="" />
             <div className="text-2xl font-bold dark:text-white">Login</div>
           </div>
           <div>
