@@ -98,22 +98,18 @@ export default function About() {
             services in the financial sector and successfully passes regular
             quality checks and official inspections of the services provided.
           </div>
-          <Navbar>
-            <NavbarLink href="https://find-and-update.company-information.service.gov.uk/company/14307013">
-              <Button
-                color="gray"
-                className="flex items-center rounded-2xl border px-7 py-1"
-              >
-                <div className="ml-2">
-                  <span className="text-xs">Co.Number</span>
-                  <div className="text-lg">14307013</div>
-                </div>
-              </Button>
-            </NavbarLink>
-          </Navbar>
+          <Button
+            color="gray"
+            className="flex items-center rounded-2xl border px-7 py-1"
+          >
+            <div className="ml-2">
+              <span className="text-xs">Co.Number</span>
+              <div className="text-lg">14307013</div>
+            </div>
+          </Button>
         </div>
         <div className="sm:ml-28 sm:max-w-[50%]">
-          <img src="images/mining.jpeg" />
+          <img src="images/cert.jpeg" />
         </div>
       </div>
       <div>
