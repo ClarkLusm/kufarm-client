@@ -60,19 +60,20 @@ export default function ReferralPage({
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Total Earnings BITCOINO2</h4>
-            <span className="text-md">
-              {data?.user.referralCommission}
-            </span>
+            <span className="text-md">{data?.user.referralCommission}</span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Referral link</h4>
             <span className="text-md flex items-center overflow-hidden">
               <span>
-                {process.env.NEXTAUTH_URL}/rf/{data?.user.referralCode ?? ""}
+                {process.env.NEXTAUTH_URL}/referral/
+                {data?.user.referralCode ?? ""}
               </span>
               <Clipboard.WithIcon
                 className="top-12 mt-1 bg-white dark:bg-slate-900"
-                valueToCopy={data?.user.referralCode ?? ""}
+                valueToCopy={`${process.env.NEXTAUTH_URL}/referral/${
+                  data?.user.referralCode ?? ""
+                }`}
               />
             </span>
           </div>

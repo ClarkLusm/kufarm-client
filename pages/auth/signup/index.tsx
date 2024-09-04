@@ -1,8 +1,9 @@
 import { Button, Checkbox, Label, Alert, TextInput } from "flowbite-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
@@ -19,16 +20,25 @@ type Inputs = {
 
 export default function SignUpPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const referralCode = searchParams.get("referral");
   const [message, setMessage] = useState("");
   const [agree, setAgree] = useState(false);
   const [successful, setSuccessful] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(SignUpSchema),
   });
+
+  useEffect(() => {
+    if (referralCode) {
+      setValue("referralCode", referralCode);
+    }
+  }, [referralCode]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     axios
@@ -57,7 +67,9 @@ export default function SignUpPage() {
             src="https://kufarm.io/static/kufarm/user.svg"
             alt=""
           />
-          <span className="ml-3 text-xl font-semibold dark:text-white">Registration</span>
+          <span className="ml-3 text-xl font-semibold dark:text-white">
+            Registration
+          </span>
         </div>
         <form
           className="flex max-w-md flex-col gap-4"
@@ -108,7 +120,7 @@ export default function SignUpPage() {
           <div>
             <TextInput
               required
-              placeholder="Your Binance Wallet Adress e.g. 0x807974B411B6b2277d73d3D017f5749Fb7bD5E62"
+              placeholder="Your Binance Wallet Address e.g. 0x807974B411B6b2277d73d3D017f5749Fb7bD5E62"
               {...register("walletAddress")}
               color={errors.walletAddress ? "failure" : ""}
               helperText={errors.walletAddress?.message}
