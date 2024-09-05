@@ -1,8 +1,7 @@
 type ReferralUser = {
   id: string;
   email: string;
-  referredUser: {
-    btco2Value: number;
-    level: number;
-  };
+  btco2Value: number;
+  level: number;
+  updatedAt?: Date | null;
 };

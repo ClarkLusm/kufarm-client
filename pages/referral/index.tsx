@@ -108,11 +108,11 @@ const UserItem = ({ index, data }: TransactionProps) => {
         {index}
       </TableCell>
       <TableCell>{data?.email || "..."}</TableCell>
-      <TableCell>{data?.referredUser?.level || "..."}</TableCell>
+      <TableCell>{data?.level || "..."}</TableCell>
       <TableCell>
         {data
-          ? data.referredUser?.btco2Value
-            ? ethers.formatUnits(data.referredUser.btco2Value.toString(), 18)
+          ? data.btco2Value
+            ? ethers.formatUnits(data.btco2Value.toString(), 18)
             : 0
           : "..."}
       </TableCell>
