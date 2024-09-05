@@ -159,8 +159,8 @@ export default function InvoiceDetailPage({
   if (!hasMounted) return null;
 
   return (
-    <div className="px-4">
-      <div className="m-auto sm:my-5 sm:w-3/4 rounded-t-3xl border bg-white dark:bg-gray-900">
+    <div className="px-4 pb-8">
+      <div className="m-auto sm:w-3/4 rounded-t-3xl border bg-white dark:bg-gray-900">
         {chainId && chainId !== invoice.chainId && (
           <div className="mx-auto my-4 sm:w-4/6">
             <Alert color="failure">

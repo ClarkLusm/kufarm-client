@@ -14,7 +14,7 @@ const metadata = {
   name: 'Bitcoino2fi',
   description: 'Bitcoino2fi description',
   url: process.env.NEXTAUTH_URL ?? '', // origin must match your domain & subdomain
-  icons: ['https://avatars.mywebsite.com/']
+  icons: ['http://bitcoino2fi.com/']
 }
 // 4. Create Ethers config
 const ethersConfig = defaultConfig({
@@ -22,9 +22,9 @@ const ethersConfig = defaultConfig({
   metadata,
 
   /*Optional*/
-  // enableEIP6963: true, // true by default
-  // enableInjected: true, // true by default
-  // enableCoinbase: true, // true by default
+  enableEIP6963: true, // true by default
+  enableInjected: false, // true by default
+  enableCoinbase: false, // true by default
   // rpcUrl: '...', // used for the Coinbase SDK
   // defaultChainId: 1 // used for the Coinbase SDK
 })

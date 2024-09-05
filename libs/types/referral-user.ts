@@ -1,6 +1,8 @@
 type ReferralUser = {
-  btco2Value: number;
-  user: {
-    email: string;
+  id: string;
+  email: string;
+  referralCommissions: {
+    btco2Value: number;
+    level: number;
   };
 };

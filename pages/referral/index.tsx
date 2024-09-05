@@ -16,15 +16,13 @@ export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
   try {
     const resp = await axios.get(
-      `${process.env.API_URL}/api/account/my-referrals`,
+      `${process.env.API_URL}/api/account/referrals`,
       {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
         },
       }
     );
-    console.log(resp.data.data);
-
     return {
       props: {
         users: resp?.data?.data,
@@ -59,7 +57,7 @@ export default function ReferralPage({
             <span className="text-md">{total}</span>
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4 className="text-gray-400">Total Earnings BITCOINO2</h4>
+            <h4 className="text-gray-400">Total Earnings BTCO2</h4>
             <span className="text-md">{data?.user.referralCommission}</span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
@@ -108,10 +106,15 @@ const UserItem = ({ index, data }: TransactionProps) => {
       <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
         {index}
       </TableCell>
-      <TableCell>{data?.user?.email || "..."}</TableCell>
+      <TableCell>{data?.email || "..."}</TableCell>
       <TableCell>
-        {data?.btco2Value
-          ? ethers.formatUnits(data?.btco2Value.toString(), 18)
+        {data
+          ? data.referralCommissions?.btco2Value
+            ? ethers.formatUnits(
+                data.referralCommissions.btco2Value.toString(),
+                18
+              )
+            : 0
           : "..."}
       </TableCell>
       <TableCell>{data ? "BTCO2" : "..."}</TableCell>

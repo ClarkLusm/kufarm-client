@@ -61,7 +61,7 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
         {success ? (
           <div className="space-y-4 pb-6 flex flex-col items-center">
             <FaCheckCircle className="inline-block my-4 text-7xl text-green-400" />
-            <p className="text-2xl">
+            <p className="text-2xl dark:text-white">
               <span className="font-bold">
                 {data.amount.toLocaleString("en-EN", {
                   maximumFractionDigits: 5,
@@ -69,7 +69,7 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
               </span>
               <span className="ml-2">BTCO2</span>
             </p>
-            <p className="text-center">
+            <p className="text-center dark:text-gray-400">
               has been withdrawn to your wallet address{" "}
               <span className="font-semibold">{data.withdrawTo}</span>.<br />
             </p>
@@ -81,11 +81,11 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
           <>
             <Modal.Body>
               <div className="space-y-4">
-                <p className="font-semibold">Withdraw to</p>
+                <p className="font-semibold dark:text-white">Withdraw to</p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
                   {data.withdrawTo}
                 </p>
-                <p className="font-semibold">Details</p>
+                <p className="font-semibold dark:text-white">Details</p>
                 <p className="flex justify-between text-gray-500 dark:text-gray-400">
                   <span>Amount: </span>
                   <span>
