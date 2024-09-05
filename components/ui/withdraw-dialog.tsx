@@ -27,7 +27,10 @@ export function WithdrawConfirmDialog({ show, onClose, data }: DialogProps) {
       setLoading(true);
       await axios.post(
         `${process.env.API_URL}/api/account/withdraw`,
-        { amount: data.amount, transactionFee: data.transactionFee },
+        {
+          amount: Number(data.amount),
+          transactionFee: Number(data.transactionFee),
+        },
         {
           headers: {
             Authorization: `Bearer ${session?.data?.accessToken}`,
