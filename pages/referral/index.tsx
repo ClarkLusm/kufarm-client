@@ -8,25 +8,27 @@ import {
   Clipboard,
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { ethers } from "ethers";
 import axios from "axios";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
+  const reqOptions = {
+    headers: {
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  };
   try {
-    const resp = await axios.get(
-      `${process.env.API_URL}/api/account/referrals`,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    );
+    const [profileRes, referralRes] = await Promise.all([
+      axios.get(`${process.env.API_URL}/api/account/profile`, reqOptions),
+      axios.get(`${process.env.API_URL}/api/account/referrals`, reqOptions),
+    ]);
     return {
       props: {
-        users: resp?.data?.data,
-        total: resp?.data?.total,
+        profile: profileRes.data,
+        users: referralRes.data.data,
+        total: referralRes.data.total,
       },
     };
   } catch (error: any) {
@@ -38,10 +40,10 @@ export const getServerSideProps = async (ctx: any) => {
 };
 
 export default function ReferralPage({
+  profile,
   users,
   total,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { data } = useSession();
   const usersFormatted =
     users.length >= 7
       ? users
@@ -58,19 +60,19 @@ export default function ReferralPage({
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Total Earnings BTCO2</h4>
-            <span className="text-md">{data?.user.referralCommission}</span>
+            <span className="text-md">{profile?.referralCommission}</span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Referral link</h4>
             <span className="text-md flex items-center overflow-hidden">
               <span>
                 {process.env.NEXTAUTH_URL}/referral/
-                {data?.user.referralCode ?? ""}
+                {profile?.referralCode ?? ""}
               </span>
               <Clipboard.WithIcon
                 className="top-12 mt-1 bg-white dark:bg-slate-900"
                 valueToCopy={`${process.env.NEXTAUTH_URL}/referral/${
-                  data?.user.referralCode ?? ""
+                  profile?.referralCode ?? ""
                 }`}
               />
             </span>
