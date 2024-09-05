@@ -81,6 +81,7 @@ export default function ReferralPage({
             <TableHead>
               <TableHeadCell>№</TableHeadCell>
               <TableHeadCell>Email</TableHeadCell>
+              <TableHeadCell>Fn</TableHeadCell>
               <TableHeadCell>Amount</TableHeadCell>
               <TableHeadCell>Coin</TableHeadCell>
             </TableHead>
@@ -107,13 +108,11 @@ const UserItem = ({ index, data }: TransactionProps) => {
         {index}
       </TableCell>
       <TableCell>{data?.email || "..."}</TableCell>
+      <TableCell>{data?.referredUser?.level || "..."}</TableCell>
       <TableCell>
         {data
-          ? data.referralCommissions?.btco2Value
-            ? ethers.formatUnits(
-                data.referralCommissions.btco2Value.toString(),
-                18
-              )
+          ? data.referredUser?.btco2Value
+            ? ethers.formatUnits(data.referredUser.btco2Value.toString(), 18)
             : 0
           : "..."}
       </TableCell>
