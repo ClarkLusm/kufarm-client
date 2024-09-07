@@ -71,7 +71,7 @@ const FooterBase = () => {
             </div>
           </div>
         </div>
-        <FooterDivider />
+        <FooterDivider className="my-2 lg:mb-2" />
         <div className="w-full sm:flex sm:items-center sm:justify-between p-4">
           <FooterCopyright href="#" by="Bitcoino2fi" year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">

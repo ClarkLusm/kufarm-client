@@ -13,7 +13,6 @@ import {
 import { InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
-import { ethers } from "ethers";
 import axios from "axios";
 
 import { Transaction } from "@/libs/types/transaction";
@@ -21,6 +20,7 @@ import { shortAddress } from "@/utils";
 import { WithdrawConfirmDialog } from "@/components/ui/withdraw-dialog";
 import EmailIcon from "@/icons/email.svg";
 import BtcIcon from "@/icons/btc.svg";
+import UsdIcon from "@/icons/usd.svg";
 import WalletIcon from "@/icons/wallet.svg";
 
 export const getServerSideProps = async (ctx: any) => {
@@ -63,6 +63,7 @@ export default function WithdrawPage({
   const [openModal, setOpenModal] = useState(false);
 
   const balanceFormatted = Number(profile.balanceToken);
+  const commissionFormatted = Number(profile.referralCommission);
   const transItems =
     transactions.length >= 7
       ? transactions
@@ -97,34 +98,40 @@ export default function WithdrawPage({
             {profile.email}
           </div>
         </div>
-        <div className="flex items-center">
-          <BtcIcon width={24} />
-          <div className="ml-2 font-semibold">Your Balance: </div>
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center">
+            <UsdIcon width={22} />
+            <div className="ml-2 font-semibold">Your USD balance: </div>
+          </div>
           <div className="ml-2 text-gray-600 dark:text-gray-200">
-            {Number(balanceFormatted).toLocaleString("en-EN", {
-              maximumFractionDigits: 5,
-            })}{" "}
-            BTCO2
+            {profile.balance.toLocaleString("en-EN")}
+          </div>
+        </div>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <BtcIcon width={24} />
+            <div className="ml-2 font-semibold">Your BTCO2 available: </div>
+          </div>
+          <div className="ml-2 text-gray-600 dark:text-gray-200">
+            {Number(balanceFormatted + commissionFormatted).toLocaleString(
+              "en-EN"
+            )}
           </div>
         </div>
         <div className="pl-6 mb-5">
-          <span className="text-sm text-gray-600 dark:text-gray-200">
-            (~USD Balance:{" "}
-            {profile.balance.toLocaleString("en-EN", {
-              maximumFractionDigits: 5,
-            })}
-            )
+          <span className="text-sm text-gray-400">
+            (~Summary of the mint balance and referral commissions)
           </span>
         </div>
         <div className="mb-5">
-          <div className="mb-5 flex items-center">
+          <div className="mb-2 flex items-center">
             <WalletIcon width={24} />
             <div className="ml-2 font-semibold">Wallet address:</div>
           </div>
           <TextInput disabled value={profile.walletAddress} />
         </div>
         <div className="mb-5">
-          <div className="mb-5 flex items-center">
+          <div className="mb-2 flex items-center">
             <BtcIcon width={24} />
             <div className="ml-2 font-semibold">Withdraw amount:</div>
           </div>
