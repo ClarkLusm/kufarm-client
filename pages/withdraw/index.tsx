@@ -84,7 +84,8 @@ export default function WithdrawPage({
   };
 
   const onChange = (e: any) => {
-    setAmount(e.target.value);
+    const value = e.target.value.replace(/\D/g, "");
+    setAmount(value);
     if (errorMsg) setErrorMsg("");
   };
 
@@ -133,7 +134,11 @@ export default function WithdrawPage({
           <TextInput value={amount} onChange={onChange} />
         </div>
         <div className="flex justify-center mb-4">
-          <Button className="text-medium min-w-[120px] text-white" color="success" onClick={onSubmit}>
+          <Button
+            className="text-medium min-w-[120px] text-white"
+            color="success"
+            onClick={onSubmit}
+          >
             <WalletIcon width={20} className="mr-2" />
             Withdraw
           </Button>
