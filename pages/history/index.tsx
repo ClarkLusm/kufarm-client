@@ -18,7 +18,7 @@ export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
   try {
     const resp = await axios.get(
-      `${process.env.API_URL}/api/account/my-orders`,
+      `${process.env.API_URL}/api/account/orders`,
       {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,

@@ -34,7 +34,7 @@ export const getServerSideProps = async (ctx: any) => {
   try {
     const [profileRes, withdrawRes, settingRes] = await Promise.all([
       axios.get(`${process.env.API_URL}/api/account/profile`, reqOptions),
-      axios.get(`${process.env.API_URL}/api/account/withdraws`, reqOptions),
+      axios.get(`${process.env.API_URL}/api/account/transactions`, reqOptions),
       axios.get(`${process.env.API_URL}/api/app-settings`, reqOptions),
     ]);
     return {
