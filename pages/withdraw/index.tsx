@@ -62,10 +62,7 @@ export default function WithdrawPage({
   const [errorMsg, setErrorMsg] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
-  const balanceFormatted = ethers.formatUnits(
-    (profile.balanceToken || 0).toString(),
-    18
-  );
+  const balanceFormatted = Number(profile.balanceToken);
   const transItems =
     transactions.length >= 7
       ? transactions
