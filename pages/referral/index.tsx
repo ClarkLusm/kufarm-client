@@ -9,8 +9,8 @@ import {
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
-import { ethers } from "ethers";
 import axios from "axios";
+import moment from "moment";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -84,8 +84,10 @@ export default function ReferralPage({
               <TableHeadCell>№</TableHeadCell>
               <TableHeadCell>Email</TableHeadCell>
               <TableHeadCell>Fn</TableHeadCell>
-              <TableHeadCell>Amount</TableHeadCell>
+              <TableHeadCell>Withdraw Amount</TableHeadCell>
+              <TableHeadCell>Commission Amount</TableHeadCell>
               <TableHeadCell>Coin</TableHeadCell>
+              <TableHeadCell>Latest withdraw</TableHeadCell>
             </TableHead>
             <TableBody className="w-screen divide-y">
               {usersFormatted.map((t: ReferralUser, index: number) => (
@@ -111,14 +113,12 @@ const UserItem = ({ index, data }: TransactionProps) => {
       </TableCell>
       <TableCell>{data?.email || "..."}</TableCell>
       <TableCell>{data?.level || "..."}</TableCell>
-      <TableCell>
-        {data
-          ? data.btco2Value
-            ? ethers.formatUnits(data.btco2Value.toString(), 18)
-            : 0
-          : "..."}
-      </TableCell>
+      <TableCell>{data ? data.withdrawValue || 0 : "..."}</TableCell>
+      <TableCell>{data ? data.btco2Value || 0 : "..."}</TableCell>
       <TableCell>{data ? "BTCO2" : "..."}</TableCell>
+      <TableCell>
+        {data ? moment(data.updatedAt).format("YYYY/MM/DD HH:mm") : "..."}
+      </TableCell>
     </TableRow>
   );
 };
