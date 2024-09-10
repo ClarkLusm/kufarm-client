@@ -29,6 +29,7 @@ export const getServerSideProps = async (ctx: any) => {
         profile: profileRes.data,
         users: referralRes.data.data,
         total: referralRes.data.total,
+        withdrawTotal: referralRes.data.withdrawTotal,
       },
     };
   } catch (error: any) {
@@ -43,6 +44,7 @@ export default function ReferralPage({
   profile,
   users,
   total,
+  withdrawTotal,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const usersFormatted =
     users.length >= 7
@@ -59,8 +61,10 @@ export default function ReferralPage({
             <span className="text-md">{total}</span>
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4 className="text-gray-400">Total Earnings BTCO2</h4>
-            <span className="text-md">{profile?.referralCommission}</span>
+            <h4 className="text-gray-400">Total Earnings / Total Investment</h4>
+            <span className="text-md">
+              {profile?.referralCommission} / {withdrawTotal}
+            </span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Referral link</h4>
@@ -112,12 +116,18 @@ const UserItem = ({ index, data }: TransactionProps) => {
         {index}
       </TableCell>
       <TableCell>{data?.email || "..."}</TableCell>
-      <TableCell>{data?.level || "..."}</TableCell>
-      <TableCell>{data ? data.withdrawValue || 0 : "..."}</TableCell>
-      <TableCell>{data ? data.btco2Value || 0 : "..."}</TableCell>
-      <TableCell>{data ? "BTCO2" : "..."}</TableCell>
-      <TableCell>
-        {data ? moment(data.updatedAt).format("YYYY/MM/DD HH:mm") : "..."}
+      <TableCell align="center">{data?.level || "..."}</TableCell>
+      <TableCell align="right">
+        {data ? data.withdrawValue || 0 : "..."}
+      </TableCell>
+      <TableCell align="right">{data ? data.btco2Value || 0 : "..."}</TableCell>
+      <TableCell align="center">{data ? "BTCO2" : "..."}</TableCell>
+      <TableCell align="center">
+        {data
+          ? data.updatedAt
+            ? moment(data.updatedAt).format("YYYY/MM/DD HH:mm")
+            : "-"
+          : "..."}
       </TableCell>
     </TableRow>
   );
