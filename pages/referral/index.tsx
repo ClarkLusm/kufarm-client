@@ -63,7 +63,8 @@ export default function ReferralPage({
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Total Earnings / Total Investment</h4>
             <span className="text-md">
-              {profile?.referralCommission} / {withdrawTotal}
+              {Number(profile?.referralCommission || 0).toLocaleString("en-EN")}{" "}
+              / {Number(withdrawTotal).toLocaleString("en-EN")}
             </span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
@@ -118,9 +119,11 @@ const UserItem = ({ index, data }: TransactionProps) => {
       <TableCell>{data?.email || "..."}</TableCell>
       <TableCell align="center">{data?.level || "..."}</TableCell>
       <TableCell align="right">
-        {data ? data.withdrawValue || 0 : "..."}
+        {data ? Number(data.withdrawValue || 0).toLocaleString("en-EN") : "..."}
       </TableCell>
-      <TableCell align="right">{data ? data.btco2Value || 0 : "..."}</TableCell>
+      <TableCell align="right">
+        {data ? Number(data.btco2Value || 0).toLocaleString("en-EN") : "..."}
+      </TableCell>
       <TableCell align="center">{data ? "BTCO2" : "..."}</TableCell>
       <TableCell align="center">
         {data
