@@ -78,8 +78,8 @@ const FAQ = ({ setting }: any) => {
               You can earn extra money by referring your friends or family.
               anyone is welcome. You can even promote our company and earn extra
               without having to make any investment. when a user registers using
-              your referral link and rents a miner. 10% of the rental price is
-              sent as a reward to your BITCOINo2 account. You can find a referral
+              your referral link and rents a miner. (10%f1) - (5%f2) - (3%f4-f5) - (2%f5-f10) - (1%f11-f15) of the rental price is
+              sent as a reward to your BITCOINo2 account with the condition that 1f1 gets 1f - 10f1 gets 15f. You can find a referral
               link in your personal account on the referral page.
             </p>
           </AccordionContent>
