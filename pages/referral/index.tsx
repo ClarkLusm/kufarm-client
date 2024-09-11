@@ -61,10 +61,9 @@ export default function ReferralPage({
             <span className="text-md">{total}</span>
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4 className="text-gray-400 overflow-hidden text-ellipsis whitespace-nowrap">Total Earnings/ Total Investment</h4>
+            <h4 className="text-gray-400">Total Investment USDT</h4>
             <span className="text-md">
-              {Number(profile?.referralCommission || 0).toLocaleString("en-EN")}{" BTCO2 "}
-              / {Number(investTotal).toLocaleString("en-EN")} USDT
+              {Number(investTotal).toLocaleString("en-EN")}
             </span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
