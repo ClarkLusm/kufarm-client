@@ -29,7 +29,7 @@ export const getServerSideProps = async (ctx: any) => {
         profile: profileRes.data,
         users: referralRes.data.data,
         total: referralRes.data.total,
-        withdrawTotal: referralRes.data.withdrawTotal,
+        investTotal: referralRes.data.investTotal,
       },
     };
   } catch (error: any) {
@@ -44,7 +44,7 @@ export default function ReferralPage({
   profile,
   users,
   total,
-  withdrawTotal,
+  investTotal,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const usersFormatted =
     users.length >= 7
@@ -61,10 +61,10 @@ export default function ReferralPage({
             <span className="text-md">{total}</span>
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4 className="text-gray-400">Total Earnings / Total Investment</h4>
+            <h4 className="text-gray-400">Total Earnings BTCO2/ Total Investment USDT</h4>
             <span className="text-md">
               {Number(profile?.referralCommission || 0).toLocaleString("en-EN")}{" "}
-              / {Number(withdrawTotal).toLocaleString("en-EN")}
+              / {Number(investTotal).toLocaleString("en-EN")}
             </span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
