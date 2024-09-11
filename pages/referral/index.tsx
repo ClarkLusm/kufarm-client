@@ -61,10 +61,10 @@ export default function ReferralPage({
             <span className="text-md">{total}</span>
           </div>
           <div className="grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
-            <h4 className="text-gray-400">Total Earnings BTCO2/ Total Investment USDT</h4>
+            <h4 className="text-gray-400 overflow-hidden text-ellipsis whitespace-nowrap">Total Earnings/ Total Investment</h4>
             <span className="text-md">
-              {Number(profile?.referralCommission || 0).toLocaleString("en-EN")}{" "}
-              / {Number(investTotal).toLocaleString("en-EN")}
+              {Number(profile?.referralCommission || 0).toLocaleString("en-EN")}{" BTCO2 "}
+              / {Number(investTotal).toLocaleString("en-EN")} USDT
             </span>
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
@@ -89,7 +89,6 @@ export default function ReferralPage({
               <TableHeadCell>№</TableHeadCell>
               <TableHeadCell>Email</TableHeadCell>
               <TableHeadCell>Fn</TableHeadCell>
-              <TableHeadCell>Withdraw Amount</TableHeadCell>
               <TableHeadCell>Commission Amount</TableHeadCell>
               <TableHeadCell>Coin</TableHeadCell>
               <TableHeadCell>Latest withdraw</TableHeadCell>
@@ -118,9 +117,6 @@ const UserItem = ({ index, data }: TransactionProps) => {
       </TableCell>
       <TableCell>{data?.email || "..."}</TableCell>
       <TableCell align="center">{data?.level || "..."}</TableCell>
-      <TableCell align="right">
-        {data ? Number(data.withdrawValue || 0).toLocaleString("en-EN") : "..."}
-      </TableCell>
       <TableCell align="right">
         {data ? Number(data.btco2Value || 0).toLocaleString("en-EN") : "..."}
       </TableCell>
