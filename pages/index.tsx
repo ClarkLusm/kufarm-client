@@ -1,4 +1,4 @@
-import { Button, Carousel } from "flowbite-react";
+import { Carousel, Button, Clipboard } from "flowbite-react";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import router from "next/router";
@@ -122,7 +122,39 @@ export default function Home({
             </Button>
           </div>
           <div className="text-2xl sm:text-5xl font-semibold dark:text-white leading-7">
-            Start your <span className="font-bold">BITCOINO2</span> mining journey today.
+            Start your <span className="font-bold">BITCOINO2</span> mining
+            journey today.
+          </div>
+          <div className="mt-4 text-base font-semibold text-slate-400">
+            <p>Overview</p>
+            <p>
+              Max Total Supply{" "}
+              <span className="font-bold text-slate-500">
+                100,000,000 BTCO2
+              </span>
+            </p>
+            <br />
+            <p>Other Info</p>
+            <p>Token Contract (WITH 18 Decimals)</p>
+            <p className="relative inline-block pr-10 max-w-full break-all">
+              <a
+                href="https://bscscan.com/token/0xb846cad46411d761d69a7f9c29fa37c7ab157ce4#balances"
+                target="_blank"
+                className="font-bold text-slate-500"
+              >
+                0xb846cad46411d761d69a7f9c29fa37c7ab157ce4
+              </a>
+              <Clipboard.WithIcon
+                className="right-0 w-auto p-3"
+                valueToCopy="0xb846cad46411d761d69a7f9c29fa37c7ab157ce4"
+              />
+            </p>
+            <br />
+            <p className="mt-2">
+              <a href="https://pancakeswap.finance" target="_blank">
+                TOKEN SWAP (BTCO2)
+              </a>
+            </p>
           </div>
           <div className="my-6 text-base font-semibold text-slate-400">
             Get your first payout today
@@ -218,21 +250,12 @@ export default function Home({
           </Button>
         </div>
         <div className="sm:w-3/6">
-          <img
-            className="rounded-lg"
-            src="images/mining.jpeg"
-            alt=""
-          />
+          <img className="rounded-lg" src="images/mining.jpeg" alt="" />
         </div>
       </div>
       <div className="mb-20 sm:flex justify-between">
         <div className="sm:w-3/6">
-          <video
-            className="w-11/12 rounded-lg"
-            controls
-            autoPlay
-            muted
-          >
+          <video className="w-11/12 rounded-lg" controls autoPlay muted>
             <source src="media/pr.mp4" />
           </video>
         </div>
