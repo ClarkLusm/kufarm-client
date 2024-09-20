@@ -75,9 +75,9 @@ export default function InvoiceDetailPage({
     setHasMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (isConnected) getAllowance();
-  }, [isConnected]);
+  // useEffect(() => {
+  //   if (isConnected) getAllowance();
+  // }, [isConnected]);
 
   const formattedAmount = ethers.formatUnits(
     invoice.amount.toString(),
