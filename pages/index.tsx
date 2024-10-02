@@ -7,6 +7,7 @@ import axios from "axios";
 
 import Faq from "@/components/ui/faq";
 import { Product } from "@/libs/types/product";
+import { NotifyModal } from "@/components/notify-modal";
 
 export async function generateMetadata(props: { params: { locale: string } }) {
   return {
@@ -333,6 +334,7 @@ export default function Home({
           </Button>
         </div>
       </div>
+      <NotifyModal />
     </div>
   );
 }
