@@ -2,6 +2,7 @@ import { Flowbite } from "flowbite-react";
 
 import Footer from "./footer";
 import Header from "./header";
+import { NotifyModal } from "../notify-modal";
 
 export default function Layout({ children }: any) {
   return (
@@ -11,6 +12,7 @@ export default function Layout({ children }: any) {
         <div className="main container max-w-[1100px] mx-auto h-max pt-24">{children}</div>
       </main>
       <Footer />
+      <NotifyModal />
     </Flowbite>
   );
 }

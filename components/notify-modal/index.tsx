@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next";
 import { Checkbox, Modal } from "flowbite-react";
+import { useSession } from "next-auth/react";
 import axios from "axios";
 
 export const NotifyModal = () => {
+  const session = useSession();
   const [notify, setNotify] = useState<Notify | null>(null);
 
   useEffect(() => {
     const shownNotify = getCookie("shownNotify");
     if (!shownNotify) {
       axios
-        .get(`${process.env.API_URL}/api/app-notify`)
+        .get(`${process.env.API_URL}/api/app-notify`, {
+          headers: {
+            Authorization: `Bearer ${session?.data?.accessToken}`,
+          },
+        })
         .then((res) => res.data)
         .then((data) => {
           if (data) {
