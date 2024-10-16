@@ -9,25 +9,27 @@ export const NotifyModal = () => {
   const [notify, setNotify] = useState<Notify | null>(null);
 
   useEffect(() => {
-    const shownNotify = getCookie("shownNotify");
-    if (!shownNotify) {
-      axios
-        .get(`${process.env.API_URL}/api/app-notify`, {
-          headers: {
-            Authorization: `Bearer ${session?.data?.accessToken}`,
-          },
-        })
-        .then((res) => res.data)
-        .then((data) => {
-          if (data) {
-            setTimeout(() => {
-              setNotify(data);
-            }, (data?.condition?.delay ?? 0) * 1000);
-          }
-        })
-        .catch((e) => console.error(e));
+    if (session.status != "loading") {
+      const shownNotify = getCookie("shownNotify");
+      if (!shownNotify) {
+        axios
+          .get(
+            `${process.env.API_URL}/api/app-notify?user_logged=${
+              session.status == "authenticated" ? 1 : 0
+            }`
+          )
+          .then((res) => res.data)
+          .then((data) => {
+            if (data) {
+              setTimeout(() => {
+                setNotify(data);
+              }, (data?.condition?.delay ?? 0) * 1000);
+            }
+          })
+          .catch((e) => console.error(e));
+      }
     }
-  }, []);
+  }, [session.status]);
 
   return (
     <Modal
