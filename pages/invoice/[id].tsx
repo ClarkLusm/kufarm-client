@@ -80,7 +80,7 @@ export default function InvoiceDetailPage({
   // }, [isConnected]);
 
   const formattedAmount = ethers.formatUnits(
-    invoice.amount.toString(),
+    invoice.amountText,
     invoice.decimals
   );
   const bigIntAmount = ethers.parseUnits(formattedAmount, invoice.decimals);
