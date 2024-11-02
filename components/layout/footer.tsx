@@ -1,6 +1,5 @@
 import {
   Footer,
-  FooterBrand,
   FooterCopyright,
   FooterDivider,
   FooterIcon,
@@ -16,6 +15,7 @@ import {
   BsInstagram,
   BsTwitter,
 } from "react-icons/bs";
+import Link from "next/link";
 
 import TeleIcon from "@/icons/telegram.svg";
 
@@ -24,14 +24,14 @@ const FooterBase = () => {
     <Footer className="rounded-none">
       <div className="container max-w-[1100px] mx-auto">
         <div className="grid w-full items-center justify-between sm:flex sm:justify-between md:flex md:grid-cols-1 px-4 pt-4">
-          <div>
-            <FooterBrand
-              href="https://flowbite.com"
-              src="https://flowbite.com/docs/images/logo.svg"
-              alt="Bitcoino2fi Logo"
-              name="Bitcoino2fi"
-            />
-          </div>
+            <Link href="/" className="flex items-center">
+              <img
+                src="images/logo.jpg"
+                className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
+                alt="Kaspa Logo"
+              />
+              <span className="text-white">Kaspa Mining</span>
+            </Link>
           <div className="grid grid-cols-3 gap-8 sm:mt-4 sm:gap-6">
             <div>
               <FooterTitle title="about" />
@@ -64,16 +64,14 @@ const FooterBase = () => {
               <FooterTitle title="Legal" />
               <FooterLinkGroup col>
                 <FooterLink href="#">Privacy Policy</FooterLink>
-                <FooterLink href="#">
-                  Terms &amp; Conditions
-                </FooterLink>
+                <FooterLink href="#">Terms &amp; Conditions</FooterLink>
               </FooterLinkGroup>
             </div>
           </div>
         </div>
         <FooterDivider className="my-2 lg:mb-2" />
         <div className="w-full sm:flex sm:items-center sm:justify-between p-4">
-          <FooterCopyright href="#" by="Bitcoino2fi" year={2024} />
+          <FooterCopyright href="#" by="Kaspa" year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <FooterIcon href="#" icon={BsFacebook} />
             <FooterIcon href="#" icon={BsInstagram} />

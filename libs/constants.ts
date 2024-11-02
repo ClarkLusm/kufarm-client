@@ -30,9 +30,9 @@ export const NETWORKS: { [key: number]: NetworkInfo } = {
 };
 
 export const TOKENS: { [key: string]: TokenInfo } = {
-  BTCO2: {
+  KAS: {
     decimals: 18,
-    symbol: "BTCO2",
+    symbol: "KAS",
   },
   USDT: {
     decimals: 6,

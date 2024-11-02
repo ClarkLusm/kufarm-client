@@ -49,7 +49,7 @@ export const NotifyModal = () => {
           <Checkbox
             onChange={(e) => setCookie("shownNotify", e.target.checked)}
           />{" "}
-          <span className="ml-2">Không hiển thị lại</span>
+          <span className="ml-2">Do not display this message again</span>
         </div>
       </Modal.Body>
     </Modal>

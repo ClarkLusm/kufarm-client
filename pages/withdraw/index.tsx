@@ -110,7 +110,7 @@ export default function WithdrawPage({
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <BtcIcon width={24} />
-            <div className="ml-2 font-semibold">Your BTCO2 available: </div>
+            <div className="ml-2 font-semibold">Your KAS available: </div>
           </div>
           <div className="ml-2 text-gray-600 dark:text-gray-200">
             {Number(balanceFormatted + commissionFormatted).toLocaleString(
@@ -148,7 +148,7 @@ export default function WithdrawPage({
           </Button>
         </div>
         <div className="text-center font-semibold">
-          Minimal withdraw: {settings.withdrawMin} BTCO2
+          Minimal withdraw: {settings.withdrawMin} KAS
         </div>
         {errorMsg && (
           <Alert

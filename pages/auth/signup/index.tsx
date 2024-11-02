@@ -120,7 +120,7 @@ export default function SignUpPage() {
           <div>
             <TextInput
               required
-              placeholder="Your Binance Wallet Address e.g. 0x807974B411B6b2277d73d3D017f5749Fb7bD5E62"
+              placeholder="Your Wallet Address e.g. 0x0b37D0D50528995072ceaDC303C352F3b75f39A6"
               {...register("walletAddress")}
               color={errors.walletAddress ? "failure" : ""}
               helperText={errors.walletAddress?.message}
@@ -137,7 +137,7 @@ export default function SignUpPage() {
           <div className="flex items-center gap-2">
             <Checkbox id="remember" onClick={() => setAgree(!agree)} />
             <Label htmlFor="remember">
-              I agree to Bitcoino2
+              I agree to Kaspa
               <Link target="_blank" href="#" className="ml-1">
                 Terms & Conditions
               </Link>

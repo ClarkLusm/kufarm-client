@@ -211,18 +211,14 @@ export default function InvoiceDetailPage({
               <div className="border p-2 bg-white dark:bg-black rounded-lg text-md w-full text-grey">
                 {formattedAmount}
               </div>
-              <Clipboard.WithIcon
-                className="absolute right-0 w-auto p-3"
-                valueToCopy={formattedAmount}
-              />
+              <span className="absolute right-0 top-0 w-auto p-2 text-slate-300 font-semibold">
+                {invoice.coin}
+              </span>
             </div>
           </div>
           <div className="mb-5">
             <div className="mb-2 block">
-              <Label
-                htmlFor="small"
-                value={`Wallet address(${invoice.coin}):`}
-              />
+              <Label htmlFor="small" value={`Wallet address:`} />
             </div>
             <div className="border p-2 relative flex rounded-lg overflow-hidden">
               <div className="bg-white dark:bg-black rounded-lg w-full">

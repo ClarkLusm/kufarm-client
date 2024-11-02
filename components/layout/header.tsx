@@ -18,12 +18,12 @@ const Header = () => {
       <div className="flex">
         <NavbarBrand href="/">
           <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="mr-3 h-6 sm:h-9 sm:block"
-            alt="Bitcoino2fi Logo"
+            src="images/logo.jpg"
+            className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
+            alt="Kaspafi Logo"
           />
           <span className="hidden sm:block whitespace-nowrap text-xl font-semibold dark:text-white">
-            Bitcoino2fi
+            Kaspa Mining
           </span>
         </NavbarBrand>
         <NavbarToggle className="ml-4" />

@@ -11,8 +11,8 @@ const chains = Object.values(NETWORKS);
 
 // 3. Create a metadata object
 const metadata = {
-  name: "Bitcoino2fi",
-  description: "Bitcoino2fi description",
+  name: "Kaspa",
+  description: "Kaspa description",
   url: process.env.NEXTAUTH_URL ?? "", // origin must match your domain & subdomain
   icons: ["http://bitcoino2fi.com/"],
 };

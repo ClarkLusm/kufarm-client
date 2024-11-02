@@ -17,19 +17,16 @@ import { Order } from "@/libs/types/order";
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
   try {
-    const resp = await axios.get(
-      `${process.env.API_URL}/api/account/orders`,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    );
-
+    const resp = await axios.get(`${process.env.API_URL}/api/account/orders`, {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    });
     return {
       props: {
         orders: resp?.data?.data,
         total: resp?.data?.total,
+        tokens: resp?.data?.tokens,
       },
     };
   } catch (error: any) {
@@ -43,6 +40,7 @@ export const getServerSideProps = async (ctx: any) => {
 export default function OrderPage({
   orders,
   total,
+  tokens,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const orderItems =
     orders.length >= 7
@@ -64,9 +62,15 @@ export default function OrderPage({
               <TableHeadCell>Status</TableHeadCell>
             </TableHead>
             <TableBody className="w-screen divide-y">
-              {orderItems.map((t: Order, index: number) => (
-                <OrderItem key={index} data={t} index={index + 1} />
-              ))}
+              {orderItems.map((t: Order, index: number) => {
+                let data;
+                if (t) {
+                  data = Object.assign({}, t);
+                  data.amount =
+                    t.amount / Math.pow(10, tokens[t.coin].decimals);
+                }
+                return <OrderItem key={index} data={data} index={index + 1} />;
+              })}
             </TableBody>
           </Table>
         </div>
@@ -99,14 +103,8 @@ const OrderItem = ({ index, data }: TransactionProps) => {
       <TableCell>
         {data?.user ? shortAddress(data.user.walletAddress) : "..."}
       </TableCell>
-      <TableCell>
-        {data?.amount
-          ? data?.coin !== "USD"
-            ? (data.amount / 1e18).toLocaleString("en-EN", {
-                maximumFractionDigits: 5,
-              })
-            : data.amount.toLocaleString("en-EN")
-          : "..."}
+      <TableCell suppressHydrationWarning>
+        {data?.amount ? data.amount.toLocaleString("en-EN") : "..."}
       </TableCell>
       <TableCell>{data?.coin ?? "..."}</TableCell>
       <TableCell>

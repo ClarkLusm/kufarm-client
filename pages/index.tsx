@@ -80,7 +80,7 @@ export default function Home({
       id: "Multiple tokens",
       image: "https://kufarm.io/static/kufarm/adv-img3.png",
       title: "Multiple tokens",
-      content: "Currently, the Bitcoino2 pool supports BTCO2",
+      content: "Currently, the Kaspa pool supports KAS",
     },
   ];
 
@@ -94,13 +94,13 @@ export default function Home({
     {
       id: "2",
       image: "images/money.png",
-      title: "Bitcoino2 mined",
+      title: "Kaspa mined",
       count: 1310.8879,
     },
     {
       id: "3",
       image: "images/purchase.png",
-      title: "Bitcoino2 miner purchased",
+      title: "Kaspa miner purchased",
       count: 30207,
     },
   ];
@@ -113,7 +113,7 @@ export default function Home({
             <Button
               color="gray"
               pill
-              onClick={() => router.push("/auth/login")}
+              onClick={() => router.push("/auth/signin")}
             >
               Cloud mining
             </Button>
@@ -122,7 +122,7 @@ export default function Home({
             </Button>
           </div>
           <div className="text-2xl sm:text-5xl font-semibold dark:text-white leading-7">
-            Start your <span className="font-bold">BITCOINO2</span> mining
+            Start your <span className="font-bold">KASPA</span> mining
             journey today.
           </div>
           <div className="mt-4 text-base font-semibold text-slate-400">
@@ -130,29 +130,29 @@ export default function Home({
             <p>
               Max Total Supply{" "}
               <span className="font-bold text-slate-500">
-                100,000,000 BTCO2
+                12,234,751.749732 KAS
               </span>
             </p>
             <br />
             <p>Other Info</p>
-            <p>Token Contract (WITH 18 Decimals)</p>
+            <p>Token Contract (WITH 8 Decimals)</p>
             <p className="relative inline-block pr-10 max-w-full break-all">
               <a
-                href="https://bscscan.com/token/0xb846cad46411d761d69a7f9c29fa37c7ab157ce4#balances"
+                href="https://bscscan.com/token/0x51e72dd1f2628295cc2ef931cb64fdbdc3a0c599#balances"
                 target="_blank"
                 className="font-bold text-slate-500"
               >
-                0xb846cad46411d761d69a7f9c29fa37c7ab157ce4
+                0x51e72dd1f2628295cc2ef931cb64fdbdc3a0c599
               </a>
               <Clipboard.WithIcon
                 className="right-0 w-auto p-3"
-                valueToCopy="0xb846cad46411d761d69a7f9c29fa37c7ab157ce4"
+                valueToCopy="0x51e72dd1f2628295cc2ef931cb64fdbdc3a0c599"
               />
             </p>
             <br />
             <p className="mt-2">
-              <a href="https://pancakeswap.finance" target="_blank">
-                TOKEN SWAP (BTCO2)
+              <a href="https://pancakeswap.finance/?outputCurrency=0x51E72dd1F2628295cC2ef931cB64fDbDc3a0c599" target="_blank">
+                TOKEN SWAP (KAS)
               </a>
             </p>
           </div>
@@ -232,13 +232,13 @@ export default function Home({
       <div className="mb-20 sm:flex justify-between">
         <div className="mt-4 sm:w-3/6 list-none pr-16">
           <div className="mb-8 text-3xl font-semibold dark:text-white">
-            What is Bitcoino2?
+            What is Kaspa?
           </div>
           <span className="text-lg/5 font-semibold text-slate-500">
-            Bitcoino2 is a simple and affordable cloud mining service, the main
+            Kaspa is a simple and affordable cloud mining service, the main
             purpose of which is to introduce a wider audience to the world of
-            bitcoino2 and other cryptocurrencies. BTCO2 has a huge number of
-            ASIC miners who mine BTCO2 daily on the Bitcoino2 pool
+            bitcoino2 and other cryptocurrencies. KAS has a huge number of
+            ASIC miners who mine KAS daily on the Kaspa pool
           </span>
           <Button
             className="mb-3 mt-8"
@@ -261,11 +261,11 @@ export default function Home({
         </div>
         <div className="mt-4 sm:w-3/6 list-none">
           <div className="mb-8 text-3xl font-semibold dark:text-white">
-            Earn Money with Bitcoino2
+            Earn Money with Kaspa
           </div>
           <span className="text-lg/5 font-semibold text-slate-500">
             To start mining bitcoins, just select a miner equipment from your
-            personal Bitcoino2 account, each miner has a different cost and
+            personal Kaspa account, each miner has a different cost and
             rental period, each equipment generates a unique amount of bitcoino2
             daily. these coins are deposited to your personal account. you just
             have collect your coins everyday without any cost
@@ -281,9 +281,9 @@ export default function Home({
             Extensive range of services
           </div>
           <span className="relative font-semibold text-slate-500">
-            The Bitcoino2 pool is an important part of the global Bitcoino2
+            The Kaspa pool is an important part of the global Kaspa
             ecosystem, uses the same accounting system as our cloud mining
-            service to ensure security. The Bitcoino2 and Bitcoino2 pool aims to
+            service to ensure security. The Kaspa and Kaspa pool aims to
             erase the line between mining and trading by providing users with a
             wide range of mining solutions.
           </span>
@@ -296,7 +296,7 @@ export default function Home({
             Reliable mining solutions
           </div>
           <span className="relative font-semibold text-slate-500">
-            Bitcoino2 provides a comprehensive mining platform with extensive
+            Kaspa provides a comprehensive mining platform with extensive
             experience working with mining pools and competitive mining
             technologies. We strive to provide high-quality and innovative cloud
             mining service for users who need comprehensive mining services.
@@ -311,7 +311,7 @@ export default function Home({
               Guarantee of services
             </div>
             <span className="relative font-semibold text-slate-500">
-              Guarantee of servicesBitcoino2 strives to provide qualified
+              Guarantee of services Kaspa strives to provide qualified
               projects with opportunities and improve industry standard
               practices to achieve consensus in the community. We strive to
               introduce more people around the world to blockchain technology

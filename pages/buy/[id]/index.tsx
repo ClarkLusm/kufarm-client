@@ -112,7 +112,7 @@ export default function BuyOnePage({
           through your mobile wallet.
         </p>
         <p>
-          Remember, all mining payments will be sent in BTCO2 to your Bitcoino2
+          Remember, all mining payments will be sent in KAS to your Kaspa
           account.
         </p>
         <p>

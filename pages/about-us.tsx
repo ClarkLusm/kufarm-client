@@ -11,7 +11,7 @@ export default function About() {
       position: "Company Founder, CEO",
       image: "/images/user1.jpeg",
       info_1:
-        "Paul Wade is an entrepreneur and the founder of the cryptomining company, Bitcoino2. He is an experienced leader and innovator in the technology industry.",
+        "Paul Wade is an entrepreneur and the founder of the cryptomining company, Kaspa. He is an experienced leader and innovator in the technology industry.",
       info_2:
         "Paul was born in San Francisco, California and attended Stanford University, where he received his degree in Computer Science. After graduating, he worked as a software engineer at several large companies, including Apple and Microsoft.",
       info_3:
@@ -46,7 +46,7 @@ export default function About() {
           About Us
         </div>
         <div className="my-7 text-2xl font-semibold">
-          BITCOINO2 COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
+          KASPA COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
           CLOUD MINING
         </div>
         <div className="my-3 sm:text-xl font-semibold text-gray-500">
@@ -60,8 +60,8 @@ export default function About() {
           cryptocurrency mining strategy around the world.
         </div>
         <div className="my-3 text-xl font-semibold text-gray-500">
-          Bitcoino2 offers bitcoino2 mining contracts from data centers in Asian
-          countries. Bitcoino2 uses technologies from leading companies and
+          Kaspa offers bitcoino2 mining contracts from data centers in Asian
+          countries. Kaspa uses technologies from leading companies and
           manufacturers in the industry. You get maximum performance at low
           cost.
         </div>
