@@ -11,7 +11,7 @@ export default function About() {
       position: "Company Founder, CEO",
       image: "/images/user1.jpeg",
       info_1:
-        "Paul Wade is an entrepreneur and the founder of the cryptomining company, Kaspa. He is an experienced leader and innovator in the technology industry.",
+        "Paul Wade is an entrepreneur and the founder of the cryptomining company, PancakeSwap. He is an experienced leader and innovator in the technology industry.",
       info_2:
         "Paul was born in San Francisco, California and attended Stanford University, where he received his degree in Computer Science. After graduating, he worked as a software engineer at several large companies, including Apple and Microsoft.",
       info_3:
@@ -46,11 +46,11 @@ export default function About() {
           About Us
         </div>
         <div className="my-7 text-2xl font-semibold">
-          KASPA COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
+          PANCAKESWAP COMPANY THAT PROVIDES RENTAL OF ASIC MINERS BY MEANS OF
           CLOUD MINING
         </div>
         <div className="my-3 sm:text-xl font-semibold text-gray-500">
-          This is a kaspa mining company using a mining pool from Kucoin, as
+          This is a pancake mining company using a mining pool from Kucoin, as
           well as which provides cloud mining services for cryptocurrency ASIC
           and GPU miners that will take care of repetitive and tedious processes
           for you, giving you more time to focus on growing your income and
@@ -60,8 +60,8 @@ export default function About() {
           cryptocurrency mining strategy around the world.
         </div>
         <div className="my-3 text-xl font-semibold text-gray-500">
-          Kaspa offers kaspa mining contracts from data centers in Asian
-          countries. Kaspa uses technologies from leading companies and
+          PancakeSwap offers pancake mining contracts from data centers in Asian
+          countries. PancakeSwap uses technologies from leading companies and
           manufacturers in the industry. You get maximum performance at low
           cost.
         </div>
@@ -142,11 +142,11 @@ export default function About() {
         <hr className="mt-5" />
         <div className="my-8 flex list-none justify-between">
           <Link
-            href="mailto:support@minerkaspa.com"
+            href="mailto:support@minerpancake.com"
             className="flex items-center text-xl font-semibold"
           >
             <EmailIcon width={24} color="black" className="mr-2" />
-            support@minerkaspa.com
+            support@minerpancake.com
           </Link>
           <div className="flex items-center">
             <div className="mr-4 text-xl font-semibold">

@@ -28,9 +28,9 @@ const FooterBase = () => {
               <img
                 src="images/logo.jpg"
                 className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
-                alt="Kaspa Logo"
+                alt="PancakeSwap Logo"
               />
-              <span className="text-white">Kaspa Mining</span>
+              <span className="dark:text-white font-bold">PancakeSwap Mining</span>
             </Link>
           <div className="grid grid-cols-3 gap-8 sm:mt-4 sm:gap-6">
             <div>
@@ -45,7 +45,7 @@ const FooterBase = () => {
               <FooterLinkGroup col>
                 <FooterLink
                   target="_blank"
-                  href="https://t.me/kaspasupport"
+                  href="https://t.me/pancakesupport"
                 >
                   <span className="flex items-center">
                     <TeleIcon width={18} height={18} className="mr-1" />{" "}
@@ -71,7 +71,7 @@ const FooterBase = () => {
         </div>
         <FooterDivider className="my-2 lg:mb-2" />
         <div className="w-full sm:flex sm:items-center sm:justify-between p-4">
-          <FooterCopyright href="#" by="Kaspa" year={2024} />
+          <FooterCopyright href="#" by="PancakeSwap" year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <FooterIcon href="#" icon={BsFacebook} />
             <FooterIcon href="#" icon={BsInstagram} />

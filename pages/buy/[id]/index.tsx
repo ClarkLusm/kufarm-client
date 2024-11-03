@@ -112,7 +112,7 @@ export default function BuyOnePage({
           through your mobile wallet.
         </p>
         <p>
-          Remember, all mining payments will be sent in KAS to your Kaspa
+          Remember, all mining payments will be sent in CAKE to your PancakeSwap
           account.
         </p>
         <p>

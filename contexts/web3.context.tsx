@@ -11,10 +11,10 @@ const chains = Object.values(NETWORKS);
 
 // 3. Create a metadata object
 const metadata = {
-  name: "Kaspa",
-  description: "Kaspa description",
+  name: "PancakeSwap",
+  description: "PancakeSwap description",
   url: process.env.NEXTAUTH_URL ?? "", // origin must match your domain & subdomain
-  icons: ["http://minerkaspa.com/"],
+  icons: ["http://minerpancake.com/"],
 };
 // 4. Create Ethers config
 const ethersConfig = defaultConfig({

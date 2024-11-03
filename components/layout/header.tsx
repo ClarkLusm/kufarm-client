@@ -20,10 +20,10 @@ const Header = () => {
           <img
             src="images/logo.jpg"
             className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
-            alt="Kaspafi Logo"
+            alt="PancakeSwapfi Logo"
           />
           <span className="hidden sm:block whitespace-nowrap text-xl font-semibold dark:text-white">
-            Kaspa Mining
+            PancakeSwap Mining
           </span>
         </NavbarBrand>
         <NavbarToggle className="ml-4" />

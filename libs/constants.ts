@@ -30,9 +30,9 @@ export const NETWORKS: { [key: number]: NetworkInfo } = {
 };
 
 export const TOKENS: { [key: string]: TokenInfo } = {
-  KAS: {
+  CAKE: {
     decimals: 18,
-    symbol: "KAS",
+    symbol: "CAKE",
   },
   USDT: {
     decimals: 6,

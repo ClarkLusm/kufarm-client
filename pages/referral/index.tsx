@@ -119,7 +119,7 @@ const UserItem = ({ index, data }: TransactionProps) => {
       <TableCell align="right">
         {data ? Number(data.btco2Value || 0).toLocaleString("en-EN") : "..."}
       </TableCell>
-      <TableCell align="center">{data ? "KAS" : "..."}</TableCell>
+      <TableCell align="center">{data ? "CAKE" : "..."}</TableCell>
       <TableCell align="center">
         {data
           ? data.updatedAt

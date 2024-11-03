@@ -43,7 +43,7 @@ const FAQ = ({ setting }: any) => {
             <p className="mb-2 font-semibold text-gray-500 dark:text-gray-400">
               You can withdraw funds immediately upon reaching the minimum
               withdrawal amount. The minimum withdrawal amount is{" "}
-              {setting?.withdrawMin ?? 100} KAS.
+              {setting?.withdrawMin ?? 100} CAKE.
             </p>
           </AccordionContent>
         </AccordionPanel>
@@ -64,7 +64,7 @@ const FAQ = ({ setting }: any) => {
           </AccordionTitle>
           <AccordionContent>
             <p className="mb-2 font-semibold text-gray-500 dark:text-gray-400">
-              At the moment we accept payments in USDT & KASPA.
+              At the moment we accept payments in USDT & PancakeSwap.
             </p>
           </AccordionContent>
         </AccordionPanel>
@@ -78,7 +78,7 @@ const FAQ = ({ setting }: any) => {
               anyone is welcome. You can even promote our company and earn extra
               without having to make any investment. when a user registers using
               your referral link and rents a miner. (10%f1) - (5%f2) - (3%f3-f4-f5) - (2%f6-f10) - (1%f11-f15) of the rental price is
-              sent as a reward to your KASPA account with the condition that 1f1 enjoy 1f - 10f1 enjoy 15f. You can find a referral
+              sent as a reward to your PancakeSwap account with the condition that 1f1 enjoy 1f - 10f1 enjoy 15f. You can find a referral
               link in your personal account on the referral page.
             </p>
           </AccordionContent>

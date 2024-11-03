@@ -137,7 +137,7 @@ export default function SignUpPage() {
           <div className="flex items-center gap-2">
             <Checkbox id="remember" onClick={() => setAgree(!agree)} />
             <Label htmlFor="remember">
-              I agree to Kaspa
+              I agree to PancakeSwap
               <Link target="_blank" href="#" className="ml-1">
                 Terms & Conditions
               </Link>
