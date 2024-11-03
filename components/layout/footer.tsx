@@ -45,7 +45,7 @@ const FooterBase = () => {
               <FooterLinkGroup col>
                 <FooterLink
                   target="_blank"
-                  href="https://t.me/bitcoino2support"
+                  href="https://t.me/kaspasupport"
                 >
                   <span className="flex items-center">
                     <TeleIcon width={18} height={18} className="mr-1" />{" "}

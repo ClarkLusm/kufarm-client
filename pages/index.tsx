@@ -122,17 +122,56 @@ export default function Home({
             </Button>
           </div>
           <div className="text-2xl sm:text-5xl font-semibold dark:text-white leading-7">
-            Start your <span className="font-bold">KASPA</span> mining
-            journey today.
+            Start your <span className="font-bold">KASPA</span> mining journey
+            today.
           </div>
           <div className="mt-4 text-base font-semibold text-slate-400">
-            <p>Overview</p>
-            <p>
-              Max Total Supply{" "}
-              <span className="font-bold text-slate-500">
-                12,234,751.749732 KAS
-              </span>
-            </p>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Token name</td>
+                  <td>
+                    <span className="font-bold text-slate-500">Kaspa</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ticker</td>
+                  <td>
+                    <span className="font-bold text-slate-500">KAS</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Blockchain</td>
+                  <td>
+                    <span className="font-bold text-slate-500">Kaspa</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Total Supply</td>
+                  <td>
+                    <span className="font-bold text-slate-500">
+                      21,875,045,347 KAS
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Circulating Total Supply</td>
+                  <td>
+                    <span className="font-bold text-slate-500">
+                      21,874,850,941 KAS
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Max Total Supply</td>
+                  <td>
+                    <span className="font-bold text-slate-500">
+                      28,704,026,601 KAS
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <br />
             <p>Other Info</p>
             <p>Token Contract (WITH 8 Decimals)</p>
@@ -151,7 +190,10 @@ export default function Home({
             </p>
             <br />
             <p className="mt-2">
-              <a href="https://pancakeswap.finance/?outputCurrency=0x51E72dd1F2628295cC2ef931cB64fDbDc3a0c599" target="_blank">
+              <a
+                href="https://pancakeswap.finance/?outputCurrency=0x51E72dd1F2628295cC2ef931cB64fDbDc3a0c599"
+                target="_blank"
+              >
                 TOKEN SWAP (KAS)
               </a>
             </p>
@@ -237,8 +279,8 @@ export default function Home({
           <span className="text-lg/5 font-semibold text-slate-500">
             Kaspa is a simple and affordable cloud mining service, the main
             purpose of which is to introduce a wider audience to the world of
-            bitcoino2 and other cryptocurrencies. KAS has a huge number of
-            ASIC miners who mine KAS daily on the Kaspa pool
+            kaspa and other cryptocurrencies. KAS has a huge number of ASIC
+            miners who mine KAS daily on the Kaspa pool
           </span>
           <Button
             className="mb-3 mt-8"
@@ -265,10 +307,10 @@ export default function Home({
           </div>
           <span className="text-lg/5 font-semibold text-slate-500">
             To start mining bitcoins, just select a miner equipment from your
-            personal Kaspa account, each miner has a different cost and
-            rental period, each equipment generates a unique amount of bitcoino2
-            daily. these coins are deposited to your personal account. you just
-            have collect your coins everyday without any cost
+            personal Kaspa account, each miner has a different cost and rental
+            period, each equipment generates a unique amount of kaspa daily.
+            these coins are deposited to your personal account. you just have
+            collect your coins everyday without any cost
           </span>
         </div>
       </div>
@@ -281,11 +323,11 @@ export default function Home({
             Extensive range of services
           </div>
           <span className="relative font-semibold text-slate-500">
-            The Kaspa pool is an important part of the global Kaspa
-            ecosystem, uses the same accounting system as our cloud mining
-            service to ensure security. The Kaspa and Kaspa pool aims to
-            erase the line between mining and trading by providing users with a
-            wide range of mining solutions.
+            The Kaspa pool is an important part of the global Kaspa ecosystem,
+            uses the same accounting system as our cloud mining service to
+            ensure security. The Kaspa and Kaspa pool aims to erase the line
+            between mining and trading by providing users with a wide range of
+            mining solutions.
           </span>
         </div>
         <div className="relative float-end sm:w-2/4">
@@ -311,12 +353,12 @@ export default function Home({
               Guarantee of services
             </div>
             <span className="relative font-semibold text-slate-500">
-              Guarantee of services Kaspa strives to provide qualified
-              projects with opportunities and improve industry standard
-              practices to achieve consensus in the community. We strive to
-              introduce more people around the world to blockchain technology
-              and outstanding projects, as well as contribute towards the
-              sustainable and stable development of our ecosystem.
+              Guarantee of services Kaspa strives to provide qualified projects
+              with opportunities and improve industry standard practices to
+              achieve consensus in the community. We strive to introduce more
+              people around the world to blockchain technology and outstanding
+              projects, as well as contribute towards the sustainable and stable
+              development of our ecosystem.
             </span>
           </div>
         </div>
@@ -324,7 +366,7 @@ export default function Home({
       <Faq setting={setting} />
       <div className="w-full list-none text-center">
         <p className="text-3xl font-semibold dark:text-white">
-          Start your bitcoino2 mining
+          Start your kaspa mining
           <br /> journey today!
         </p>
         <div className="my-10 flex justify-center">

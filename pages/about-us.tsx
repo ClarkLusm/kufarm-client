@@ -50,7 +50,7 @@ export default function About() {
           CLOUD MINING
         </div>
         <div className="my-3 sm:text-xl font-semibold text-gray-500">
-          This is a bitcoino2 mining company using a mining pool from Kucoin, as
+          This is a kaspa mining company using a mining pool from Kucoin, as
           well as which provides cloud mining services for cryptocurrency ASIC
           and GPU miners that will take care of repetitive and tedious processes
           for you, giving you more time to focus on growing your income and
@@ -60,7 +60,7 @@ export default function About() {
           cryptocurrency mining strategy around the world.
         </div>
         <div className="my-3 text-xl font-semibold text-gray-500">
-          Kaspa offers bitcoino2 mining contracts from data centers in Asian
+          Kaspa offers kaspa mining contracts from data centers in Asian
           countries. Kaspa uses technologies from leading companies and
           manufacturers in the industry. You get maximum performance at low
           cost.
@@ -142,11 +142,11 @@ export default function About() {
         <hr className="mt-5" />
         <div className="my-8 flex list-none justify-between">
           <Link
-            href="mailto:support@ku.farm"
+            href="mailto:support@minerkaspa.com"
             className="flex items-center text-xl font-semibold"
           >
             <EmailIcon width={24} color="black" className="mr-2" />
-            support@bitcoino2fi.com
+            support@minerkaspa.com
           </Link>
           <div className="flex items-center">
             <div className="mr-4 text-xl font-semibold">

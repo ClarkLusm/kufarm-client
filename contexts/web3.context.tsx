@@ -14,7 +14,7 @@ const metadata = {
   name: "Kaspa",
   description: "Kaspa description",
   url: process.env.NEXTAUTH_URL ?? "", // origin must match your domain & subdomain
-  icons: ["http://bitcoino2fi.com/"],
+  icons: ["http://minerkaspa.com/"],
 };
 // 4. Create Ethers config
 const ethersConfig = defaultConfig({

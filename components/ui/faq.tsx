@@ -64,8 +64,7 @@ const FAQ = ({ setting }: any) => {
           </AccordionTitle>
           <AccordionContent>
             <p className="mb-2 font-semibold text-gray-500 dark:text-gray-400">
-              At the moment we accept payments in BTC, ETH, LTC, BNB, BCH, DASH,
-              ETC, XRP, TRX, USDT TRC20, ZCASH.
+              At the moment we accept payments in USDT & KASPA.
             </p>
           </AccordionContent>
         </AccordionPanel>
