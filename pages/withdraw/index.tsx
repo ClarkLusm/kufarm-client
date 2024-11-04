@@ -118,6 +118,9 @@ export default function WithdrawPage({
             )}
           </div>
         </div>
+        <div className="pl-6 text-gray-600 dark:text-gray-200">
+          <span className="text-sm">1 CAKE ~ {Number(profile.rate)} USDT</span>
+        </div>
         <div className="pl-6 mb-5">
           <span className="text-sm text-gray-400">
             (~Summary of the mint balance and referral commissions)

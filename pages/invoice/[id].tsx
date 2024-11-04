@@ -15,7 +15,8 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 
-import tokenABI from "@/libs/abis/USDT_test.abi.json";
+import USDTTokenABI from "@/libs/abis/USDT_main.abi.json";
+import CAKETokenABI from "@/libs/abis/CAKE_main.abi.json";
 import { NETWORKS } from "@/libs/constants";
 import { EOrderStatus } from "@/libs/enums/order.enum";
 
@@ -97,7 +98,12 @@ export default function InvoiceDetailPage({
     try {
       const ethersProvider = new BrowserProvider(walletProvider!);
       const signer = await ethersProvider.getSigner(address);
-      return new Contract(invoice.contractAddress, tokenABI, signer);
+      if (invoice.coin === "USDT") {
+        return new Contract(invoice.contractAddress, USDTTokenABI, signer);
+      } else if (invoice.coin === "CAKE") {
+        return new Contract(invoice.contractAddress, CAKETokenABI, signer);
+      }
+      throw new Error(`Does not support ${invoice.coin} token`);
     } catch (error) {
       console.error(error);
     }

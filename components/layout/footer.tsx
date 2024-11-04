@@ -45,14 +45,14 @@ const FooterBase = () => {
               <FooterLinkGroup col>
                 <FooterLink
                   target="_blank"
-                  href="https://t.me/pancakesupport"
+                  href="https://t.me/minercakesupport"
                 >
                   <span className="flex items-center">
                     <TeleIcon width={18} height={18} className="mr-1" />{" "}
                     <span>Support</span>
                   </span>
                 </FooterLink>
-                <FooterLink target="_blank" href="https://t.me/MiningBITCOINo2">
+                <FooterLink target="_blank" href="https://t.me/MiningCake">
                   <span className="flex items-center">
                     <TeleIcon width={18} height={18} className="mr-1" />{" "}
                     <span>Guide</span>
