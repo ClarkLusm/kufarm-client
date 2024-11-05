@@ -87,7 +87,7 @@ export default function InvoiceDetailPage({
   const bigIntAmount = ethers.parseUnits(formattedAmount, invoice.decimals);
 
   const onClick = () => {
-    setErrorMsg('');
+    setErrorMsg("");
     isConnected
       ? chainId !== invoice.chainId
         ? switchNetwork(invoice.chainId)
@@ -125,17 +125,22 @@ export default function InvoiceDetailPage({
       if (allowance < bigIntAmount) {
         await tokenContract?.approve(invoice.contractAddress, bigIntAmount);
       }
-      const gasFee = await tokenContract?.transfer.estimateGas(
-        invoice.contractAddress,
-        bigIntAmount
-      );
-      const tx = await tokenContract?.transfer(
-        invoice.walletAddress,
-        bigIntAmount,
-        {
-          gasLimit: gasFee,
-        }
-      );
+      let tx;
+      if (invoice.coin !== "USDT") {
+        tx = await tokenContract?.transfer(invoice.walletAddress, bigIntAmount);
+      } else {
+        const gasFee = await tokenContract?.transfer.estimateGas(
+          invoice.contractAddress,
+          bigIntAmount
+        );
+        tx = await tokenContract?.transfer(
+          invoice.walletAddress,
+          bigIntAmount,
+          {
+            gasLimit: gasFee,
+          }
+        );
+      }
       txHash = await tx.wait();
     } catch (e: any) {
       let message = e?.message || "UNKNOWN_ERROR";
