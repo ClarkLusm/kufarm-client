@@ -18,7 +18,7 @@ const Header = () => {
       <div className="flex">
         <NavbarBrand href="/">
           <img
-            src="images/logo.jpg"
+            src="/images/logo.jpg"
             className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
             alt="PancakeSwapfi Logo"
           />
