@@ -31,6 +31,11 @@ export const NotifyModal = () => {
     }
   }, [session.status]);
 
+  const onClose = (e: any) => {
+    setCookie("shownNotify", e.target.checked);
+    setNotify(null);
+  }
+
   return (
     <Modal
       className="notify-modal"
@@ -47,7 +52,7 @@ export const NotifyModal = () => {
         />
         <div className="text-slate-400 text-base flex items-center">
           <Checkbox
-            onChange={(e) => setCookie("shownNotify", e.target.checked)}
+            onChange={onClose}
           />{" "}
           <span className="ml-2">Do not display this message again</span>
         </div>

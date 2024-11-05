@@ -133,7 +133,7 @@ export default function Dashboard({
       id: "3",
       image: <MonthIcon width={24} className="fill-yellow-400" />,
       properties: "MONTHLY:",
-      value: profile?.monthlyIncome.toLocaleString("en-EN") + "$",
+      value: profile?.monthlyIncome?.toLocaleString("en-EN") + "$",
     },
     {
       id: "4",

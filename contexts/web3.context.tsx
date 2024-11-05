@@ -11,10 +11,10 @@ const chains = Object.values(NETWORKS);
 
 // 3. Create a metadata object
 const metadata = {
-  name: "PancakeSwap",
-  description: "PancakeSwap description",
+  name: "Miner86",
+  description: "Miner86 mining CAKE token",
   url: process.env.NEXTAUTH_URL ?? "", // origin must match your domain & subdomain
-  icons: ["http://minerpancake.com/"],
+  icons: ["https://miner86.com/"],
 };
 // 4. Create Ethers config
 const ethersConfig = defaultConfig({
