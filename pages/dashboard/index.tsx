@@ -41,7 +41,7 @@ const symbols = [
     proName: "BINANCE:CAKEUSD",
   },
   {
-    proName: "BINANCE:USDTUSD",
+    proName: "BINANCEUS:USDTUSD",
     title: "USDT",
   },
 ];
