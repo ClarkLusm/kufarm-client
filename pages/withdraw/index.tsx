@@ -12,7 +12,7 @@ import {
 } from "flowbite-react";
 import { InferGetServerSidePropsType } from "next";
 import { getSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Transaction } from "@/libs/types/transaction";
@@ -61,9 +61,28 @@ export default function WithdrawPage({
   const [amount, setAmount] = useState(settings.withdrawMin);
   const [errorMsg, setErrorMsg] = useState("");
   const [openModal, setOpenModal] = useState(false);
+  const [tokenBalance, setTokenBalance] = useState(0);
+  const [usdtPrice, setUsdtPrice] = useState(0);
+  const [priceFetching, setPriceFetching] = useState(false);
 
-  const balanceFormatted = Number(profile.balanceToken);
-  const commissionFormatted = Number(profile.referralCommission);
+  useEffect(() => {
+    if (profile.balance) {
+      setPriceFetching(true);
+      axios
+        .get("https://api.binance.com/api/v3/ticker/price?symbol=CAKEUSDT")
+        .then((res) => res.data)
+        .then(({ price }) => {
+          setUsdtPrice(price);
+          const totalBalance =
+            Number(profile.balance) / price +
+            Number(profile.referralCommission || 0);
+          setTokenBalance(totalBalance);
+          setPriceFetching(false);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [profile]);
+
   const transItems =
     transactions.length >= 7
       ? transactions
@@ -72,7 +91,7 @@ export default function WithdrawPage({
   const onSubmit = async () => {
     if (Number.isNaN(Number(amount))) {
       setErrorMsg("Invalid amount!");
-    } else if (amount > balanceFormatted) {
+    } else if (amount > tokenBalance) {
       setErrorMsg("Your balance is not enough to withdraw!");
     } else if (amount < settings.withdrawMin) {
       setErrorMsg("Withdrawal amount is less than the minimum!");
@@ -113,13 +132,13 @@ export default function WithdrawPage({
             <div className="ml-2 font-semibold">Your CAKE available: </div>
           </div>
           <div className="ml-2 text-gray-600 dark:text-gray-200">
-            {Number(balanceFormatted + commissionFormatted).toLocaleString(
-              "en-EN"
-            )}
+            {priceFetching ? "..." : tokenBalance.toLocaleString("en-EN")}
           </div>
         </div>
         <div className="pl-6 text-gray-600 dark:text-gray-200">
-          <span className="text-sm">1 CAKE ~ {Number(profile.rate)} USDT</span>
+          <span className="text-sm">
+            1 CAKE ~ {usdtPrice ? Number(usdtPrice) : "..."} USDT
+          </span>
         </div>
         <div className="pl-6 mb-5">
           <span className="text-sm text-gray-400">
@@ -145,6 +164,7 @@ export default function WithdrawPage({
             className="text-medium min-w-[120px] text-white"
             color="success"
             onClick={onSubmit}
+            disabled={priceFetching}
           >
             <WalletIcon width={20} className="mr-2" />
             Withdraw

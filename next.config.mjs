@@ -7,7 +7,12 @@ const nextConfig = {
     WALLET_CONNECT_PROJECT_ID: process.env.WALLET_CONNECT_PROJECT_ID,
   },
   images: {
-    domains: ['i.ibb.co'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+      },
+    ],
   },
   webpack: (config) => {
     // Grab the existing rule that handles SVG imports

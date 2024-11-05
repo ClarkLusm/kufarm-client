@@ -87,6 +87,7 @@ export default function InvoiceDetailPage({
   const bigIntAmount = ethers.parseUnits(formattedAmount, invoice.decimals);
 
   const onClick = () => {
+    setErrorMsg('');
     isConnected
       ? chainId !== invoice.chainId
         ? switchNetwork(invoice.chainId)
@@ -117,6 +118,7 @@ export default function InvoiceDetailPage({
   }
 
   const sendTransaction = async () => {
+    let txHash;
     try {
       setLoading(true);
       const tokenContract = await getTokenContract();
@@ -134,32 +136,46 @@ export default function InvoiceDetailPage({
           gasLimit: gasFee,
         }
       );
-      await tx.wait();
-      await payOrderSuccess(tx);
-      router.push("/history");
+      txHash = await tx.wait();
     } catch (e: any) {
-      console.error("Error sending transaction:", e);
-      setErrorMsg(e?.message || "UNKNOWN_ERROR");
-    } finally {
+      let message = e?.message || "UNKNOWN_ERROR";
+      const regex = /"message":\s*"([^"]+)"/;
+      const match = message.match(regex);
+      if (match?.length > 1) {
+        message = match[1].split(":");
+        message = message.length > 1 ? message[1] : message[0];
+      }
+      setErrorMsg(message);
+    }
+    if (txHash) {
+      await payOrderSuccess(txHash);
+    } else {
       setLoading(false);
     }
   };
 
   async function payOrderSuccess(tx: any) {
-    const session = await getSession();
-    return axios.post(
-      process.env.API_URL + "/api/account/payorder",
-      {
-        code: invoice.code,
-        walletAddress: invoice.walletAddress,
-        tx,
-      },
-      {
-        headers: {
-          Authorization: "Bearer " + session?.accessToken,
+    try {
+      const session = await getSession();
+      await axios.post(
+        process.env.API_URL + "/api/account/payorder",
+        {
+          code: invoice.code,
+          walletAddress: invoice.walletAddress,
+          tx,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: "Bearer " + session?.accessToken,
+          },
+        }
+      );
+      setLoading(false);
+      router.push("/history");
+    } catch (error: any) {
+      setLoading(false);
+      setErrorMsg(error.message);
+    }
   }
 
   if (!hasMounted) return null;
