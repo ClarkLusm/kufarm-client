@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Button } from "flowbite-react";
+import { Button, useThemeMode } from "flowbite-react";
 import { TbChartRadar } from "react-icons/tb";
 import { getSession } from "next-auth/react";
+import { TickerTape } from "react-ts-tradingview-widgets";
 import router from "next/router";
 import axios from "axios";
 
@@ -21,6 +22,29 @@ import CartIcon from "@/icons/cart.svg";
 import CreditCardIcon from "@/icons/credit-card.svg";
 import RefreshIcon from "@/icons/refresh.svg";
 import ReferralIcon from "@/icons/referral.svg";
+
+const symbols = [
+  {
+    proName: "BITSTAMP:BTCUSD",
+    title: "Bitcoin",
+  },
+  {
+    proName: "BITSTAMP:ETHUSD",
+    title: "Ethereum",
+  },
+  {
+    title: "Binance",
+    proName: "BINANCE:BNBUSD",
+  },
+  {
+    title: "Cake",
+    proName: "BINANCE:CAKEBNB",
+  },
+  {
+    proName: "CRYPTOCAP:USDT",
+    title: "",
+  },
+];
 
 type Resp = {
   products: Product[];
@@ -64,6 +88,7 @@ export default function Dashboard({
   products,
   userProducts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { mode } = useThemeMode();
   const [userBalance, setUserBalance] = useState<number>(profile?.balance);
   useEffect(() => {
     if (!profile) return;
@@ -244,13 +269,10 @@ export default function Dashboard({
       </div>
 
       <div className="w-[100vw] absolute left-[50%] bottom-0 translate-x-[-50%]">
-        <iframe
-          src="https://widget.coinlib.io/widget?type=horizontal_v2&amp;theme=light&amp;pref_coin_id=1505&amp;invert_hover="
-          loading="lazy"
-          width="100%"
-          height="36px"
-          style={{ border: 0, margin: 0, padding: 0 }}
-        />
+        <TickerTape
+          colorTheme={mode === "dark" ? "dark" : "light"}
+          symbols={symbols}
+        ></TickerTape>
       </div>
     </div>
   );
