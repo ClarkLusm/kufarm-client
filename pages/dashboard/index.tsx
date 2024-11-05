@@ -25,24 +25,24 @@ import ReferralIcon from "@/icons/referral.svg";
 
 const symbols = [
   {
-    proName: "BITSTAMP:BTCUSD",
-    title: "Bitcoin",
+    proName: "BINANCE:BTCUSD",
+    title: "BTC",
   },
   {
-    proName: "BITSTAMP:ETHUSD",
-    title: "Ethereum",
+    proName: "BINANCE:ETHUSD",
+    title: "ETH",
   },
   {
-    title: "Binance",
+    title: "BNB",
     proName: "BINANCE:BNBUSD",
   },
   {
-    title: "Cake",
-    proName: "BINANCE:CAKEBNB",
+    title: "CAKE",
+    proName: "BINANCE:CAKEUSD",
   },
   {
-    proName: "CRYPTOCAP:USDT",
-    title: "",
+    proName: "BINANCE:USDTUSD",
+    title: "USDT",
   },
 ];
 
