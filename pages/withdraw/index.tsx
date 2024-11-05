@@ -241,7 +241,7 @@ const TransactionItem = ({ index, data }: TransactionProps) => {
       <TableCell>{data?.coin ?? "..."}</TableCell>
       <TableCell>
         {data?.amount
-          ? data?.coin !== "USD"
+          ? data?.coin !== "USDT"
             ? (data.amount / 1e18).toLocaleString("en-EN", {
                 maximumFractionDigits: 5,
               })

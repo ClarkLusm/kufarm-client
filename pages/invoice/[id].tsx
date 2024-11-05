@@ -142,8 +142,7 @@ export default function InvoiceDetailPage({
       const regex = /"message":\s*"([^"]+)"/;
       const match = message.match(regex);
       if (match?.length > 1) {
-        message = match[1].split(":");
-        message = message.length > 1 ? message[1] : message[0];
+        message = match[1];
       }
       setErrorMsg(message);
     }
