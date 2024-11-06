@@ -25,7 +25,7 @@ export const SignUpSchema = yup
     referralId: yup.string().optional().nullable(),
     walletAddress: yup
       .string()
-      .matches(/^0x+$/i, "Address is invalid. Begin with 0x...")
+      .matches(/^0x[a-z0-9]+$/i, "Address is invalid. Begin with 0x...")
       .required(),
   })
   .required();
