@@ -4,11 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { InferGetServerSidePropsType } from "next";
 import router from "next/router";
 import { ethers, Contract } from "ethers";
-import {
-  useWeb3Modal,
-  useSwitchNetwork,
-  useWeb3ModalAccount,
-} from "@web3modal/ethers/react";
+import { useWeb3Modal, useSwitchNetwork } from "@web3modal/ethers/react";
 
 import axios from "axios";
 import Link from "next/link";
@@ -64,8 +60,7 @@ export default function InvoiceDetailPage({
   invoice,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { open } = useWeb3Modal();
-  const { chainId, isConnected } = useWeb3ModalAccount();
-  const { address, signer } = useWallet();
+  const { chainId, address, signer } = useWallet();
   const { switchNetwork } = useSwitchNetwork();
   const [loading, setLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
@@ -76,10 +71,6 @@ export default function InvoiceDetailPage({
     setHasMounted(true);
   }, []);
 
-  // useEffect(() => {
-  //   if (isConnected) getAllowance();
-  // }, [isConnected]);
-
   const formattedAmount = ethers.formatUnits(
     invoice.amountText,
     invoice.decimals
@@ -88,7 +79,7 @@ export default function InvoiceDetailPage({
 
   const onClick = () => {
     setErrorMsg("");
-    isConnected
+    address
       ? chainId !== invoice.chainId
         ? switchNetwork(invoice.chainId)
         : sendTransaction()
@@ -221,7 +212,7 @@ export default function InvoiceDetailPage({
               />
               <div className="ml-2 text-xl font-medium">{invoice?.coin}</div>
             </div>
-            {isConnected && <w3m-account-button balance="hide" />}
+            {address && <w3m-account-button balance="hide" />}
           </div>
           <div className="mb-5">
             <div className="mb-2 block">
