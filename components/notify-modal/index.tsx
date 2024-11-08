@@ -48,7 +48,7 @@ export const NotifyModal = () => {
       <Modal.Body>
         <div
           dangerouslySetInnerHTML={{ __html: notify?.description ?? "" }}
-          className="mb-4"
+          className="mb-4 dark:text-white"
         />
         <div className="text-slate-400 text-base flex items-center">
           <Checkbox

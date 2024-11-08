@@ -1,21 +1,24 @@
-import { useEffect } from "react";
-
-declare global {
-  interface Window {
-    safePal: any;
-  }
-}
+import { useEffect, useState } from "react";
+import { BrowserProvider } from "ethers";
 
 export default function TestPage() {
+  const [account, setAccount] = useState("");
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      alert(window.safePal);
+    if (window.ethereum) {
+      isConnected();
     }
   }, []);
 
+  async function isConnected() {
+    const provider = new BrowserProvider((window as any).ethereum!);
+    const signer = await provider.getSigner();
+    const address = await signer.getAddress();
+    setAccount(address);
+  }
+
   return (
     <div>
-      <p>This is Test Page</p>
+      <p>Account {account}</p>
     </div>
   );
 }
