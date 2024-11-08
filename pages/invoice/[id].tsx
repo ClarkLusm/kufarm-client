@@ -3,11 +3,10 @@ import { getSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { InferGetServerSidePropsType } from "next";
 import router from "next/router";
-import { ethers, BrowserProvider, Contract } from "ethers";
+import { ethers, Contract } from "ethers";
 import {
   useWeb3Modal,
   useSwitchNetwork,
-  useWeb3ModalProvider,
   useWeb3ModalAccount,
 } from "@web3modal/ethers/react";
 
@@ -19,6 +18,7 @@ import USDTTokenABI from "@/libs/abis/USDT_main.abi.json";
 import CAKETokenABI from "@/libs/abis/CAKE_main.abi.json";
 import { NETWORKS } from "@/libs/constants";
 import { EOrderStatus } from "@/libs/enums/order.enum";
+import { useWallet } from "@/hooks/useWallet";
 
 export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
@@ -64,8 +64,8 @@ export default function InvoiceDetailPage({
   invoice,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { open } = useWeb3Modal();
-  const { address, chainId, isConnected } = useWeb3ModalAccount();
-  const { walletProvider } = useWeb3ModalProvider();
+  const { chainId, isConnected } = useWeb3ModalAccount();
+  const { address, signer } = useWallet();
   const { switchNetwork } = useSwitchNetwork();
   const [loading, setLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
@@ -97,18 +97,17 @@ export default function InvoiceDetailPage({
 
   const getTokenContract = useCallback(async () => {
     try {
-      const ethersProvider = new BrowserProvider(walletProvider!);
-      const signer = await ethersProvider.getSigner(address);
       if (invoice.coin === "USDT") {
         return new Contract(invoice.contractAddress, USDTTokenABI, signer);
       } else if (invoice.coin === "CAKE") {
         return new Contract(invoice.contractAddress, CAKETokenABI, signer);
       }
       throw new Error(`Does not support ${invoice.coin} token`);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setErrorMsg(error?.message || "UNKNOWN_ERROR");
     }
-  }, [walletProvider, address]);
+  }, [invoice.coin, invoice.contractAddress, signer]);
 
   async function getAllowance() {
     const tokenContract = await getTokenContract();
@@ -284,7 +283,7 @@ export default function InvoiceDetailPage({
                 className={`flex items-center mt-4 px-4 py-2 w-full font-bold text-white rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 active:translate-y-0 focus:outline-none`}
               >
                 {loading && <Spinner className="mr-2" />}
-                {isConnected
+                {!!address
                   ? chainId !== invoice.chainId
                     ? "Change Network"
                     : "Submit"

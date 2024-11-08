@@ -8,6 +8,7 @@ import Link from "next/link";
 import axios from "axios";
 
 import { SignUpSchema } from "@/libs/schemas/auth.schema";
+import { useWallet } from "@/hooks/useWallet";
 
 type Inputs = {
   username: string;
@@ -25,6 +26,7 @@ export default function SignUpPage() {
   const [message, setMessage] = useState("");
   const [agree, setAgree] = useState(false);
   const [successful, setSuccessful] = useState(false);
+  const { address } = useWallet();
   const {
     register,
     handleSubmit,
@@ -39,6 +41,12 @@ export default function SignUpPage() {
       setValue("referralCode", referralCode);
     }
   }, [referralCode]);
+
+  useEffect(() => {
+    if (address) {
+      setValue("walletAddress", address);
+    }
+  }, [address]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     axios
@@ -124,6 +132,7 @@ export default function SignUpPage() {
               {...register("walletAddress")}
               color={errors.walletAddress ? "failure" : ""}
               helperText={errors.walletAddress?.message}
+              disabled={!!address}
             />
           </div>
           <div>
