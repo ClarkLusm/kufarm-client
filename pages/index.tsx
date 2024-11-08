@@ -89,19 +89,19 @@ export default function Home({
       id: "1",
       image: "images/users.png",
       title: "Users",
-      count: 23827,
+      count: Number(23827).toLocaleString(),
     },
     {
       id: "2",
       image: "images/money.png",
       title: "PancakeSwap mined",
-      count: 1310.8879,
+      count: Number(1310.8879).toLocaleString(),
     },
     {
       id: "3",
       image: "images/purchase.png",
       title: "PancakeSwap miner purchased",
-      count: 30207,
+      count: Number(30207).toLocaleString(),
     },
   ];
 
@@ -122,8 +122,8 @@ export default function Home({
             </Button>
           </div>
           <div className="text-2xl sm:text-5xl font-semibold dark:text-white leading-7">
-            Start your <span className="font-bold">PANCAKESWAP</span> mining journey
-            today.
+            Start your <span className="font-bold">PANCAKESWAP</span> mining
+            journey today.
           </div>
           <div className="mt-4 text-base font-semibold text-slate-400">
             <table>
@@ -147,7 +147,9 @@ export default function Home({
                 <tr>
                   <td>Max Total Supply</td>
                   <td>
-                    <span className="font-bold text-slate-500 pl-2">450M CAKE</span>
+                    <span className="font-bold text-slate-500 pl-2">
+                      450M CAKE
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -236,7 +238,7 @@ export default function Home({
           </div>
         ))}
       </div>
-      <div className="mb-4 sm:mb-10 grid grid-cols-3 gap-8">
+      <div className="mb-4 sm:mb-10 grid grid-cols-3 gap-8 overflow-hidden">
         {parameters.map((p) => (
           <div className="mx-4 h-64 grid-item text-center" key={p.id}>
             <img className="m-auto w-24" src={p.image} alt="" />

@@ -4,7 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { InferGetServerSidePropsType } from "next";
 import router from "next/router";
 import { ethers, Contract } from "ethers";
-import { useWeb3Modal, useSwitchNetwork } from "@web3modal/ethers/react";
+import {
+  useWeb3Modal,
+  useSwitchNetwork,
+  useWeb3ModalAccount,
+} from "@web3modal/ethers/react";
 
 import axios from "axios";
 import Link from "next/link";
@@ -60,6 +64,7 @@ export default function InvoiceDetailPage({
   invoice,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { open } = useWeb3Modal();
+  const { isConnected } = useWeb3ModalAccount();
   const { chainId, address, signer } = useWallet();
   const { switchNetwork } = useSwitchNetwork();
   const [loading, setLoading] = useState(false);
@@ -212,7 +217,7 @@ export default function InvoiceDetailPage({
               />
               <div className="ml-2 text-xl font-medium">{invoice?.coin}</div>
             </div>
-            {address && <w3m-account-button balance="hide" />}
+            {isConnected && <w3m-account-button balance="hide" />}
           </div>
           <div className="mb-5">
             <div className="mb-2 block">

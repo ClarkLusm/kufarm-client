@@ -90,6 +90,8 @@ export default function Dashboard({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { mode } = useThemeMode();
   const [userBalance, setUserBalance] = useState<number>(profile?.balance);
+  const [chartUrl, setChartUrl] = useState("");
+
   useEffect(() => {
     if (!profile) return;
     const timer = setInterval(() => {
@@ -103,6 +105,12 @@ export default function Dashboard({
       clearInterval(timer);
     };
   }, []);
+
+  useEffect(() => {
+    setChartUrl(
+      `https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22frameElementId%22%3A%22tradingview_7763e%22%2C%22interval%22%3A%22240%22%2C%22hide_side_toolbar%22%3A%221%22%2C%22allow_symbol_change%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22watchlist%22%3A%22BINANCE%3ABTCUSDT%5Cu001fBINANCE%3AETHUSDT%22%2C%22details%22%3A%221%22%2C%22calendar%22%3A%221%22%2C%22hotlist%22%3A%221%22%2C%22studies%22%3A%22STD%3BSMA%22%2C%22theme%22%3A%22${mode}%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUtc%22%2C%22show_popup_button%22%3A%221%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22BINANCE%3ABTCUSDT%22%2C%22page-uri%22%3A%22kufarm.com%2Faccounts%2Fmain%2F%22%7D`
+    );
+  }, [mode]);
 
   const statistic = [
     {
@@ -194,11 +202,12 @@ export default function Dashboard({
       </div>
       <div className="rounded-3xl border mb-10">
         <iframe
-          src="https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22frameElementId%22%3A%22tradingview_7763e%22%2C%22interval%22%3A%22240%22%2C%22hide_side_toolbar%22%3A%221%22%2C%22allow_symbol_change%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22watchlist%22%3A%22BINANCE%3ABTCUSDT%5Cu001fBINANCE%3AETHUSDT%22%2C%22details%22%3A%221%22%2C%22calendar%22%3A%221%22%2C%22hotlist%22%3A%221%22%2C%22studies%22%3A%22STD%3BSMA%22%2C%22theme%22%3A%22light%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUtc%22%2C%22show_popup_button%22%3A%221%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22BINANCE%3ABTCUSDT%22%2C%22page-uri%22%3A%22kufarm.com%2Faccounts%2Fmain%2F%22%7D"
+          key={mode}
+          src={chartUrl}
           className="h-[400px] w-full rounded-3xl"
         />
       </div>
-      <div className="sm:flex justify-between">
+      <div className="sm:flex justify-between mb-6">
         <div className="mb-4 sm:mr-7 sm:mb-0 sm:w-8/12 rounded-2xl bg-slate-100 dark:bg-gray-800 p-4 sm:p-10">
           <div className="mb-5 text-2xl font-semibold">
             Dashboard Statistic:
