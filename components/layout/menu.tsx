@@ -54,7 +54,7 @@ const Menu = () => {
   }, [status]);
 
   return (
-    <NavbarCollapse>
+    <NavbarCollapse className="main-navbar">
       {menuItems.map((r) => (
         <NavbarLink
           className="text-lg font-semibold"

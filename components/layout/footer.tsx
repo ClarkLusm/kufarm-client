@@ -24,14 +24,16 @@ const FooterBase = () => {
     <Footer className="rounded-none">
       <div className="container max-w-[1100px] mx-auto">
         <div className="grid w-full items-center justify-between sm:flex sm:justify-between md:flex md:grid-cols-1 px-4 pt-4">
-            <Link href="/" className="flex items-center">
-              <img
-                src="/images/logo.jpg"
-                className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
-                alt="Miner86 Logo"
-              />
-              <span className="dark:text-white font-bold">Miner86</span>
-            </Link>
+            <div className="mb-4">
+              <Link href="/" className="flex items-center">
+                <img
+                  src="/images/logo.jpg"
+                  className="mr-3 h-6 sm:h-9 sm:block rounded-[50%]"
+                  alt="Miner86 Logo"
+                />
+                <span className="dark:text-white font-bold">Miner86</span>
+              </Link>
+            </div>
           <div className="grid grid-cols-3 gap-8 sm:mt-4 sm:gap-6">
             <div>
               <FooterTitle title="about" />

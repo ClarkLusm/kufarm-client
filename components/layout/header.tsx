@@ -29,7 +29,7 @@ const Header = () => {
         <NavbarToggle className="ml-4" />
       </div>
       <Menu />
-      <div className="flex align-center">
+      <div className="flex items-center">
         <DarkThemeToggle className="mr-2" />
         <Account />
       </div>

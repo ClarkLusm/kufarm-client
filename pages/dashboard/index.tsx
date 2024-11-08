@@ -169,7 +169,7 @@ export default function Dashboard({
   ];
 
   return (
-    <div className="relative py-24 sm:pt-0 px-4 sm:px-0">
+    <div className="relative md:py-24 md:px-4">
       <div className="mb-10 rounded-2xl shadow-2xl">
         <div className="mb-5 rounded-2xl bg-slate-100 dark:bg-gray-800 p-4 sm:p-10">
           <div className="mb-5 text-2xl font-semibold">Mining Statistic:</div>
@@ -268,12 +268,10 @@ export default function Dashboard({
         </div>
       </div>
 
-      <div className="w-[100vw] absolute left-[50%] bottom-0 translate-x-[-50%]">
-        <TickerTape
-          colorTheme={mode === "dark" ? "dark" : "light"}
-          symbols={symbols}
-        ></TickerTape>
-      </div>
+      <TickerTape
+        colorTheme={mode === "dark" ? "dark" : "light"}
+        symbols={symbols}
+      ></TickerTape>
     </div>
   );
 }

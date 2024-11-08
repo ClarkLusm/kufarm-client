@@ -55,3 +55,20 @@ video {
 .notify-modal .notify-modal-header button {
   outline: none;
 }
+
+.tradingview-widget-copyright {
+  display: none;
+}
+
+@media only screen and (max-width: 640px) {
+  .main-navbar {
+    position: fixed;
+    z-index: 9;
+    background: #FFF;
+    top: 60px;
+    left: 0;
+    right: 0;
+    padding: 0 1rem 1rem;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  }
+}

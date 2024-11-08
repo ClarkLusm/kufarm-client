@@ -9,7 +9,7 @@ export default function Layout({ children }: any) {
     <Flowbite>
       <Header />
       <main className="bg-white dark:bg-gray-900 dark:text-white">
-        <div className="main container max-w-[1100px] mx-auto h-max pt-24">{children}</div>
+        <div className="main container max-w-[1100px] mx-auto h-max pt-16 md:pt-24">{children}</div>
       </main>
       <Footer />
       <NotifyModal />

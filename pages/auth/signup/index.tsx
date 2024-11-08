@@ -133,6 +133,7 @@ export default function SignUpPage() {
               color={errors.walletAddress ? "failure" : ""}
               helperText={errors.walletAddress?.message}
               disabled={!!address}
+              className="text-right"
             />
           </div>
           <div>
@@ -146,7 +147,7 @@ export default function SignUpPage() {
           <div className="flex items-center gap-2">
             <Checkbox id="remember" onClick={() => setAgree(!agree)} />
             <Label htmlFor="remember">
-              I agree to PancakeSwap
+              I agree to Miner86
               <Link target="_blank" href="#" className="ml-1">
                 Terms & Conditions
               </Link>

@@ -26,10 +26,10 @@ export default function BuyPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter();
   return (
-    <div className="grid gap-8 sm:grid-cols-2 py-8 px-4 sm:px-0">
+    <div className="grid gap-8 sm:grid-cols-2 py-8 px-4">
       {product.data.map((p) => (
         <Card className="w-full bg-slate-100 rounded-2xl" key={p.id}>
-          <div className="flex justify-between">
+          <div className="sm:flex justify-between">
             <div>
               <div className="mb-5 text-2xl font-semibold">{p.name}</div>
               <div className="mb-3 flex items-center">
@@ -62,6 +62,7 @@ export default function BuyPage({
                 width: "100%",
                 height: "auto",
               }}
+              className="max-w-[300px] sm:max-w-[50%]"
             />
           </div>
           <div className="flex items-center text-xl">
