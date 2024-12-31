@@ -11,7 +11,7 @@ import { SignUpSchema } from "@/libs/schemas/auth.schema";
 import { useWallet } from "@/hooks/useWallet";
 
 type Inputs = {
-  username: string;
+  // username: string;
   email: string;
   password: string;
   rePassword: string;
@@ -84,7 +84,7 @@ export default function SignUpPage() {
           onSubmit={handleSubmit(onSubmit)}
           onChange={onChange}
         >
-          <div>
+          {/* <div>
             <TextInput
               required
               placeholder="Username"
@@ -93,7 +93,7 @@ export default function SignUpPage() {
               color={errors.username ? "failure" : ""}
               helperText={errors.username?.message}
             />
-          </div>
+          </div> */}
           <div>
             <TextInput
               required

@@ -1,6 +1,6 @@
 export type UserProfile = {
   id: string;
-  username: string;
+  // username: string;
   email: string;
   walletAddress: string;
   balance: number;

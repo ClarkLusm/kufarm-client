@@ -288,7 +288,7 @@ export default function Home({
             Earn Money with PancakeSwap
           </div>
           <span className="text-lg/5 font-semibold text-slate-500">
-            To start mining bitcoins, just select a miner equipment from your
+            To start mining cake, just select a miner equipment from your
             personal PancakeSwap account, each miner has a different cost and
             rental period, each equipment generates a unique amount of pancake
             daily. these coins are deposited to your personal account. you just

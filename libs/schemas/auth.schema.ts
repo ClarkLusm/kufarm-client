@@ -9,13 +9,13 @@ export const SignInSchema = yup
 
 export const SignUpSchema = yup
   .object({
-    username: yup
-      .string()
-      .matches(
-        /^[a-z0-9]+$/i,
-        "Username is invalid. Includes letters and numbers."
-      )
-      .required(),
+    // username: yup
+    //   .string()
+    //   .matches(
+    //     /^[a-z0-9]+$/i,
+    //     "Username is invalid. Includes letters and numbers."
+    //   )
+    //   .required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
     rePassword: yup
