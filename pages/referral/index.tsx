@@ -6,9 +6,11 @@ import {
   TableHeadCell,
   TableRow,
   Clipboard,
+  Pagination,
 } from "flowbite-react";
+import { useState } from "react";
 import { InferGetServerSidePropsType } from "next";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import axios from "axios";
 import moment from "moment";
 
@@ -29,6 +31,7 @@ export const getServerSideProps = async (ctx: any) => {
         profile: profileRes.data,
         users: referralRes.data.data,
         total: referralRes.data.total,
+        totalPage: referralRes.data.totalPage,
         investTotal: referralRes.data.investTotal,
       },
     };
@@ -44,12 +47,32 @@ export default function ReferralPage({
   profile,
   users,
   total,
+  totalPage,
   investTotal,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const usersFormatted =
+  const { data: session } = useSession();
+  const [usersFormatted, setUsersFormatted] = useState(
     users.length >= 7
       ? users
-      : [...users, ...new Array(7 - users.length).fill(null)];
+      : [...users, ...new Array(7 - users.length).fill(null)]
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+    axios
+      .get(`${process.env.API_URL}/api/account/referrals?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      })
+      .then((res) => res.data)
+      .then((data) => {
+        setUsersFormatted(data.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   return (
     <div className="">
@@ -94,10 +117,21 @@ export default function ReferralPage({
             </TableHead>
             <TableBody className="w-screen divide-y">
               {usersFormatted.map((t: ReferralUser, index: number) => (
-                <UserItem key={index} data={t} index={index + 1} />
+                <UserItem
+                  key={index}
+                  data={t}
+                  index={(currentPage - 1) * 20 + index + 1}
+                />
               ))}
             </TableBody>
           </Table>
+        </div>
+        <div className="flex overflow-x-auto sm:justify-center mt-2">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPage}
+            onPageChange={onPageChange}
+          />
         </div>
       </div>
     </div>
