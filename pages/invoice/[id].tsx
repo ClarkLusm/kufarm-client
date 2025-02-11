@@ -182,7 +182,7 @@ export default function InvoiceDetailPage({
   return (
     <div className="px-4 pb-8">
       <div className="m-auto sm:w-3/4 rounded-t-3xl border bg-white dark:bg-gray-900">
-        {chainId && chainId !== invoice.chainId && (
+        {chainId > 0 && chainId !== invoice.chainId && (
           <div className="mx-auto my-4 sm:w-4/6">
             <Alert color="failure">
               <span>The payment method you choose is only supported in</span>
@@ -223,9 +223,9 @@ export default function InvoiceDetailPage({
             <div className="mb-2 block">
               <Label
                 htmlFor="small"
-                value={`Amount (approx: $${Number(invoice.price).toLocaleString(
-                  "en-EN"
-                )}) :`}
+                value={`Amount (approx: $${Number(
+                  invoice.usdAmount
+                ).toLocaleString("en-EN")}) :`}
               />
             </div>
             <div className="relative flex">
