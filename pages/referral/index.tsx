@@ -151,7 +151,7 @@ const UserItem = ({ index, data }: TransactionProps) => {
       <TableCell>{data?.email || "..."}</TableCell>
       <TableCell align="center">{data?.level || "..."}</TableCell>
       <TableCell align="right">
-        {data ? Number(data.btco2Value || 0).toLocaleString("en-EN") : "..."}
+        {data ? Number(data.cakeValue || 0).toLocaleString("en-EN") : "..."}
       </TableCell>
       <TableCell align="center">{data ? "CAKE" : "..."}</TableCell>
       <TableCell align="center">

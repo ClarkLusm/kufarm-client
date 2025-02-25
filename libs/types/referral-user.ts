@@ -3,6 +3,7 @@ type ReferralUser = {
   email: string;
   withdrawValue: number;
   btco2Value: number;
+  cakeValue: number;
   level: number;
   updatedAt?: Date | null;
 };
