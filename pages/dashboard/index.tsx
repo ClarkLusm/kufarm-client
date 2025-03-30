@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import { TickerTape } from "react-ts-tradingview-widgets";
 import router from "next/router";
 import axios from "axios";
+import moment from "moment";
 
 import { Product } from "@/libs/types/product";
 import { UserProfile } from "@/libs/types/user";
@@ -83,6 +84,9 @@ export const getServerSideProps = (async (ctx) => {
   }
 }) satisfies GetServerSideProps<Resp>;
 
+let timer: any = null,
+  countdown: any = null;
+
 export default function Dashboard({
   profile,
   products,
@@ -91,18 +95,60 @@ export default function Dashboard({
   const { mode } = useThemeMode();
   const [userBalance, setUserBalance] = useState<number>(profile?.balance);
   const [chartUrl, setChartUrl] = useState("");
+  const [running, setRunning] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    totalSeconds: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  const calculateTimeLeft = () => {
+    const difference = moment(profile.miningAt)
+      .add(profile.sessionMiningDuration, "hours")
+      .diff(moment(), "seconds", true);
+
+    if (difference >= 0) {
+      return {
+        totalSeconds: difference,
+        hours: Math.floor(difference / (60 * 60)),
+        minutes: Math.floor((difference / 60) % 60),
+        seconds: Math.floor(difference % 60),
+      };
+    }
+  };
 
   useEffect(() => {
     if (!profile) return;
-    const timer = setInterval(() => {
-      if (!profile.maxOut || profile.income >= profile.maxOut) {
-        clearInterval(timer);
-      }
-      const balance = profile?.dailyIncome / 24 / 3600;
-      setUserBalance((prev) => prev + balance);
-    }, 1000);
+    if (
+      profile.miningAt &&
+      moment().isBefore(
+        moment(profile.miningAt).add(profile.sessionMiningDuration, "hours")
+      ) &&
+      profile.hashPower > 0
+    ) {
+      setRunning(true);
+      timer = setInterval(() => {
+        if (!profile.maxOut || profile.income >= profile.maxOut) {
+          clearInterval(timer);
+        }
+        const balance = profile?.dailyIncome / 24 / 3600;
+        setUserBalance((prev) => prev + balance);
+      }, 1000);
+      countdown = setInterval(() => {
+        const remainSeconds = calculateTimeLeft();
+        if (remainSeconds) {
+          setTimeLeft(remainSeconds);
+        } else {
+          clearInterval(countdown);
+          clearInterval(timer);
+          setRunning(false);
+        }
+      }, 1000);
+    }
     return () => {
       clearInterval(timer);
+      clearInterval(countdown);
     };
   }, []);
 
@@ -111,6 +157,24 @@ export default function Dashboard({
       `https://s.tradingview.com/widgetembed/?hideideas=1&overrides=%7B%7D&enabled_features=%5B%5D&disabled_features=%5B%5D&locale=en#%7B%22symbol%22%3A%22BINANCE%3ABTCUSDT%22%2C%22frameElementId%22%3A%22tradingview_7763e%22%2C%22interval%22%3A%22240%22%2C%22hide_side_toolbar%22%3A%221%22%2C%22allow_symbol_change%22%3A%221%22%2C%22save_image%22%3A%221%22%2C%22watchlist%22%3A%22BINANCE%3ABTCUSDT%5Cu001fBINANCE%3AETHUSDT%22%2C%22details%22%3A%221%22%2C%22calendar%22%3A%221%22%2C%22hotlist%22%3A%221%22%2C%22studies%22%3A%22STD%3BSMA%22%2C%22theme%22%3A%22${mode}%22%2C%22style%22%3A%221%22%2C%22timezone%22%3A%22Etc%2FUtc%22%2C%22show_popup_button%22%3A%221%22%2C%22studies_overrides%22%3A%22%7B%7D%22%2C%22utm_medium%22%3A%22widget_new%22%2C%22utm_campaign%22%3A%22chart%22%2C%22utm_term%22%3A%22BINANCE%3ABTCUSDT%22%2C%22page-uri%22%3A%22kufarm.com%2Faccounts%2Fmain%2F%22%7D`
     );
   }, [mode]);
+
+  const _onStartMining = async () => {
+    try {
+      const session = await getSession();
+      await axios.post(
+        `${process.env.API_URL}/api/account/start-mining`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+          },
+        }
+      );
+      router.reload();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const statistic = [
     {
@@ -180,24 +244,97 @@ export default function Dashboard({
     <div className="relative md:py-24 md:px-4">
       <div className="mb-10 rounded-2xl shadow-2xl">
         <div className="mb-5 rounded-2xl bg-slate-100 dark:bg-gray-800 p-4 sm:p-10">
-          <div className="mb-5 text-2xl font-semibold">Mining Statistic:</div>
-          {mining_statistic.map((ms) => (
-            <div className="mb-2 flex items-center overflow-hidden" key={ms.id}>
-              {ms.image}
-              <div className="ml-2 ">
-                {ms.properties}
-                <span className="ml-2 text-gray-500">{ms.value}</span>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <div className="mb-5 text-2xl font-semibold">
+                Mining Statistic:
+              </div>
+              {mining_statistic.map((ms) => (
+                <div
+                  className="mb-2 flex items-center overflow-hidden"
+                  key={ms.id}
+                >
+                  {ms.image}
+                  <div className="ml-2 ">
+                    {ms.properties}
+                    <span className="ml-2 text-gray-500">{ms.value}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div>
+              {profile.hashPower == 0 && (
+                <div className="text-center mt-6">
+                  <span className="text-base text-gray-400">
+                    You don't have any mining power
+                  </span>
+                  <div className="flex justify-center mt-4">
+                    <Button
+                      color="success"
+                      className="h-12 items-center"
+                      style={{ minWidth: 200 }}
+                      onClick={() => router.push("/buy")}
+                    >
+                      <span className="text-white text-lg">Buy TH/S</span>
+                    </Button>
+                  </div>
+                </div>
+              )}
+              {!running && profile.hashPower > 0 && (
+                <div className="text-center mt-6">
+                  <span className="text-base text-gray-400">
+                    Mining is not started yet
+                  </span>
+                  {profile?.hashPower > 0 && (
+                    <div className="flex justify-center mt-4">
+                      <Button
+                        color="success"
+                        className="h-12 items-center"
+                        style={{ minWidth: 200 }}
+                        onClick={_onStartMining}
+                      >
+                        <span className="text-white text-lg">Start Mining</span>
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
+              {running && (
+                <div className="text-center mt-6">
+                  <div className="flex justify-center">
+                    <Button color="warning" className="flex items-center px-4">
+                      <div className="flex flex-col items-center">
+                        <div className="font-light text-xs">
+                          Start next session after
+                        </div>
+                        <div className="flex gap-2">
+                          <div className="flex flex-col items-center">
+                            <span className="text-2xl font-bold">
+                              {String(timeLeft.hours).padStart(2, "0")}:
+                              {String(timeLeft.minutes).padStart(2, "0")}:
+                              {String(timeLeft.seconds).padStart(2, "0")}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+                  </div>
+                </div>
+              )}
+              <div className="mt-6 text-center">
+                <span className="text-xl ">
+                  {userBalance?.toLocaleString("en-EN", {
+                    maximumFractionDigits: 9,
+                  })}
+                </span>
               </div>
             </div>
-          ))}
-          <div className="my-6 h-5 w-full rounded-xl bg-slate-300 dark:bg-gray-800 text-transparent mining-line"></div>
-          <div className="my-6 text-center">
-            <span className="text-xl ">
-              {userBalance?.toLocaleString("en-EN", {
-                maximumFractionDigits: 9,
-              })}
-            </span>
           </div>
+          {running ? (
+            <div className="mt-4 h-5 w-full rounded-xl bg-slate-300 dark:bg-gray-800 text-transparent mining-line"></div>
+          ) : (
+            <div className="mt-4 h-5 w-full rounded-xl bg-slate-300 dark:bg-gray-400 text-transparent"></div>
+          )}
         </div>
       </div>
       <div className="rounded-3xl border mb-10">

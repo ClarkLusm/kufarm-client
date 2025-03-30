@@ -11,4 +11,5 @@ export type UserProfile = {
   dailyIncome: number;
   monthlyIncome: number;
   pool: string;
+  miningAt: Date;
 };
