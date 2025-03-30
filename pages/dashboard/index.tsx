@@ -266,7 +266,7 @@ export default function Dashboard({
               {profile.hashPower == 0 && (
                 <div className="text-center mt-6">
                   <span className="text-base text-gray-400">
-                    You don't have any mining power
+                    {`You don't have any mining power`}
                   </span>
                   <div className="flex justify-center mt-4">
                     <Button
