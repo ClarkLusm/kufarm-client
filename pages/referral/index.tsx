@@ -91,18 +91,22 @@ export default function ReferralPage({
           </div>
           <div className="relative grid-item p-4 border rounded-xl bg-white dark:bg-gray-900">
             <h4 className="text-gray-400">Referral link</h4>
-            <span className="text-md flex items-center overflow-hidden">
-              <span>
-                {process.env.NEXTAUTH_URL}/referral/
-                {profile?.referralCode ?? ""}
+            {profile.referralCode ? (
+              <span className="text-md flex items-center overflow-hidden">
+                <span>
+                  {process.env.NEXTAUTH_URL}/referral/
+                  {profile.referralCode}
+                </span>
+                <Clipboard.WithIcon
+                  className="top-12 mt-1 bg-white dark:bg-slate-900"
+                  valueToCopy={`${process.env.NEXTAUTH_URL}/referral/${profile.referralCode}`}
+                />
               </span>
-              <Clipboard.WithIcon
-                className="top-12 mt-1 bg-white dark:bg-slate-900"
-                valueToCopy={`${process.env.NEXTAUTH_URL}/referral/${
-                  profile?.referralCode ?? ""
-                }`}
-              />
-            </span>
+            ) : (
+              <span className="text-md text-gray-400 italic text-sm overflow-hidden">
+                You haven't bought TH/S yet
+              </span>
+            )}
           </div>
         </div>
         <div className="overflow-x-auto">
