@@ -1,6 +1,6 @@
 import router from "next/router";
 
-import { activeAccount } from "../api/active-account";
+import { activeAccount } from "../api/auth/active-account";
 
 export async function getServerSideProps(context: any) {
   const { query } = context;
