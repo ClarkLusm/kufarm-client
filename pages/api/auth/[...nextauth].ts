@@ -27,6 +27,28 @@ export const authOptions = {
         }
       },
     }),
+    CredentialsProvider({
+      id: "otp-credentials",
+      name: "OTP Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        code: { label: "OTP code", type: "text" },
+      },
+      async authorize(credentials, req) {
+        try {
+          const res = await axios.post(
+            `${process.env.API_URL}/api/auth/otp-signin`,
+            {
+              email: credentials?.email,
+              code: credentials?.code,
+            }
+          );
+          return res.data;
+        } catch (error: any) {
+          throw new Error(error?.response?.data?.message);
+        }
+      },
+    }),
   ],
   session: { strategy: "jwt" },
   jwt: {

@@ -3,7 +3,19 @@ import * as yup from "yup";
 export const SignInSchema = yup
   .object({
     email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
+    loginType: yup.number().required(),
+    password: yup
+      .string()
+      .min(6)
+      .when("loginType", ([type], schema) => {
+        return type == 0 ? schema.required() : schema.nullable();
+      }),
+    code: yup
+      .string()
+      .length(6)
+      .when("loginType", ([type], schema) => {
+        return type == 1 ? schema.required() : schema.nullable();
+      }),
   })
   .required();
 
