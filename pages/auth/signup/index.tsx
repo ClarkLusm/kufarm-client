@@ -75,9 +75,9 @@ export default function SignUpPage() {
             Congratulations!
           </p>
           <p className="text-justify mb-8">
-            You have successfully registered your account. Please check your
-            email to confirm your account. If you don't see the email in your
-            inbox, please check your spam folder. Thank you for joining us!
+            {
+              "You have successfully registered your account. Please check your email to confirm your account. If you don't see the email in your inbox, please check your spam folder. Thank you for joining us!"
+            }
           </p>
           <div className="flex justify-center mb-4">
             <Button

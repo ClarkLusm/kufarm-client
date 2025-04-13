@@ -186,7 +186,7 @@ export default function SignInPage() {
               </div>
               {sentOtp && (
                 <div className="mb-4 mt-6 text-sm text-gray-600">
-                  Didn't receive OTP code?{" "}
+                  {"Didn't receive OTP code? "}
                   <button
                     type="button"
                     className="font-semibold text-green-500 disabled:text-green-300"

@@ -104,7 +104,7 @@ export default function ReferralPage({
               </span>
             ) : (
               <span className="text-md text-gray-400 italic text-sm overflow-hidden">
-                You haven't bought TH/S yet
+                {"You haven't bought TH/S yet"}
               </span>
             )}
           </div>
