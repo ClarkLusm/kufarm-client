@@ -130,13 +130,15 @@ export default function ReferralPage({
             </TableBody>
           </Table>
         </div>
-        <div className="flex overflow-x-auto sm:justify-center mt-2">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPage}
-            onPageChange={onPageChange}
-          />
-        </div>
+        {totalPage > 1 && (
+          <div className="flex overflow-x-auto sm:justify-center mt-2">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPage}
+              onPageChange={onPageChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
