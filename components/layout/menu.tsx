@@ -42,10 +42,6 @@ const Menu = () => {
           path: "/",
         },
         {
-          label: "Mining Pool",
-          path: "/mining",
-        },
-        {
           label: "About Us",
           path: "/about-us",
         },
