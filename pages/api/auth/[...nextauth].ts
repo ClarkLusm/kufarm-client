@@ -1,7 +1,29 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import type { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+async function refreshAccessToken(token: any) {
+  try {
+    const resp = await axios.post(
+      `${process.env.API_URL}/api/auth/refresh-token/`,
+      {
+        token: token.refreshToken,
+      }
+    );
+    const accessToken = resp.data.access;
+    return {
+      ...token,
+      accessToken,
+    };
+  } catch (error) {
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
 
 export const authOptions = {
   providers: [
@@ -54,6 +76,7 @@ export const authOptions = {
   jwt: {
     secret: "secretCode",
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }: any) {
       if (user) {
@@ -61,11 +84,13 @@ export const authOptions = {
         token.refreshToken = user.refreshToken;
         token.user = user.user;
       }
-      const tokenParsed = JSON.parse(
-        Buffer.from(token?.accessToken?.split(".")?.[1], "base64").toString()
-      );
-      const dateNowInSeconds = new Date().getTime() / 1000;
-      if (dateNowInSeconds > tokenParsed.exp) {
+      try {
+        const tokenParsed = jwtDecode(token.accessToken);
+        const dateNowInSeconds = new Date().getTime() / 1000;
+        if (dateNowInSeconds > tokenParsed.exp!) {
+          return refreshAccessToken(token);
+        }
+      } catch (error) {
         token.error = "AccessTokenExpired";
       }
       return token;

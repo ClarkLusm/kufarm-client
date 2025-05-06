@@ -29,13 +29,10 @@ export default function SignInPage() {
   const [countDown, setCountDown] = useState(0);
 
   useEffect(() => {
-    if (status === "authenticated") {
-      void router.push("/dashboard");
-    }
     return () => {
       clearInterval(debounce);
     };
-  }, [status]);
+  }, []);
 
   const {
     register,
@@ -58,6 +55,8 @@ export default function SignInPage() {
     }).then((res) => {
       if (!res?.ok) {
         setMessage(res?.error || "Login failed!");
+      } else {
+        router.push("/dashboard");
       }
     });
   };
