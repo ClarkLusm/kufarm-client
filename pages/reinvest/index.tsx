@@ -15,9 +15,6 @@ import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { shortAddress } from "@/utils";
-import { WithdrawConfirmDialog } from "@/components/ui/withdraw-dialog";
-import EmailIcon from "@/icons/email.svg";
 import BtcIcon from "@/icons/btc.svg";
 import UsdIcon from "@/icons/usd.svg";
 import WalletIcon from "@/icons/wallet.svg";
@@ -31,16 +28,18 @@ export const getServerSideProps = async (ctx: any) => {
   };
 
   try {
-    const [profileRes, withdrawRes, settingRes] = await Promise.all([
+    const [profileRes, reinvestRes, settingRes] = await Promise.all([
       axios.get(`${process.env.API_URL}/api/account/profile`, reqOptions),
-      axios.get(`${process.env.API_URL}/api/account/transactions`, reqOptions),
-      axios.get(`${process.env.API_URL}/api/app-settings`, reqOptions),
+      axios.get(`${process.env.API_URL}/api/account/reinvests`, reqOptions),
+      axios.get(`${process.env.API_URL}/api/reinvest-settings`, reqOptions),
     ]);
+    console.log(settingRes);
+    
     return {
       props: {
         profile: profileRes.data,
-        transactions: withdrawRes.data.data,
-        total: withdrawRes.data.total,
+        reinvests: reinvestRes.data.data,
+        total: reinvestRes.data.total,
         settings: settingRes.data,
       },
     };
@@ -51,16 +50,16 @@ export const getServerSideProps = async (ctx: any) => {
   }
 };
 
-export default function WithdrawPage({
+export default function ReinvestPage({
   profile,
-  transactions,
+  reinvests,
   total,
   settings,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [amount, setAmount] = useState(settings.withdrawMin);
+  const [amount, setAmount] = useState(settings.amount);
   const [errorMsg, setErrorMsg] = useState("");
   const [openModal, setOpenModal] = useState(false);
-  const [tokenBalance, setTokenBalance] = useState(0);
+  const [usdReferralCommission, setUsdReferralCommission] = useState(0);
   const [usdtPrice, setUsdtPrice] = useState(0);
   const [priceFetching, setPriceFetching] = useState(false);
 
@@ -72,27 +71,26 @@ export default function WithdrawPage({
         .then((res) => res.data)
         .then(({ price }) => {
           setUsdtPrice(price);
-          const totalBalance =
-            Number(profile.balance) / price +
-            Number(profile.referralCommission || 0);
-          setTokenBalance(totalBalance);
+          setUsdReferralCommission(
+            Number(profile.referralCommission || 0) * price
+          );
           setPriceFetching(false);
         })
         .catch((error) => console.error(error));
     }
   }, [profile]);
 
-  const transItems =
-    transactions.length >= 7
-      ? transactions
-      : [...transactions, ...new Array(7 - transactions.length).fill(null)];
+  const iItems =
+    reinvests.length >= 7
+      ? reinvests
+      : [...reinvests, ...new Array(7 - reinvests.length).fill(null)];
 
   const onSubmit = async () => {
     if (Number.isNaN(Number(amount))) {
       setErrorMsg("Invalid amount!");
-    } else if (amount > tokenBalance) {
-      setErrorMsg("Your balance is not enough to withdraw!");
-    } else if (amount < settings.withdrawMin) {
+    } else if (amount > profile.balance + usdReferralCommission) {
+      setErrorMsg("Your balance is not enough to invest!");
+    } else if (amount < settings.minAmount) {
       setErrorMsg("Withdrawal amount is less than the minimum!");
     } else {
       setOpenModal(true);
@@ -108,14 +106,7 @@ export default function WithdrawPage({
   return (
     <div className="p-4 sm:flex">
       <div className="mb-4 sm:mb-0 sm:mr-9 sm:w-1/3 rounded-2xl bg-slate-100 dark:bg-slate-800 p-7">
-        <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
-        <div className="mb-5 flex items-center">
-          <EmailIcon width={20} />
-          <div className="ml-2 font-semibold">Email:</div>
-          <div className="ml-2 text-gray-600 dark:text-gray-200">
-            {profile.email}
-          </div>
-        </div>
+        <div className="mb-5 text-2xl font-semibold">Reinvest</div>
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center">
             <UsdIcon width={22} />
@@ -128,35 +119,31 @@ export default function WithdrawPage({
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <BtcIcon width={24} />
-            <div className="ml-2 font-semibold">Your CAKE available: </div>
+            <div className="ml-2 font-semibold">Referral commission: </div>
           </div>
           <div className="ml-2 text-gray-600 dark:text-gray-200">
-            {priceFetching ? "..." : tokenBalance.toLocaleString("en-EN")}
+            {priceFetching
+              ? "..."
+              : usdReferralCommission.toLocaleString("en-EN")}
           </div>
         </div>
-        <div className="pl-6 text-gray-600 dark:text-gray-200">
-          <span className="text-sm">
+        <div className="pl-6 mb-2 text-gray-600 dark:text-gray-200">
+          <span className="text-sm text-gray-400">
             1 CAKE ~ {usdtPrice ? Number(usdtPrice) : "..."} USDT
           </span>
-        </div>
-        <div className="pl-6 mb-5">
-          <span className="text-sm text-gray-400">
-            (~Summary of the mint balance and referral commissions)
-          </span>
-        </div>
-        <div className="mb-5">
-          <div className="mb-2 flex items-center">
-            <WalletIcon width={24} />
-            <div className="ml-2 font-semibold">Wallet address:</div>
-          </div>
-          <TextInput disabled value={profile.walletAddress} />
         </div>
         <div className="mb-5">
           <div className="mb-2 flex items-center">
             <BtcIcon width={24} />
-            <div className="ml-2 font-semibold">Withdraw amount:</div>
+            <div className="ml-2 font-semibold">Invest amount:</div>
           </div>
           <TextInput value={amount} onChange={onChange} />
+        </div>
+        <div className="mb-4">
+          <p className="mb-2 font-semibold">You will receive:</p>
+          <p className="text-gray-400">Hash power: {(amount * settings.hashPower) / 100} TH/s</p>
+          <p className="text-gray-400">Daily income: {(amount * settings.dailyIncome) / 100} $</p>
+          <p className="text-gray-400">Monthly income: {(amount * settings.monthlyIncome) / 100} $</p>
         </div>
         <div className="flex justify-center mb-4">
           <Button
@@ -166,11 +153,11 @@ export default function WithdrawPage({
             disabled={priceFetching}
           >
             <WalletIcon width={20} className="mr-2" />
-            Withdraw
+            Auto Reinvest
           </Button>
         </div>
         <div className="text-center font-semibold">
-          Minimal withdraw: {settings.withdrawMin} CAKE
+          Minimal invest: {settings.amount} $
         </div>
         {errorMsg && (
           <Alert
@@ -183,87 +170,43 @@ export default function WithdrawPage({
         )}
       </div>
       <div className="sm:w-2/3 rounded-2xl bg-slate-100 dark:bg-slate-800 p-7">
-        <div className="mb-5 text-2xl font-semibold">Withdraw history:</div>
+        <div className="mb-5 text-2xl font-semibold">Reinvest history:</div>
         <div className="overflow-x-auto">
           <Table>
             <TableHead>
               <TableHeadCell>№</TableHeadCell>
-              <TableHeadCell>Wallet</TableHeadCell>
-              <TableHeadCell>Coin</TableHeadCell>
+              <TableHeadCell>USD</TableHeadCell>
               <TableHeadCell>Amount</TableHeadCell>
-              <TableHeadCell>Status</TableHeadCell>
+              <TableHeadCell>Date</TableHeadCell>
             </TableHead>
             <TableBody className="w-screen divide-y">
-              {transItems.map((t: Transaction, index: number) => (
-                <TransactionItem key={index} data={t} index={index + 1} />
+              {iItems.map((t: Transaction, index: number) => (
+                <ReinvestItem key={index} data={t} index={index + 1} />
               ))}
             </TableBody>
           </Table>
         </div>
       </div>
-      <WithdrawConfirmDialog
-        show={openModal}
-        data={{
-          withdrawTo: profile.walletAddress,
-          amount,
-          transactionFee: (amount * settings.withdrawFeePercent) / 100,
-        }}
-        onClose={(status: boolean) => setOpenModal(status)}
-      />
     </div>
   );
 }
-
-type TransactionStatus = {
-  [key: number]: string;
-};
-
-const status: TransactionStatus = {
-  0: "Pending",
-  1: "Error",
-  2: "Success",
-};
 
 type TransactionProps = {
   index: number;
   data?: Transaction;
 };
-const TransactionItem = ({ index, data }: TransactionProps) => {
+const ReinvestItem = ({ index, data }: TransactionProps) => {
   return (
     <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
       <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
         {index}
       </TableCell>
       <TableCell>
-        {data?.userAddress ? shortAddress(data.userAddress) : "..."}
+        
       </TableCell>
       <TableCell>{data?.coin ?? "..."}</TableCell>
       <TableCell>
-        {data?.amount
-          ? data?.coin !== "USDT"
-            ? (data.amount / 1e18).toLocaleString("en-EN", {
-                maximumFractionDigits: 5,
-              })
-            : data.amount.toLocaleString("en-EN")
-          : "..."}
-      </TableCell>
-      <TableCell>
-        {data?.status ? (
-          <Badge
-            className="inline-flex"
-            color={
-              data?.status == 2
-                ? "success"
-                : data?.status == 1
-                ? "failure"
-                : "warning"
-            }
-          >
-            {status?.[data?.status]}
-          </Badge>
-        ) : (
-          "..."
-        )}
+        
       </TableCell>
     </TableRow>
   );

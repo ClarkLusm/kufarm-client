@@ -378,6 +378,15 @@ export default function Dashboard({
             </Button>
 
             <Button
+              color="success"
+              className="h-12 items-center"
+              onClick={() => router.push("/reinvest")}
+            >
+              <CreditCardIcon width={24} className="hidden sm:block mr-2" />
+              <span className="text-white">Auto Reinvest</span>
+            </Button>
+
+            <Button
               color="warning"
               className="h-12 items-center"
               onClick={() => router.push("/referral")}
