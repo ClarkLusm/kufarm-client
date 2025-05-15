@@ -18,6 +18,7 @@ import {
 import Link from "next/link";
 
 import TeleIcon from "@/icons/telegram.svg";
+import PancakeIcon from "@/icons/pancake.svg";
 
 const FooterBase = () => {
   return (
@@ -54,10 +55,10 @@ const FooterBase = () => {
                     <span>Support</span>
                   </span>
                 </FooterLink>
-                <FooterLink target="_blank" href="https://t.me/MiningCake">
+                <FooterLink target="_blank" href="https://coinmarketcap.com/vi/currencies/pancakeswap">
                   <span className="flex items-center">
-                    <TeleIcon width={18} height={18} className="mr-1" />{" "}
-                    <span>Guide</span>
+                    <PancakeIcon width={18} height={18} className="mr-1" />{" "}
+                    <span>Coinmarketcap</span>
                   </span>
                 </FooterLink>
               </FooterLinkGroup>
