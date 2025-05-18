@@ -10,8 +10,8 @@ import { Product } from "@/libs/types/product";
 
 export async function generateMetadata(props: { params: { locale: string } }) {
   return {
-    title: "meta_title",
-    description: "meta_description",
+    title: "Kiếm Lợi Nhuận Từ PancakeSwap Mining - Đầu Tư Thông Minh",
+    description: "Khám phá cơ hội kiếm lợi nhuận từ PancakeSwap Mining với hướng dẫn chi tiết và chiến lược đầu tư hiệu quả. Tham gia ngay hôm nay để tối đa hóa lợi nhuận của bạn!",
   };
 }
 
@@ -25,7 +25,7 @@ type Resp = {
 
 export const getServerSideProps = (async (ctx) => {
   const session = await getSession(ctx);
-  if (session)
+  if (session && !session?.error)
     return {
       redirect: {
         destination: "/dashboard",

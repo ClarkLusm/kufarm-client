@@ -63,7 +63,7 @@ const FooterBase = () => {
                 </FooterLink>
               </FooterLinkGroup>
             </div>
-            <div>
+            <div className="hidden sm:block">
               <FooterTitle title="Legal" />
               <FooterLinkGroup col>
                 <FooterLink href="#">Privacy Policy</FooterLink>

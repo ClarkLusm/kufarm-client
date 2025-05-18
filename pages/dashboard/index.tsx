@@ -16,13 +16,13 @@ import BtcIcon from "@/icons/btc.svg";
 import CpuIcon from "@/icons/cpu.svg";
 import GpuIcon from "@/icons/gpu.svg";
 import WalletIcon from "@/icons/wallet.svg";
+import WithdrawIcon from "@/icons/withdraw.svg";
 import DayIcon from "@/icons/24h.svg";
 import MonthIcon from "@/icons/time-is-money.svg";
 import BitClouldIcon from "@/icons/bit_cloud.svg";
 import CartIcon from "@/icons/cart.svg";
-import CreditCardIcon from "@/icons/credit-card.svg";
-import RefreshIcon from "@/icons/refresh.svg";
 import ReferralIcon from "@/icons/referral.svg";
+import ReinvestIcon from "@/icons/investment.svg";
 
 const symbols = [
   {
@@ -187,7 +187,7 @@ export default function Dashboard({
       id: "2",
       image: <CpuIcon width={24} className="dark:color-white" />,
       properties: "Mining power:",
-      value: profile?.hashPower?.toLocaleString("en-EN"),
+      value: profile?.hashPower?.toLocaleString("en-EN") +' TH/s',
     },
     {
       id: "3",
@@ -201,7 +201,7 @@ export default function Dashboard({
       properties: "Your Balance:",
       value: userBalance?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
-      }),
+      }) +' USD',
     },
     {
       id: "5",
@@ -209,7 +209,7 @@ export default function Dashboard({
       properties: "Your Referral Balance:",
       value: profile?.referralCommission?.toLocaleString("en-EN", {
         maximumFractionDigits: 5,
-      }),
+      }) +' CAKE',
     },
   ];
 
@@ -362,18 +362,9 @@ export default function Dashboard({
             <Button
               color="success"
               className="h-12 items-center"
-              onClick={router.reload}
-            >
-              <RefreshIcon width={24} className="hidden sm:block mr-2" />
-              <span className="text-white">Refresh balance</span>
-            </Button>
-
-            <Button
-              color="success"
-              className="h-12 items-center"
               onClick={() => router.push("/withdraw")}
             >
-              <CreditCardIcon width={24} className="hidden sm:block mr-2" />
+              <WithdrawIcon width={24} className="hidden sm:block mr-2" />
               <span className="text-white">Withdrawal</span>
             </Button>
 
@@ -382,8 +373,8 @@ export default function Dashboard({
               className="h-12 items-center"
               onClick={() => router.push("/reinvest")}
             >
-              <CreditCardIcon width={24} className="hidden sm:block mr-2" />
-              <span className="text-white">Auto Reinvest</span>
+              <ReinvestIcon width={24} className="hidden sm:block mr-2" />
+              <span className="text-white">Reinvest</span>
             </Button>
 
             <Button

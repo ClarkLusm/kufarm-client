@@ -106,7 +106,7 @@ export default function WithdrawPage({
   };
 
   return (
-    <div className="p-4 sm:flex">
+    <div className="pb-8 sm:flex">
       <div className="mb-4 sm:mb-0 sm:mr-9 sm:w-1/3 rounded-2xl bg-slate-100 dark:bg-slate-800 p-7">
         <div className="mb-5 text-2xl font-semibold">Withdraw Panel</div>
         <div className="mb-5 flex items-center">
