@@ -94,12 +94,16 @@ export default function ReinvestPage({
       : [...reinvests, ...new Array(7 - reinvests.length).fill(null)];
 
   const onSubmit = async () => {
-    if (Number.isNaN(Number(amount))) {
-      setErrorMsg("Invalid amount!");
-    } else if (amount > profile.balance + usdReferralCommission) {
-      setErrorMsg("Your balance is not enough to invest!");
-    } else if (amount < settings.minAmount) {
-      setErrorMsg("The reinvestment amount is less than the minimum!");
+    if (enabled) {
+      if (Number.isNaN(Number(amount))) {
+        setErrorMsg("Invalid amount!");
+      } else if (amount > profile.balance + usdReferralCommission) {
+        setErrorMsg("Your balance is not enough to invest!");
+      } else if (amount < settings.minAmount) {
+        setErrorMsg("The reinvestment amount is less than the minimum!");
+      } else {
+        sendRequest();
+      }
     } else {
       sendRequest();
     }
@@ -109,9 +113,11 @@ export default function ReinvestPage({
     sendReinvest(enabled, amount)
       .then((res) => res.data)
       .then((data) => {
+        setPriceFetching(true);
         router.reload();
       })
       .catch((err) => {
+        setPriceFetching(false);
         setErrorMsg(
           err?.response?.data?.message ??
             err?.message ??
@@ -131,7 +137,11 @@ export default function ReinvestPage({
       .sort((a: Product, b: Product) => a.price - b.price)
       .find((p: Product) => p.price >= amount);
     if (product) {
-      return (amount / product.price) * product.hashPower;
+      return Number(
+        (amount / product.price) * product.hashPower
+      ).toLocaleString("en-EN", {
+        maximumFractionDigits: 2,
+      });
     }
     return 0;
   };
@@ -263,7 +273,7 @@ export default function ReinvestPage({
                 className="text-medium min-w-[120px] text-white"
                 color="success"
                 onClick={onSubmit}
-                disabled={!profile.autoReinvestEnabled}
+                disabled={priceFetching || !profile.autoReinvestEnabled}
               >
                 <SaveIcon width={20} className="mr-2 text-white" />
                 Save
@@ -316,7 +326,7 @@ const ReinvestItem = ({ index, data }: InvestHisstoryProps) => {
       </TableCell>
       <TableCell>
         {data
-          ? Number(data.amount / data.quantity).toLocaleString("vi", {
+          ? Number(data.amount / data.quantity).toLocaleString("en-EN", {
               maximumFractionDigits: 2,
             })
           : "..."}
